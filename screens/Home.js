@@ -10,29 +10,68 @@ import {
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
+import { login } from '../reducers/user';
 
 export default function Home() {
   const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = useState(false);
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const [modalSignInVisible, setModalSignInVisible] = useState(false);
+  const [firstname, setFirstname] = useState('');
+  const [lastname, setLastname] = useState('');
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const inputsObj = {
-    firstName,
-    lastName,
+    firstname,
+    lastname,
     username,
     email,
-    password
-  }
+    password,
+  };
 
-  dispatch(login(inputsObj))
-
+  const handleRegister = () => {
+    fetch('http://172.16.190.13:3000/users/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        firstname: firstname,
+        lastname: lastname,
+        username: username,
+        password: password,
+        email: email,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        if (data.result) {
+          dispatch(
+            login({
+              username: data.user.username,
+              token: data.user.token,
+              firstname: data.user.firstname,
+              lastname: data.user.lastname,
+              email: data.user.email,
+              password: data.user.password,
+            })
+          );
+          setFirstname('');
+          setUsername('');
+          setPassword('');
+          setEmail('');
+          setLastname('');
+        } else {
+          alert('username already existing !');
+        }
+      });
+  };
   const handleSignUp = () => {
     // setModalVisible(!modalVisible)
     return setModalVisible(!modalVisible);
+  };
+  const handleSignIn = () => {
+    return setModalSignInVisible(!modalSignInVisible);
   };
   return (
     <ImageBackground
@@ -50,14 +89,14 @@ export default function Home() {
               <View style={styles.modalContent}>
                 <TextInput
                   placeholder="First Name"
-                  value={firstName}
-                  onChangeText={(value) => setFirstName(value)}
+                  value={firstname}
+                  onChangeText={(value) => setFirstname(value)}
                   style={styles.inputs}
                 ></TextInput>
                 <TextInput
                   placeholder="Last Name"
-                  value={lastName}
-                  onChangeText={(value) => setLastName(value)}
+                  value={lastname}
+                  onChangeText={(value) => setLastname(value)}
                   style={styles.inputs}
                 ></TextInput>
                 <TextInput
@@ -86,7 +125,11 @@ export default function Home() {
                     <Text>X</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
-                    onPress={() => setModalVisible(!modalVisible)}
+                    onPress={() => {
+                      handleRegister();
+                      setModalVisible(!modalVisible),
+                        dispatch(login(inputsObj));
+                    }}
                     style={styles.buttonsSub}
                   >
                     <Text>SUBMIT</Text>
@@ -96,11 +139,44 @@ export default function Home() {
             </View>
           </Modal>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.signBtn}
-          onPress={() => alert('Sign in')}
-        >
+        <TouchableOpacity style={styles.signBtn} onPress={() => handleSignIn()}>
           <Text>SING'IN</Text>
+          <Modal visible={modalSignInVisible} animationType="slide" transparent>
+            <View style={{ backgroundColor: '#000000aa', flex: 1 }}>
+              <View style={styles.modalContent}>
+                <TextInput
+                  placeholder="Username"
+                  value={firstname}
+                  onChangeText={(value) => setUsername(value)}
+                  style={styles.inputs}
+                ></TextInput>
+                <TextInput
+                  placeholder="Password"
+                  value={lastname}
+                  onChangeText={(value) => setPassword(value)}
+                  style={styles.inputs}
+                ></TextInput>
+                <View style={styles.submitContainer}>
+                  <TouchableOpacity
+                    onPress={() => setModalSignInVisible(!modalSignInVisible)}
+                    style={styles.buttonsSub}
+                  >
+                    <Text>X</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      handleRegister();
+                      setModalVisible(!modalVisible),
+                        dispatch(login(inputsObj));
+                    }}
+                    style={styles.buttonsSub}
+                  >
+                    <Text>SUBMIT</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+          </Modal>
         </TouchableOpacity>
       </View>
     </ImageBackground>
