@@ -1,8 +1,8 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/bin/yarnpkg add expo-linear-gradient@~12.0.1
+  /usr/local/bin/node /usr/local/bin/yarn add @fortawesome/pro-regular-svg-icons
 
 PATH: 
-  /Users/lucvaida/Desktop/WannaPlay/WannaPlay-frontend/node_modules/.bin:/Users/lucvaida/Desktop/WannaPlay/WannaPlay-frontend/node_modules/.bin:/Users/lucvaida/Desktop/WannaPlay/node_modules/.bin:/Users/lucvaida/Desktop/node_modules/.bin:/Users/lucvaida/node_modules/.bin:/Users/node_modules/.bin:/node_modules/.bin:/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin
+  /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin
 
 Yarn version: 
   1.22.19
@@ -14,7 +14,17 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: EACCES: permission denied, unlink '/Users/lucvaida/Desktop/WannaPlay/WannaPlay-frontend/node_modules/@babel/highlight/node_modules/escape-string-regexp/index.js'
+  Error: https://registry.yarnpkg.com/@fortawesome%2fpro-regular-svg-icons: Not found
+      at Request.params.callback [as _callback] (/usr/local/lib/node_modules/yarn/lib/cli.js:66145:18)
+      at Request.self.callback (/usr/local/lib/node_modules/yarn/lib/cli.js:140890:22)
+      at Request.emit (node:events:513:28)
+      at Request.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141862:10)
+      at Request.emit (node:events:513:28)
+      at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141784:12)
+      at Object.onceWrapper (node:events:627:28)
+      at IncomingMessage.emit (node:events:525:35)
+      at endReadableNT (node:internal/streams/readable:1358:12)
+      at processTicksAndRejections (node:internal/process/task_queues:83:21)
 
 npm manifest: 
   {
@@ -32,6 +42,7 @@ npm manifest:
       "@react-navigation/native": "6",
       "@react-navigation/native-stack": "6",
       "expo": "~47.0.8",
+      "expo-linear-gradient": "~12.0.1",
       "expo-status-bar": "~1.4.2",
       "react": "18.1.0",
       "react-native": "0.70.5",
@@ -3105,6 +3116,11 @@ Lockfile:
     version "11.0.1"
     resolved "https://registry.npmjs.org/expo-keep-awake/-/expo-keep-awake-11.0.1.tgz"
     integrity sha512-44ZjgLE4lnce2d40Pv8xsjMVc6R5GvgHOwZfkLYtGmgYG9TYrEJeEj5UfSeweXPL3pBFhXKfFU8xpGYMaHdP0A==
+  
+  expo-linear-gradient@~12.0.1:
+    version "12.0.1"
+    resolved "https://registry.yarnpkg.com/expo-linear-gradient/-/expo-linear-gradient-12.0.1.tgz#452f793b0463ddf313aad431552f23acc85f5d64"
+    integrity sha512-TMl/wBTVQOliL4S3DS5Aa3UFfVySr0mdJEHLG6kfBdMCLkr+tfLI2rGyJ+scS7xgMsvhTIaurhf1+Z0sL3aLCg==
   
   expo-modules-autolinking@1.0.0:
     version "1.0.0"
