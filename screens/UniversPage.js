@@ -56,7 +56,8 @@ const styles = StyleSheet.create({
     paddingTop: 55,
   },
   Title: {
-    color: "white",
+    color: "#CE2174",
+    fontSize: 20,
   },
   content: {
     flex: 30,
@@ -130,5 +131,12 @@ const styles = StyleSheet.create({
     borderRadius: "25px",
     justifyContent: "center",
     marginTop: 70,
+  },
+  text: {
+    color: "white",
+    paddingLeft: 15,
+    paddingRight: 10,
+    fontSize: 20,
+    alignItems: "center",
   },
 });
