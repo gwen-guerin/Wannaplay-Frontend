@@ -21,7 +21,7 @@ export default function Home() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [userNameSignIn, setUserNameSignIn] = useState("");
+  const [usernameSignIn, setUsernameSignIn] = useState("");
   const [passwordSignIn, setPasswordSignIn] = useState("");
 
   const inputsObj = {
@@ -148,8 +148,8 @@ export default function Home() {
               <View style={styles.modalContent}>
                 <TextInput
                   placeholder="Username"
-                  value={userNameSignIn}
-                  onChangeText={(value) => setUserNameSignIn(value)}
+                  value={usernameSignIn}
+                  onChangeText={(value) => setUsernameSignIn(value)}
                   style={styles.inputs}
                 ></TextInput>
                 <TextInput
