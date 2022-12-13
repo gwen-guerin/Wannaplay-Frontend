@@ -1,50 +1,50 @@
 import { Image, View, StyleSheet, Text, TextInput, Button } from "react-native";
 import { useState } from "react";
 // import FriendsCards from "../components/FriendsCards";
+<<<<<<< HEAD
 import { login } from "../reducers/user";
+=======
+//import { login } from "../reducers/users";
+>>>>>>> 094cd37850f124b5fd8760165cb1824273d7184a
 import { useDispatch, useSelector } from "react-redux";
-
-
 
 export default function ProfilScreen() {
   const [input, setInput] = useState("");
-  const [user, setUser]= useState({});
+  const [user, setUser] = useState({});
   const [tag, setTag] = useState([]);
-//   const [friend, setFriend] = useState([]);
+  //   const [friend, setFriend] = useState([]);
 
   const dispatch = useDispatch();
-  const users = useSelector(((state) => state.user.value));
-
+  const users = useSelector((state) => state.user.value);
 
   const handleSubmitProfile = () => {
-
-
     fetch(`http://172.17.188.33:3000/users/profile/${input}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
-            // setUser(users)
-            dispatch(login({ username: username }))
+          // setUser(users)
+          dispatch(login({ username: username }));
         } else {
-            console.log("error");
+          console.log("error");
         }
-    });
-};
+      });
+  };
 
   const tags = tag.map((tags, i) => {
-    console.log(tags)
+    console.log(tags);
     return (
-        <Text style={styles.textUser} key={i}>{tags}</Text>
-        )
-});
+      <Text style={styles.textUser} key={i}>
+        {tags}
+      </Text>
+    );
+  });
 
-//   const friends = friend.map((friends, i) => {
-//     console.log(friends)
-//     return (
-//         <FriendsCards key={i} props={data}/>
-//         )
-// });
-
+  //   const friends = friend.map((friends, i) => {
+  //     console.log(friends)
+  //     return (
+  //         <FriendsCards key={i} props={data}/>
+  //         )
+  // });
 
   return (
     <View style={styles.container}>
@@ -61,7 +61,7 @@ export default function ProfilScreen() {
         />
         <Text style={styles.textUser}>{user.username}</Text>
         <Text style={styles.textUser}>{user.firstname}</Text>
-        <View >{tags}</View>
+        <View>{tags}</View>
         <Text style={styles.textUser}>{user.age}</Text>
         <Text style={styles.textUser}>{user.teacher}</Text>
         <Text style={styles.textUser}>{user.status}</Text>
@@ -118,5 +118,4 @@ const styles = StyleSheet.create({
     color: "red",
     fontSize: 18,
   },
-
 });
