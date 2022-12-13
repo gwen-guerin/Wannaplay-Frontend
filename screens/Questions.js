@@ -100,7 +100,6 @@ export default function Questions() {
     </View>
   );
 }
-const win = Dimensions.get('window');
 
 styles = StyleSheet.create({
   container: {

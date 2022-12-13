@@ -10,7 +10,8 @@ import ProfileScreen from './screens/ProfileScreen';
 import user from './reducers/user';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
-import Questions from './screens/Questions';
+import Questions2 from './screens/Questions2';
+import { NativeBaseProvider } from 'native-base';
 
 const store = configureStore({
   reducer: { user },
@@ -22,9 +23,9 @@ const Tab = createBottomTabNavigator();
 const TabNavigator = () => {
   return (
     <Tab.Navigator
-    screenOptions={({ route }) => ({
-      tabBarIcon: ({ color, size }) => {
-        let iconName = '';
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ color, size }) => {
+          let iconName = '';
 
           if (route.name === 'Profil') {
             iconName = 'user';
@@ -40,7 +41,7 @@ const TabNavigator = () => {
         headerShown: false,
       })}
     >
-      <Tab.Screen name="Questions" component={Questions} />
+      <Tab.Screen name="Questions" component={Questions2} />
       <Tab.Screen name="Profil" component={ProfileScreen} />
     </Tab.Navigator>
   );
@@ -48,13 +49,15 @@ const TabNavigator = () => {
 
 export default function App() {
   return (
-    <Provider store={store}>
-      <NavigationContainer>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Home" component={Home} />
-          <Stack.Screen name="TabNavigator" component={TabNavigator} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </Provider>
+    <NativeBaseProvider>
+      <Provider store={store}>
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="TabNavigator" component={TabNavigator} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </Provider>
+    </NativeBaseProvider>
   );
 }
