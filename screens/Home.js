@@ -12,17 +12,20 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { login } from "../reducers/user";
 
-export default function Home() {
+const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+
+export default function Home({navigation}) {
   const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = useState(false);
   const [modalSignInVisible, setModalSignInVisible] = useState(false);
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [userNameSignIn, setUserNameSignIn] = useState("");
-  const [passwordSignIn, setPasswordSignIn] = useState("");
+  const [firstname, setFirstname] = useState('');
+  const [lastname, setLastname] = useState('');
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [usernameSignIn, setUsernameSignIn] = useState('')
+  const [passwordSignIn, setPasswordSignIn] = useState('')
 
   const inputsObj = {
     firstname,
@@ -33,7 +36,7 @@ export default function Home() {
   };
 
   const handleRegister = () => {
-    fetch("http://172.16.190.13:3000/users/signup", {
+    fetch("http://172.16.190.14:3000/users/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -73,8 +76,19 @@ export default function Home() {
     return setModalVisible(!modalVisible);
   };
   const handleSignIn = () => {
-    return setModalSignInVisible(!modalSignInVisible);
-  };
+    // if (EMAIL_REGEX.test(email)) {
+    //   dispatch(updateEmail(email));
+    // }
+    // else {
+      //   setEmailError(true);
+      // }
+      return setModalSignInVisible(!modalSignInVisible);
+    };
+    const submitSignIn = () => {
+    navigation.navigate('TabNavigator');
+  }
+
+
   return (
     <ImageBackground
       source={require("../assets/illu_02.jpg")}
@@ -148,8 +162,8 @@ export default function Home() {
               <View style={styles.modalContent}>
                 <TextInput
                   placeholder="Username"
-                  value={userNameSignIn}
-                  onChangeText={(value) => setUserNameSignIn(value)}
+                  value={usernameSignIn}
+                  onChangeText={(value) => setUsernameSignIn(value)}
                   style={styles.inputs}
                 ></TextInput>
                 <TextInput
@@ -167,7 +181,7 @@ export default function Home() {
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() => {
-                      handleRegister();
+                      submitSignIn();
                       setModalVisible(!modalVisible),
                         dispatch(login(inputsObj));
                     }}
