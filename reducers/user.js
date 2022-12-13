@@ -6,8 +6,14 @@ const initialState = {
     lastname: null,
     username: null,
     email: null,
-    password: null,
-    token: null,
+    age: null,
+    tags: [],
+    friends: [],
+    status: null,
+    city: null,
+    department: null,
+    teacher: null,
+    singer: null,
   },
 };
 
@@ -21,19 +27,31 @@ export const userSlice = createSlice({
       state.value.lastname = action.payload.lasname;
       state.value.username = action.payload.username;
       state.value.email = action.payload.email;
-      state.value.password = action.payload.password;
-      state.value.token = action.payload.token;
+      
     },
     logout: (state) => {
       state.value.firstname = null;
       state.value.lastname = null;
       state.value.username = null;
       state.value.email = null;
-      state.value.password = null;
-      state.value.token = null;
     },
-  },
+    question: (state, action) => {
+      state.value.age = action.payload.age;
+      state.value.tags = state.value.tags.push(action.payload);
+      state.value.city = action.payload.city;
+      state.value.department = action.payload.department;
+      // state.value.status = action.payload.status;
+      state.value.teacher = action.payload.teacher;
+      state.value.singer = action.payload.singer;
+    },
+    addFriend: (state, action) => {
+    state.value.friends = state.value.friends.push(action.payload);
+    },
+    removeFriend: (state, action) => {
+      state.value = state.value.filter((e) => e.username !== action.payload);
+    },
+  }
 });
 
-export const { login, logout } = userSlice.actions;
+export const { login, logout, question, addFriend, removeFriend } = userSlice.actions;
 export default userSlice.reducer;

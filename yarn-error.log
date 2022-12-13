@@ -1,9 +1,5 @@
 Arguments: 
-<<<<<<< HEAD
   C:\Program Files\nodejs\node.exe C:\Users\Yannick\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add react-native-linear-gradient*
-=======
-  /usr/local/bin/node /usr/local/bin/yarn add react-redux @reduxjs/toolkit
->>>>>>> 094cd37850f124b5fd8760165cb1824273d7184a
 
 PATH: 
   C:\Users\Yannick\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\Yannick\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files\Git\cmd;C:\Program Files\nodejs;C:\Users\Yannick\AppData\Local\Microsoft\WindowsApps;C:\Users\Yannick\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Yannick\AppData\Roaming\npm;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
@@ -18,7 +14,6 @@ Platform:
   win32 x64
 
 Trace: 
-<<<<<<< HEAD
   Error: https://registry.yarnpkg.com/react-native-linear-gradient*: Not found
       at Request.params.callback [as _callback] (C:\Users\Yannick\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:66145:18)
       at Request.self.callback (C:\Users\Yannick\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:140890:22)
@@ -30,9 +25,6 @@ Trace:
       at IncomingMessage.emit (node:events:525:35)
       at endReadableNT (node:internal/streams/readable:1358:12)
       at processTicksAndRejections (node:internal/process/task_queues:83:21)
-=======
-  Error: EACCES: permission denied, unlink '/Users/lucvaida/Desktop/WannaPlay/WannaPlay-frontend/node_modules/@react-navigation/native-stack/LICENSE'
->>>>>>> 094cd37850f124b5fd8760165cb1824273d7184a
 
 npm manifest: 
   {
