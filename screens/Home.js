@@ -12,20 +12,20 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { login } from "../reducers/user";
 
-const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const EMAIL_REGEX =
+  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-
-export default function Home({navigation}) {
+export default function Home({ navigation }) {
   const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = useState(false);
   const [modalSignInVisible, setModalSignInVisible] = useState(false);
-  const [firstname, setFirstname] = useState('');
-  const [lastname, setLastname] = useState('');
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [usernameSignIn, setUsernameSignIn] = useState('')
-  const [passwordSignIn, setPasswordSignIn] = useState('')
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [usernameSignIn, setUsernameSignIn] = useState("");
+  const [passwordSignIn, setPasswordSignIn] = useState("");
 
   const inputsObj = {
     firstname,
@@ -66,6 +66,8 @@ export default function Home({navigation}) {
           setPassword("");
           setEmail("");
           setLastname("");
+          setModalSignInVisible(!modalSignInVisible);
+          setModalVisible(!modalVisible);
         } else {
           alert("username already existing !");
         }
@@ -80,14 +82,13 @@ export default function Home({navigation}) {
     //   dispatch(updateEmail(email));
     // }
     // else {
-      //   setEmailError(true);
-      // }
-      return setModalSignInVisible(!modalSignInVisible);
-    };
-    const submitSignIn = () => {
-    navigation.navigate('TabNavigator');
-  }
-
+    //   setEmailError(true);
+    // }
+    setModalSignInVisible(!modalSignInVisible);
+  };
+  const submitSignIn = () => {
+    navigation.navigate("TabNavigator");
+  };
 
   return (
     <ImageBackground
@@ -182,7 +183,7 @@ export default function Home({navigation}) {
                   <TouchableOpacity
                     onPress={() => {
                       submitSignIn();
-                      setModalVisible(!modalVisible),
+                      setModalSignInVisible(!modalSignInVisible),
                         dispatch(login(inputsObj));
                     }}
                     style={styles.buttonsSub}
