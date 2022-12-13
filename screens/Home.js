@@ -37,9 +37,9 @@ export default function Home({ navigation }) {
   };
 
   const handleRegister = () => {
-    fetch("http://192.168.1.118:3000/users/signup", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+    fetch('http://172.17.188.33:3000/users/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         firstname: firstname,
         lastname: lastname,
@@ -89,7 +89,7 @@ export default function Home({ navigation }) {
     setModalSignInVisible(!modalSignInVisible);
   };
   const submitSignIn = () => {
-    fetch('http://172.16.190.14:3000/users/signin', {
+    fetch('http://172.17.188.33:3000/users/signin', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

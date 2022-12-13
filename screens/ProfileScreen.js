@@ -12,14 +12,16 @@ export default function ProfilScreen() {
 
   const dispatch = useDispatch();
   const users = useSelector((state) => state.user.value);
+ 
 
   const handleSubmitProfile = () => {
     fetch(`http://172.17.188.33:3000/users/profile/${input}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
-          // setUser(users)
-          dispatch(login({ username: username }));
+          setUser(user)
+          setTag(tag)
+     
         } else {
           console.log("error");
         }
@@ -61,7 +63,7 @@ export default function ProfilScreen() {
         <Text style={styles.textUser}>{user.age}</Text>
         <Text style={styles.textUser}>{user.teacher}</Text>
         <Text style={styles.textUser}>{user.status}</Text>
-        <Text style={styles.textUser}>{user.city}</Text>
+        {/* <Text style={styles.textUser}>{user.city}</Text> */}
         {/* <View >{friends}</View> */}
       </View>
       <View>
