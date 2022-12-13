@@ -6,13 +6,19 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Image,
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { LinearGradient } from "expo-linear-gradient";
+import { BlurView } from "expo-blur";
+import { ImageBackground } from "react-native";
 
 export default function UniversPage() {
   return (
-    <View style={styles.container}>
+    <ImageBackground
+      source={require("../assets/background.jpg")}
+      style={styles.container}
+    >
       <View style={styles.header}>
         <Text style={styles.Title}>Wanna Play?</Text>
       </View>
@@ -38,13 +44,16 @@ export default function UniversPage() {
           <Text style={styles.text}>Wanna singer?</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "black",
+    borderBottomRightRadius: "25%",
+    borderBottomLeftRadius: "25%",
   },
   header: {
     flex: 1,
@@ -67,8 +76,10 @@ const styles = StyleSheet.create({
     color: "white",
     flexWrap: "wrap",
     paddingTop: 20,
-    backgroundColor: "black",
+
     paddingRight: 20,
+    borderBottomLeftRadius: "50%",
+    borderBottomRightRadius: "50%",
   },
   button1: {
     backgroundColor: "#404ECD",
@@ -78,6 +89,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     justifyContent: "center",
     marginTop: 70,
+    opacity: 0.9,
   },
   text: {
     color: "white",
@@ -93,6 +105,7 @@ const styles = StyleSheet.create({
     marginTop: 70,
     paddingLeft: 10,
     paddingRight: 10,
+    opacity: 0.9,
   },
   button3: {
     backgroundColor: "#CD40AE",
@@ -102,6 +115,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     justifyContent: "center",
     marginTop: 70,
+    opacity: 0.9,
   },
   button4: {
     backgroundColor: "#76CD40",
@@ -113,6 +127,7 @@ const styles = StyleSheet.create({
     marginTop: 70,
     paddingLeft: 10,
     paddingRight: 10,
+    opacity: 0.9,
   },
   button5: {
     backgroundColor: "#CACD40",
@@ -122,6 +137,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     justifyContent: "center",
     marginTop: 70,
+    opacity: 0.9,
   },
   button6: {
     backgroundColor: "#40CDC5",
@@ -131,6 +147,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     justifyContent: "center",
     marginTop: 70,
+    opacity: 0.9,
   },
   text: {
     color: "white",
@@ -138,5 +155,10 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     fontSize: 20,
     alignItems: "center",
+  },
+  image: {
+    height: "100%",
+    width: "100%",
+    marginBottom: 2,
   },
 });

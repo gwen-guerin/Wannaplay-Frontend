@@ -12,6 +12,8 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import Questions2 from './screens/Questions2';
 import { NativeBaseProvider } from 'native-base';
+import ChatsList from './screens/ChatsList';
+import ChatScreen from './screens/ChatScreen';
 
 const store = configureStore({
   reducer: { user },
@@ -27,10 +29,12 @@ const TabNavigator = () => {
         tabBarIcon: ({ color, size }) => {
           let iconName = '';
 
-          if (route.name === 'Profil') {
-            iconName = 'user';
-          } else if (route.name === 'Univers') {
-            iconName = 'home';
+          if (route.name === "Profil") {
+            iconName = "user";
+          } else if (route.name === "Univers") {
+            iconName = "home";
+          } else if (route.name === "Chats") {
+            iconName = "wechat"
           }
 
           return <FontAwesome name={iconName} size={size} color={color} />;
@@ -43,6 +47,7 @@ const TabNavigator = () => {
     >
       <Tab.Screen name="Questions" component={Questions2} />
       <Tab.Screen name="Profil" component={ProfileScreen} />
+      <Stack.Screen name='Chats' component={ChatsList} />
     </Tab.Navigator>
   );
 };
@@ -55,6 +60,7 @@ export default function App() {
           <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="TabNavigator" component={TabNavigator} />
+            <Stack.Screen name="Chat" component={ChatScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>
