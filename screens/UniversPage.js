@@ -52,8 +52,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "black",
-    borderBottomRightRadius: "25%",
-    borderBottomLeftRadius: "25%",
+    borderBottomRightRadius: 25,
+    borderBottomLeftRadius: 25,
   },
   header: {
     flex: 1,
@@ -78,8 +78,6 @@ const styles = StyleSheet.create({
     paddingTop: 20,
 
     paddingRight: 20,
-    borderBottomLeftRadius: "50%",
-    borderBottomRightRadius: "50%",
   },
   button1: {
     backgroundColor: "#404ECD",
@@ -159,6 +157,5 @@ const styles = StyleSheet.create({
   image: {
     height: "100%",
     width: "100%",
-    marginBottom: 2,
   },
 });
