@@ -26,6 +26,7 @@ export default function Home({ navigation }) {
   const [password, setPassword] = useState('');
   const [usernameSignIn, setUsernameSignIn] = useState('');
   const [passwordSignIn, setPasswordSignIn] = useState('');
+  const [error, setError] = useState(false);
 
   const inputsObj = {
     firstname,
@@ -68,6 +69,7 @@ export default function Home({ navigation }) {
           setLastname('');
           setModalSignInVisible(!modalSignInVisible);
           setModalVisible(!modalVisible);
+          navigation.navigate('Questions');
         } else {
           alert('username already existing !');
         }
@@ -87,7 +89,25 @@ export default function Home({ navigation }) {
     setModalSignInVisible(!modalSignInVisible);
   };
   const submitSignIn = () => {
-    navigation.navigate('TabNavigator');
+    fetch('http://172.16.190.14:3000/users/signin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username: usernameSignIn,
+        password: passwordSignIn,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.result) {
+          setModalSignInVisible(!modalSignInVisible),
+          navigation.navigate('TabNavigator');
+        } else {
+          setModalSignInVisible(true)
+          setError(!error);
+        }
+      });
   };
 
   return (
@@ -161,6 +181,7 @@ export default function Home({ navigation }) {
           <Modal visible={modalSignInVisible} animationType="slide" transparent>
             <View style={{ backgroundColor: '#000000aa', flex: 1 }}>
               <View style={styles.modalContent}>
+              {error && <Text>Veuillez remplir tous les champs</Text>}
                 <TextInput
                   placeholder="Username"
                   value={usernameSignIn}
@@ -183,7 +204,6 @@ export default function Home({ navigation }) {
                   <TouchableOpacity
                     onPress={() => {
                       submitSignIn();
-                      setModalSignInVisible(!modalSignInVisible),
                         dispatch(login(inputsObj));
                     }}
                     style={styles.buttonsSub}
