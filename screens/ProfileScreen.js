@@ -1,7 +1,7 @@
 import { Image, View, StyleSheet, Text, TextInput, Button } from "react-native";
 import { useState } from "react";
 // import FriendsCards from "../components/FriendsCards";
-import { login } from "../reducers/users";
+import { login } from "../reducers/user";
 import { useDispatch, useSelector } from "react-redux";
 
 
