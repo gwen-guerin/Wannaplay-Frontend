@@ -21,6 +21,8 @@ export default function Home() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [usernameSignIn, setUsernameSignIn] = useState('')
+  const [passwordSignIn, setPasswordSignIn] = useState('')
 
   const inputsObj = {
     firstname,
@@ -146,14 +148,14 @@ export default function Home() {
               <View style={styles.modalContent}>
                 <TextInput
                   placeholder="Username"
-                  value={firstname}
-                  onChangeText={(value) => setUsername(value)}
+                  value={usernameSignIn}
+                  onChangeText={(value) => setUsernameSignIn(value)}
                   style={styles.inputs}
                 ></TextInput>
                 <TextInput
                   placeholder="Password"
-                  value={lastname}
-                  onChangeText={(value) => setPassword(value)}
+                  value={passwordSignIn}
+                  onChangeText={(value) => setPasswordSignIn(value)}
                   style={styles.inputs}
                 ></TextInput>
                 <View style={styles.submitContainer}>
