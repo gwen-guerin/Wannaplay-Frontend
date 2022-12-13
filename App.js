@@ -10,8 +10,8 @@ import ProfileScreen from "./screens/ProfileScreen";
 import user from "./reducers/user";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
-import ChatsList from './ChatsList';
-import ChatScreen from './ChatScreen';
+import ChatsList from './screens/ChatsList';
+import ChatScreen from './screens/ChatScreen';
 
 const store = configureStore({
   reducer: { user },
@@ -31,6 +31,8 @@ const TabNavigator = () => {
             iconName = "user";
           } else if (route.name === "Univers") {
             iconName = "home";
+          } else if (route.name === "Chats") {
+            iconName = "wechat"
           }
 
           return <FontAwesome name={iconName} size={size} color={color} />;
@@ -42,6 +44,7 @@ const TabNavigator = () => {
     >
       <Tab.Screen name="Univers" component={UniversPage} />
       <Tab.Screen name="Profil" component={ProfileScreen} />
+      <Stack.Screen name='Chats' component={ChatsList} />
     </Tab.Navigator>
   );
 };
@@ -53,6 +56,7 @@ export default function App() {
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="TabNavigator" component={TabNavigator} />
+          <Stack.Screen name="Chat" component={ChatScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
