@@ -7,20 +7,22 @@ import {
   Modal,
   Dimensions,
   TextInput,
-} from 'react-native';
-import { useDispatch } from 'react-redux';
-import { useState } from 'react';
-import { login } from '../reducers/user';
+} from "react-native";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
+import { login } from "../reducers/user";
 
 export default function Home() {
   const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = useState(false);
   const [modalSignInVisible, setModalSignInVisible] = useState(false);
-  const [firstname, setFirstname] = useState('');
-  const [lastname, setLastname] = useState('');
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [userNameSignIn, setUserNameSignIn] = useState("");
+  const [passwordSignIn, setPasswordSignIn] = useState("");
 
   const inputsObj = {
     firstname,
@@ -31,9 +33,9 @@ export default function Home() {
   };
 
   const handleRegister = () => {
-    fetch('http://172.16.190.13:3000/users/signup', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    fetch("http://172.16.190.13:3000/users/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         firstname: firstname,
         lastname: lastname,
@@ -56,13 +58,13 @@ export default function Home() {
               password: data.user.password,
             })
           );
-          setFirstname('');
-          setUsername('');
-          setPassword('');
-          setEmail('');
-          setLastname('');
+          setFirstname("");
+          setUsername("");
+          setPassword("");
+          setEmail("");
+          setLastname("");
         } else {
-          alert('username already existing !');
+          alert("username already existing !");
         }
       });
   };
@@ -75,7 +77,7 @@ export default function Home() {
   };
   return (
     <ImageBackground
-      source={require('../assets/illu_02.jpg')}
+      source={require("../assets/illu_02.jpg")}
       style={styles.background}
     >
       <View style={styles.header}>
@@ -85,7 +87,7 @@ export default function Home() {
         <TouchableOpacity style={styles.signBtn} onPress={() => handleSignUp()}>
           <Text>SING'UP</Text>
           <Modal visible={modalVisible} animationType="slide" transparent>
-            <View style={{ backgroundColor: '#000000aa', flex: 1 }}>
+            <View style={{ backgroundColor: "#000000aa", flex: 1 }}>
               <View style={styles.modalContent}>
                 <TextInput
                   placeholder="First Name"
@@ -142,18 +144,18 @@ export default function Home() {
         <TouchableOpacity style={styles.signBtn} onPress={() => handleSignIn()}>
           <Text>SING'IN</Text>
           <Modal visible={modalSignInVisible} animationType="slide" transparent>
-            <View style={{ backgroundColor: '#000000aa', flex: 1 }}>
+            <View style={{ backgroundColor: "#000000aa", flex: 1 }}>
               <View style={styles.modalContent}>
                 <TextInput
                   placeholder="Username"
-                  value={firstname}
-                  onChangeText={(value) => setUsername(value)}
+                  value={userNameSignIn}
+                  onChangeText={(value) => setUserNameSignIn(value)}
                   style={styles.inputs}
                 ></TextInput>
                 <TextInput
                   placeholder="Password"
-                  value={lastname}
-                  onChangeText={(value) => setPassword(value)}
+                  value={passwordSignIn}
+                  onChangeText={(value) => setPasswordSignIn(value)}
                   style={styles.inputs}
                 ></TextInput>
                 <View style={styles.submitContainer}>
@@ -183,12 +185,12 @@ export default function Home() {
   );
 }
 
-const win = Dimensions.get('window');
+const win = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   background: {
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "100%",
   },
   title: {
     fontSize: 50,
@@ -198,23 +200,23 @@ const styles = StyleSheet.create({
     // fontFamily: 'Atma-Bold'
   },
   header: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
     height: 90,
     marginBottom: 20,
     // fontSize: 200,
   },
   signInSignUpContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
   signBtn: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#CE2174',
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#CE2174",
     width: 200,
     height: 30,
     marginBottom: 20,
@@ -222,31 +224,31 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     borderRadius: 40,
-    backgroundColor: '#CE2174',
+    backgroundColor: "#CE2174",
     marginTop: 200,
     padding: 30,
     margin: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   inputs: {
-    backgroundColor: '#D9D9D9',
+    backgroundColor: "#D9D9D9",
     borderRadius: 15,
     paddingLeft: 10,
-    width: '100%',
+    width: "100%",
     fontSize: 16,
     marginBottom: 10,
   },
   submitContainer: {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   buttonsSub: {
-    backgroundColor: '#AAA8A8',
+    backgroundColor: "#AAA8A8",
     borderRadius: 15,
-    width: '45%',
-    alignItems: 'center',
+    width: "45%",
+    alignItems: "center",
   },
 });
