@@ -28,7 +28,7 @@ const TabNavigator = () => {
           if (route.name === "Profil") {
             iconName = "user";
           } else if (route.name === "Univers") {
-            iconName = "house";
+            iconName = "home";
           }
 
           return <FontAwesome name={iconName} size={size} color={color} />;
@@ -38,8 +38,8 @@ const TabNavigator = () => {
         headerShown: false,
       })}
     >
-      <Tab.Screen name="Profil" component={ProfileScreen} />
       <Tab.Screen name="Univers" component={UniversPage} />
+      <Tab.Screen name="Profil" component={ProfileScreen} />
     </Tab.Navigator>
   );
 };
