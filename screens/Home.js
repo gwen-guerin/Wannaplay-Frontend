@@ -33,7 +33,7 @@ export default function Home() {
   };
 
   const handleRegister = () => {
-    fetch("http://172.16.190.13:3000/users/signup", {
+    fetch("http://172.17.188.33:3000/users/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

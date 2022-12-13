@@ -1,11 +1,7 @@
 import { Image, View, StyleSheet, Text, TextInput, Button } from "react-native";
 import { useState } from "react";
 // import FriendsCards from "../components/FriendsCards";
-<<<<<<< HEAD
-import { login } from "../reducers/user";
-=======
 //import { login } from "../reducers/users";
->>>>>>> 094cd37850f124b5fd8760165cb1824273d7184a
 import { useDispatch, useSelector } from "react-redux";
 
 export default function ProfilScreen() {

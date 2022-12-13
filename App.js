@@ -47,20 +47,12 @@ const TabNavigator = () => {
 export default function App() {
   return (
     <Provider store={store}>
-<<<<<<< HEAD
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
-=======
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="TabNavigator" component={TabNavigator} />
         </Stack.Navigator>
       </NavigationContainer>
->>>>>>> 094cd37850f124b5fd8760165cb1824273d7184a
     </Provider>
   );
 }
