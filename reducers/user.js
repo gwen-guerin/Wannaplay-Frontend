@@ -26,14 +26,22 @@ export const userSlice = createSlice({
       state.value.firstname = action.payload.firstname;
       state.value.lastname = action.payload.lasname;
       state.value.username = action.payload.username;
+<<<<<<< HEAD
       state.value.email = action.payload.email;
       
+=======
+      // state.value.email = action.payload.email;
+      // state.value.password = action.payload.password;
+      // state.value.token = action.payload.token;
+>>>>>>> 22ae8e74f2cd25a8128230b78908e0d0d139da68
     },
     logout: (state) => {
       state.value.firstname = null;
       state.value.lastname = null;
       state.value.username = null;
-      state.value.email = null;
+      // state.value.email = null;
+      // state.value.password = null;
+      // state.value.token = null;
     },
     question: (state, action) => {
       state.value.age = action.payload.age;
