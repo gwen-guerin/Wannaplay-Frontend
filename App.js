@@ -45,9 +45,9 @@ const TabNavigator = () => {
         headerShown: false,
       })}
     >
-      <Tab.Screen name="Questions" component={Questions2} />
+      <Tab.Screen name="Univers" component={UniversPage} />
       <Tab.Screen name="Profil" component={ProfileScreen} />
-      <Stack.Screen name='Chats' component={ChatsList} />
+      <Tab.Screen name='Chats' component={ChatsList} />
     </Tab.Navigator>
   );
 };
