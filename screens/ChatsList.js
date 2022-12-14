@@ -17,7 +17,7 @@ export default function ChatsList({ navigation }) {
   const [allUsers, setAllUsers] = useState([]);
 
   useEffect(() => {
-    fetch("http://192.168.1.118:3000/users/allUsers")
+    fetch("http://172.20.10.3:3000/users/allUsers")
       .then((response) => response.json())
       .then((data) => setAllUsers(data.usernames));
   }, []);
@@ -32,7 +32,10 @@ export default function ChatsList({ navigation }) {
         onPress={() => handleNavigation(data)}
         style={styles.chatlink}
       >
-        <Image source={require("../assets/mia-khalifa.jpg")} style={styles.avatar} />
+        <Image
+          source={require("../assets/mia-khalifa.jpg")}
+          style={styles.avatar}
+        />
         <Text> {data} </Text>
       </TouchableOpacity>
     );
@@ -44,10 +47,10 @@ export default function ChatsList({ navigation }) {
       <ImageBackground
         source={require("../assets/esquise02.jpg")}
         style={styles.inset}
-        imageStyle={{borderTopLeftRadius: 30, borderTopRightRadius: 30}}
+        imageStyle={{ borderTopLeftRadius: 30, borderTopRightRadius: 30 }}
         blurRadius={0.3}
       >
-        <TextInput style={styles.input} placeholder='Search a friend...'/>
+        <TextInput style={styles.input} placeholder="Search a friend..." />
         <ScrollView contentContainerStyle={styles.scrollList}>
           {chatBoxes}
         </ScrollView>
@@ -65,8 +68,8 @@ const styles = StyleSheet.create({
   },
   inset: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    alignItems: "center",
+    justifyContent: "space-between",
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     backgroundColor: "#ffffff",
@@ -81,12 +84,12 @@ const styles = StyleSheet.create({
     borderLeftWidth: 0.1,
   },
   input: {
-    height: '7%',
-    width: '90%',
-    backgroundColor: 'white',
+    height: "7%",
+    width: "90%",
+    backgroundColor: "white",
     borderRadius: 10,
-    paddingLeft: '2%',
-    marginBottom: '3%'
+    paddingLeft: "2%",
+    marginBottom: "3%",
   },
   header: {
     height: "10%",
