@@ -14,14 +14,12 @@ import Slider from "@react-native-community/slider";
 import { BTMultiSelect } from "@blump-tech/native-base-select";
 
 const Questions2 = () => {
-  const [currency, setCurrency] = useState("US Dollar");
+
   const [age, setAge] = useState(0);
   const [city, setCity] = useState("");
   const [department, setDepartment] = useState("");
   const [teacher, setTeacher] = useState(false);
-  const [tags, setTags] = useState([]);
   const [singer, setSinger] = useState(false);
-
   const [instruments, setInstruments] = useState({
     value: "",
     list: [
@@ -50,7 +48,7 @@ const Questions2 = () => {
     <View>
 
       <ScrollView>
-      <BackgroundImage source={require("../assets/illu_02.jpg")}>
+      
         
         <View style={styles.container}>
           <View style={styles.questionblock}>
@@ -68,12 +66,14 @@ const Questions2 = () => {
             <Text>I am {age} years old</Text>
           </View>
           <TextInput
+          value={city}
             placeholder="Where do you live ?"
             onChangeText={(city) => setCity(city)}
             />
           <TextInput
+            value={department}
             placeholder="Which department ?"
-            onChangeText={(department) => setCity(department)}
+            onChangeText={(department) => setDepartment(department)}
             />
           <View>
             <Text>Do you wanna teach something ?</Text>
@@ -116,7 +116,7 @@ const Questions2 = () => {
             errorStyle={{ textColor: "red" }}
             />
         </View>
-</BackgroundImage>
+
       </ScrollView>
     </View>
   );
