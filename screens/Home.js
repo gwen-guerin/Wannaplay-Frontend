@@ -5,11 +5,11 @@ import {
   StyleSheet,
   TouchableOpacity,
   Modal,
-  Dimensions,
   TextInput,
+  Dimensions,
 } from "react-native";
 import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { login } from "../reducers/user";
 
 const EMAIL_REGEX =
@@ -27,6 +27,7 @@ export default function Home({ navigation }) {
   const [usernameSignIn, setUsernameSignIn] = useState('');
   const [passwordSignIn, setPasswordSignIn] = useState('');
   const [error, setError] = useState(false);
+  const [currentPosition, setCurrentPosition] = useState()
 
   const inputsObj = {
     firstname,
@@ -37,7 +38,7 @@ export default function Home({ navigation }) {
   };
 
   const handleRegister = () => {
-    fetch('http://172.17.188.33:3000/users/signup', {
+    fetch('http://192.168.1.118:3000/users/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -46,20 +47,20 @@ export default function Home({ navigation }) {
         username: username,
         password: password,
         email: email,
+        location: {},
       }),
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         if (data.result) {
           dispatch(
             login({
               username: data.user.username,
-              token: data.user.token,
-              firstname: data.user.firstname,
-              lastname: data.user.lastname,
-              email: data.user.email,
-              password: data.user.password,
+              // token: data.user.token,
+              // firstname: data.user.firstname,
+              // lastname: data.user.lastname,
+              // email: data.user.email,
+              // password: data.user.password,
             })
           );
           setFirstname("");
@@ -69,7 +70,7 @@ export default function Home({ navigation }) {
           setLastname("");
           setModalSignInVisible(!modalSignInVisible);
           setModalVisible(!modalVisible);
-          navigation.navigate('Questions');
+          // navigation.navigate('Questions');
         } else {
           alert("username already existing !");
         }
@@ -89,7 +90,7 @@ export default function Home({ navigation }) {
     setModalSignInVisible(!modalSignInVisible);
   };
   const submitSignIn = () => {
-    fetch('http://172.17.188.33:3000/users/signin', {
+    fetch('http://192.168.1.118:3000/users/signin', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -99,8 +100,8 @@ export default function Home({ navigation }) {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.result) {
+          dispatch(login({username: usernameSignIn}))
           setModalSignInVisible(!modalSignInVisible),
           navigation.navigate('TabNavigator');
         } else {
@@ -153,6 +154,7 @@ export default function Home({ navigation }) {
                   value={password}
                   onChangeText={(value) => setPassword(value)}
                   style={styles.inputs}
+                  secureTextEntry={true}
                 ></TextInput>
                 <View style={styles.submitContainer}>
                   <TouchableOpacity
@@ -189,10 +191,11 @@ export default function Home({ navigation }) {
                   style={styles.inputs}
                 ></TextInput>
                 <TextInput
-                  placeholder="Password"
+                  label="Password"
                   value={passwordSignIn}
                   onChangeText={(value) => setPasswordSignIn(value)}
                   style={styles.inputs}
+                  secureTextEntry={true}
                 ></TextInput>
                 <View style={styles.submitContainer}>
                   <TouchableOpacity
@@ -268,7 +271,7 @@ const styles = StyleSheet.create({
   },
   inputs: {
     backgroundColor: "#D9D9D9",
-    borderRadius: 15,
+    borderRadius: 20,
     paddingLeft: 10,
     width: "100%",
     fontSize: 16,

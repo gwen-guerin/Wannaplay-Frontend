@@ -8,12 +8,10 @@ const initialState = {
     email: null,
     age: null,
     tags: [],
+    location: [],
     friends: [],
     status: null,
-    city: null,
-    department: null,
-    teacher: null,
-    singer: null,
+    teacher: [],
   },
 };
 
@@ -23,10 +21,10 @@ export const userSlice = createSlice({
   reducers: {
     login: (state, action) => {
       // const { firstname, lastname, username, email, password, token } = action.payload;
-      state.value.firstname = action.payload.firstname;
-      state.value.lastname = action.payload.lasname;
+      // state.value.firstname = action.payload.firstname;
+      // state.value.lastname = action.payload.lasname;
       state.value.username = action.payload.username;
-      state.value.email = action.payload.email;
+      // state.value.email = action.payload.email;
       // state.value.password = action.payload.password;
       // state.value.token = action.payload.token;
     },

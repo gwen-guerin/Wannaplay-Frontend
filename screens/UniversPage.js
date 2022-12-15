@@ -8,12 +8,61 @@ import {
   View,
   Image,
 } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { LinearGradient } from "expo-linear-gradient";
 import { ImageBackground } from "react-native";
 import { BlurView } from "expo-blur";
+import * as Location from "expo-location";
+import { useState, useEffect } from "react";
+
+const API_KEY = "AIzaSyANG7Yh1Az3Q0okg4x2yfgmVupwYQkRdDo";
 
 export default function UniversPage() {
+  const [currentPosition, setCurrentPosition] = useState([]);
+  const dispatch = useDispatch();
+
+  const user = useSelector((state) => state.user.value);
+  // console.log(user);
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      let latitude = 0;
+      let longitude = 0;
+      let url = "";
+
+      if (status === "granted") {
+        console.log(status);
+        Location.watchPositionAsync({ distanceInterval: 10 }, (location) => {
+          latitude = location.coords.latitude;
+          longitude = location.coords.longitude;
+          fetch(
+            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+          )
+            .then((response) => response.json())
+            .then((data) => {
+              console.log(data.address.city);
+              fetch("http://192.168.1.118:3000/users/geoloc", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  username: user.username,
+                  location: {
+                    city: data.address.city,
+                    latitude: latitude,
+                    longitude: longitude,
+                  },
+                }),
+              })
+                .then((response) => response.json())
+                .then((user) => console.log(user));
+            });
+        });
+      }
+    })();
+  }, []);
+
   return (
     <ImageBackground
       source={require("../assets/background.jpg")}
@@ -100,7 +149,7 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 25,
     justifyContent: "center",
-    alignItems: 'center'
+    alignItems: "center",
   },
   text: {
     color: "white",
