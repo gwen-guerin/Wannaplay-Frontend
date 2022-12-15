@@ -2,15 +2,13 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
 import Home from './screens/Home';
-import UniversPage from './screens/UniversPage';
 import ProfileScreen from './screens/ProfileScreen';
+import UniversPage from './screens/UniversPage'
 import user from './reducers/user';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
-import Questions2 from './screens/Questions2';
+import Questions from './screens/Questions';
 import { NativeBaseProvider } from 'native-base';
 import ChatsList from './screens/ChatsList';
 import ChatScreen from './screens/ChatScreen';
@@ -61,6 +59,7 @@ export default function App() {
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="TabNavigator" component={TabNavigator} />
             <Stack.Screen name="Chat" component={ChatScreen} />
+            <Stack.Screen name="Questions" component={Questions} />
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>
