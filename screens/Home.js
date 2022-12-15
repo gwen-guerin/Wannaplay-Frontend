@@ -19,13 +19,13 @@ export default function Home({ navigation }) {
   const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = useState(false);
   const [modalSignInVisible, setModalSignInVisible] = useState(false);
-  const [firstname, setFirstname] = useState('');
-  const [lastname, setLastname] = useState('');
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [usernameSignIn, setUsernameSignIn] = useState('');
-  const [passwordSignIn, setPasswordSignIn] = useState('');
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [usernameSignIn, setUsernameSignIn] = useState("");
+  const [passwordSignIn, setPasswordSignIn] = useState("");
   const [error, setError] = useState(false);
 
   const inputsObj = {
@@ -37,9 +37,9 @@ export default function Home({ navigation }) {
   };
 
   const handleRegister = () => {
-    fetch('http://172.17.188.33:3000/users/signup', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    fetch("http://172.17.188.19:3000/users/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         firstname: firstname,
         lastname: lastname,
@@ -50,7 +50,6 @@ export default function Home({ navigation }) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         if (data.result) {
           dispatch(
             login({
@@ -69,7 +68,7 @@ export default function Home({ navigation }) {
           setLastname("");
           setModalSignInVisible(!modalSignInVisible);
           setModalVisible(!modalVisible);
-          navigation.navigate('Questions');
+          navigation.navigate("Questions");
         } else {
           alert("username already existing !");
         }
@@ -89,9 +88,9 @@ export default function Home({ navigation }) {
     setModalSignInVisible(!modalSignInVisible);
   };
   const submitSignIn = () => {
-    fetch('http://172.17.188.33:3000/users/signin', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    fetch("http://172.17.188.19:3000/users/signin", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         username: usernameSignIn,
         password: passwordSignIn,
@@ -99,12 +98,12 @@ export default function Home({ navigation }) {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.result) {
+          dispatch(login(data.user));
           setModalSignInVisible(!modalSignInVisible),
-          navigation.navigate('TabNavigator');
+            navigation.navigate("TabNavigator");
         } else {
-          setModalSignInVisible(true)
+          setModalSignInVisible(true);
           setError(!error);
         }
       });
@@ -114,6 +113,7 @@ export default function Home({ navigation }) {
     <ImageBackground
       source={require("../assets/illu_02.jpg")}
       style={styles.background}
+      
     >
       <View style={styles.header}>
         <Text style={styles.title}>WannaPlay?</Text>
@@ -181,7 +181,7 @@ export default function Home({ navigation }) {
           <Modal visible={modalSignInVisible} animationType="slide" transparent>
             <View style={{ backgroundColor: "#000000aa", flex: 1 }}>
               <View style={styles.modalContent}>
-              {error && <Text>Veuillez remplir tous les champs</Text>}
+                {error && <Text>Veuillez remplir tous les champs</Text>}
                 <TextInput
                   placeholder="Username"
                   value={usernameSignIn}
@@ -204,7 +204,7 @@ export default function Home({ navigation }) {
                   <TouchableOpacity
                     onPress={() => {
                       submitSignIn();
-                        dispatch(login(inputsObj));
+                      dispatch(login(inputsObj));
                     }}
                     style={styles.buttonsSub}
                   >
