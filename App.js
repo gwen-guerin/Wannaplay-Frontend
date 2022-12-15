@@ -14,7 +14,7 @@ import Questions2 from "./screens/Questions2";
 import { NativeBaseProvider } from "native-base";
 import ChatsList from "./screens/ChatsList";
 import ChatScreen from "./screens/ChatScreen";
-
+import SearchPage from "./screens/SearchPage";
 const store = configureStore({
   reducer: { user },
 });
@@ -35,6 +35,8 @@ const TabNavigator = () => {
             iconName = "home";
           } else if (route.name === "Chats") {
             iconName = "wechat";
+          } else if (route.name === "Search") {
+            iconName = "compass";
           }
 
           return <FontAwesome name={iconName} size={size} color={color} />;
@@ -48,6 +50,7 @@ const TabNavigator = () => {
       <Tab.Screen name="Univers" component={UniversPage} />
       <Tab.Screen name="Profil" component={ProfileScreen} />
       <Tab.Screen name="Chats" component={ChatsList} />
+      <Tab.Screen name="Search" component={SearchPage} />
     </Tab.Navigator>
   );
 };
