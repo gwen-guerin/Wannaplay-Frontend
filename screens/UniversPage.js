@@ -8,12 +8,61 @@ import {
   View,
   Image,
 } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { LinearGradient } from "expo-linear-gradient";
-import { BlurView } from "expo-blur";
 import { ImageBackground } from "react-native";
+import { BlurView } from "expo-blur";
+import * as Location from "expo-location";
+import { useState, useEffect } from "react";
+
+const API_KEY = "AIzaSyANG7Yh1Az3Q0okg4x2yfgmVupwYQkRdDo";
 
 export default function UniversPage() {
+  const [currentPosition, setCurrentPosition] = useState([]);
+  const dispatch = useDispatch();
+
+  const user = useSelector((state) => state.user.value);
+  // console.log(user);
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      let latitude = 0;
+      let longitude = 0;
+      let url = "";
+
+      if (status === "granted") {
+        console.log(status);
+        Location.watchPositionAsync({ distanceInterval: 10 }, (location) => {
+          latitude = location.coords.latitude;
+          longitude = location.coords.longitude;
+          fetch(
+            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+          )
+            .then((response) => response.json())
+            .then((data) => {
+              console.log(data.address.city);
+              fetch("http://192.168.1.118:3000/users/geoloc", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  username: user.username,
+                  location: {
+                    city: data.address.city,
+                    latitude: latitude,
+                    longitude: longitude,
+                  },
+                }),
+              })
+                .then((response) => response.json())
+                .then((user) => console.log(user));
+            });
+        });
+      }
+    })();
+  }, []);
+
   return (
     <ImageBackground
       source={require("../assets/background.jpg")}
@@ -23,26 +72,36 @@ export default function UniversPage() {
         <Text style={styles.Title}>Wanna Play?</Text>
       </View>
       <View style={styles.content}>
-        <TouchableOpacity style={styles.button1}>
-          <Text style={styles.text}>Wanna Learn?</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.button2}>
-          <Text style={styles.text}>Wanna Play with a buddy?</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.button3}>
-          <Text style={styles.text}>Wanna see what's around?</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button4}>
-          <Text style={styles.text}>Wanna play in a band?</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button5}>
-          <Text style={styles.text}>Wanna buy something?</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button6}>
-          <Text style={styles.text}>Wanna singer?</Text>
-        </TouchableOpacity>
+        <BlurView intensity={100} tint="dark" style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.text}>Wanna Learn?</Text>
+          </TouchableOpacity>
+        </BlurView>
+        <BlurView intensity={100} tint="dark" style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.text}>Wanna Learn?</Text>
+          </TouchableOpacity>
+        </BlurView>
+        <BlurView intensity={100} tint="dark" style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.text}>Wanna Learn?</Text>
+          </TouchableOpacity>
+        </BlurView>
+        <BlurView intensity={100} tint="dark" style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.text}>Wanna Learn?</Text>
+          </TouchableOpacity>
+        </BlurView>
+        <BlurView intensity={100} tint="dark" style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.text}>Wanna Learn?</Text>
+          </TouchableOpacity>
+        </BlurView>
+        <BlurView intensity={100} tint="dark" style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.text}>Wanna Learn?</Text>
+          </TouchableOpacity>
+        </BlurView>
       </View>
     </ImageBackground>
   );
@@ -52,8 +111,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "black",
-    borderBottomRightRadius: "25%",
-    borderBottomLeftRadius: "25%",
+    borderBottomRightRadius: 25,
+    borderBottomLeftRadius: 25,
   },
   header: {
     flex: 1,
@@ -75,79 +134,26 @@ const styles = StyleSheet.create({
     alignItems: "center",
     color: "white",
     flexWrap: "wrap",
-    paddingTop: 20,
-
-    paddingRight: 20,
+    paddingTop: 80,
+    padding: 20,
     borderBottomLeftRadius: 25,
     borderBottomRightRadius: 25,
   },
-  button1: {
-    backgroundColor: "#404ECD",
+  buttonContainer: {
     width: "40%",
     height: "20%",
-    marginLeft: 20,
+    margin: 10,
+    borderRadius: 25,
+  },
+  button: {
+    flex: 1,
     borderRadius: 25,
     justifyContent: "center",
-    marginTop: 70,
-    opacity: 0.9,
+    alignItems: "center",
   },
   text: {
     color: "white",
     textAlign: "center",
-  },
-  button2: {
-    backgroundColor: "#CD4040",
-    width: "40%",
-    height: "20%",
-    marginLeft: 20,
-    borderRadius: 25,
-    justifyContent: "center",
-    marginTop: 70,
-    paddingLeft: 10,
-    paddingRight: 10,
-    opacity: 0.9,
-  },
-  button3: {
-    backgroundColor: "#CD40AE",
-    width: "40%",
-    height: "20%",
-    marginLeft: 20,
-    borderRadius: 25,
-    justifyContent: "center",
-    marginTop: 70,
-    opacity: 0.9,
-  },
-  button4: {
-    backgroundColor: "#76CD40",
-    width: "40%",
-    height: "20%",
-    marginLeft: 20,
-    borderRadius: 25,
-    justifyContent: "center",
-    marginTop: 70,
-    paddingLeft: 10,
-    paddingRight: 10,
-    opacity: 0.9,
-  },
-  button5: {
-    backgroundColor: "#CACD40",
-    width: "40%",
-    height: "20%",
-    marginLeft: 20,
-    borderRadius: 25,
-    justifyContent: "center",
-    marginTop: 70,
-    opacity: 0.9,
-  },
-  button6: {
-    backgroundColor: "#40CDC5",
-    width: "40%",
-    height: "20%",
-    marginLeft: 20,
-    borderRadius: 25,
-    justifyContent: "center",
-    marginTop: 70,
-    opacity: 0.9,
   },
   text: {
     color: "white",
@@ -159,6 +165,5 @@ const styles = StyleSheet.create({
   image: {
     height: "100%",
     width: "100%",
-    marginBottom: 2,
   },
 });

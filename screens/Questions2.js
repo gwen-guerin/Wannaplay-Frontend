@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import Slider from "@react-native-community/slider";
-import { BTMultiSelect } from "@blump-tech/native-base-select";
+// import { BTMultiSelect } from "@blump-tech/native-base-select"; 
 
 const Questions2 = () => {
 

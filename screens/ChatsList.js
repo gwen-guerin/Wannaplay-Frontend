@@ -7,11 +7,12 @@ import {
   TouchableOpacity,
   Image,
   useWindowDimensions,
-  TextInput,
+  // TextInput,
   Dimensions,
 } from "react-native";
-
+import { BlurView } from "expo-blur";
 import { useEffect, useState } from "react";
+import { TextInput } from "react-native-paper";
 
 export default function ChatsList({ navigation }) {
   const [allUsers, setAllUsers] = useState([]);
@@ -27,14 +28,23 @@ export default function ChatsList({ navigation }) {
 
   const chatBoxes = allUsers.map((data, i) => {
     return (
-      <TouchableOpacity
+      <BlurView
         key={i}
-        onPress={() => handleNavigation(data)}
-        style={styles.chatlink}
+        intensity={100}
+        tint="dark"
+        style={styles.chatlinkContainer}
       >
-        <Image source={require("../assets/mia-khalifa.jpg")} style={styles.avatar} />
-        <Text> {data} </Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => handleNavigation(data)}
+          style={styles.chatlink}
+        >
+          <Image
+            source={require("../assets/mia-khalifa.jpg")}
+            style={styles.avatar}
+          />
+          <Text style={{ color: "white" }}> {data} </Text>
+        </TouchableOpacity>
+      </BlurView>
     );
   });
 
@@ -44,10 +54,15 @@ export default function ChatsList({ navigation }) {
       <ImageBackground
         source={require("../assets/esquise02.jpg")}
         style={styles.inset}
-        imageStyle={{borderTopLeftRadius: 30, borderTopRightRadius: 30}}
+        imageStyle={{ borderTopLeftRadius: 30, borderTopRightRadius: 30 }}
         blurRadius={0.3}
       >
-        <TextInput style={styles.input} placeholder='Search a friend...'/>
+        <TextInput
+          style={styles.input}
+          placeholder="Search a friend..."
+          placeholderTextColor={"white"}
+          // mode='outlined'
+        />
         <ScrollView contentContainerStyle={styles.scrollList}>
           {chatBoxes}
         </ScrollView>
@@ -65,8 +80,8 @@ const styles = StyleSheet.create({
   },
   inset: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    alignItems: "center",
+    justifyContent: "space-between",
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     backgroundColor: "#ffffff",
@@ -81,12 +96,12 @@ const styles = StyleSheet.create({
     borderLeftWidth: 0.1,
   },
   input: {
-    height: '7%',
-    width: '90%',
-    backgroundColor: 'white',
+    height: "7%",
+    width: "90%",
+    backgroundColor: "black",
     borderRadius: 10,
-    paddingLeft: '2%',
-    marginBottom: '3%'
+    paddingLeft: "2%",
+    marginBottom: "3%",
   },
   header: {
     height: "10%",
@@ -98,16 +113,19 @@ const styles = StyleSheet.create({
     // backgroundColor: 'green',
     alignItems: "center",
   },
-  chatlink: {
+  chatlinkContainer: {
+    backgroundColor: "white",
     padding: Dimensions.get("screen").height * 0.01,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
     height: Dimensions.get("screen").height * 0.095,
     width: Dimensions.get("screen").width * 0.95,
     margin: Dimensions.get("screen").width * 0.01,
-    backgroundColor: "white",
-    opacity: 0.95,
+    borderRadius: 5,
+  },
+  chatlink: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    flex: 1,
     borderRadius: 5,
   },
   avatar: {

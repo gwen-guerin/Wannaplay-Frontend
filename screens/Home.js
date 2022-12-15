@@ -5,11 +5,11 @@ import {
   StyleSheet,
   TouchableOpacity,
   Modal,
-  Dimensions,
   TextInput,
+  Dimensions,
 } from "react-native";
 import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { login } from "../reducers/user";
 
 const EMAIL_REGEX =
@@ -27,6 +27,7 @@ export default function Home({ navigation }) {
   const [usernameSignIn, setUsernameSignIn] = useState("");
   const [passwordSignIn, setPasswordSignIn] = useState("");
   const [error, setError] = useState(false);
+  const [currentPosition, setCurrentPosition] = useState()
 
   const inputsObj = {
     firstname,
@@ -46,6 +47,7 @@ export default function Home({ navigation }) {
         username: username,
         password: password,
         email: email,
+        location: {},
       }),
     })
       .then((response) => response.json())
@@ -54,11 +56,11 @@ export default function Home({ navigation }) {
           dispatch(
             login({
               username: data.user.username,
-              token: data.user.token,
-              firstname: data.user.firstname,
-              lastname: data.user.lastname,
-              email: data.user.email,
-              password: data.user.password,
+              // token: data.user.token,
+              // firstname: data.user.firstname,
+              // lastname: data.user.lastname,
+              // email: data.user.email,
+              // password: data.user.password,
             })
           );
           setFirstname("");
@@ -153,6 +155,7 @@ export default function Home({ navigation }) {
                   value={password}
                   onChangeText={(value) => setPassword(value)}
                   style={styles.inputs}
+                  secureTextEntry={true}
                 ></TextInput>
                 <View style={styles.submitContainer}>
                   <TouchableOpacity
@@ -189,10 +192,11 @@ export default function Home({ navigation }) {
                   style={styles.inputs}
                 ></TextInput>
                 <TextInput
-                  placeholder="Password"
+                  label="Password"
                   value={passwordSignIn}
                   onChangeText={(value) => setPasswordSignIn(value)}
                   style={styles.inputs}
+                  secureTextEntry={true}
                 ></TextInput>
                 <View style={styles.submitContainer}>
                   <TouchableOpacity
@@ -268,7 +272,7 @@ const styles = StyleSheet.create({
   },
   inputs: {
     backgroundColor: "#D9D9D9",
-    borderRadius: 15,
+    borderRadius: 20,
     paddingLeft: 10,
     width: "100%",
     fontSize: 16,
