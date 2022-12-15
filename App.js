@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Home from './screens/Home';
 import ProfileScreen from './screens/ProfileScreen';
+import UniversPage from './screens/UniversPage'
 import user from './reducers/user';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
@@ -42,8 +43,9 @@ const TabNavigator = () => {
         headerShown: false,
       })}
     >
+      <Tab.Screen name="Univers" component={UniversPage} />
       <Tab.Screen name="Profil" component={ProfileScreen} />
-      <Stack.Screen name='Chats' component={ChatsList} />
+      <Tab.Screen name='Chats' component={ChatsList} />
     </Tab.Navigator>
   );
 };

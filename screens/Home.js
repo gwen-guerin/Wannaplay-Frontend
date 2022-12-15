@@ -5,7 +5,6 @@ import {
   StyleSheet,
   TouchableOpacity,
   Modal,
-  Dimensions,
   TextInput,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
@@ -19,14 +18,15 @@ export default function Home({ navigation }) {
   const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = useState(false);
   const [modalSignInVisible, setModalSignInVisible] = useState(false);
-  const [firstname, setFirstname] = useState('');
-  const [lastname, setLastname] = useState('');
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [usernameSignIn, setUsernameSignIn] = useState('');
-  const [passwordSignIn, setPasswordSignIn] = useState('');
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [usernameSignIn, setUsernameSignIn] = useState("");
+  const [passwordSignIn, setPasswordSignIn] = useState("");
   const [error, setError] = useState(false);
+  const [currentPosition, setCurrentPosition] = useState()
 
   const inputsObj = {
     firstname,
@@ -46,22 +46,33 @@ export default function Home({ navigation }) {
         username: username,
         password: password,
         email: email,
+        location: {},
       }),
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("hello fucker", data);
-          // setFirstname('');
-          // setUsername('');
-          // setPassword('');
-          // setEmail('');
-          // setLastname('');
-          // setModalSignInVisible(!modalSignInVisible);
-          navigation.navigate('Questions');
+        if (data.result) {
+          dispatch(
+            login({
+              username: data.user.username,
+              // token: data.user.token,
+              // firstname: data.user.firstname,
+              // lastname: data.user.lastname,
+              // email: data.user.email,
+              // password: data.user.password,
+            })
+          );
+          setFirstname("");
+          setUsername("");
+          setPassword("");
+          setEmail("");
+          setLastname("");
+          setModalSignInVisible(!modalSignInVisible);
           setModalVisible(!modalVisible);
-          // setError(!error);
-          // alert('username already existing !');
-        
+          navigation.navigate("Questions");
+        } else {
+          alert("username already existing !");
+        }
       });
   };
   const handleSignUp = () => {
@@ -83,8 +94,8 @@ export default function Home({ navigation }) {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.result) {
+          dispatch(login(data.user));
           setModalSignInVisible(!modalSignInVisible),
             navigation.navigate('TabNavigator');
         } else {
@@ -98,6 +109,7 @@ export default function Home({ navigation }) {
     <ImageBackground
       source={require('../assets/illu_02.jpg')}
       style={styles.background}
+      
     >
       <View style={styles.header}>
         <Text style={styles.title}>WannaPlay?</Text>
@@ -138,6 +150,7 @@ export default function Home({ navigation }) {
                   value={password}
                   onChangeText={(value) => setPassword(value)}
                   style={styles.inputs}
+                  secureTextEntry={true}
                 ></TextInput>
                 <View style={styles.submitContainer}>
                   <TouchableOpacity
@@ -174,10 +187,11 @@ export default function Home({ navigation }) {
                   style={styles.inputs}
                 ></TextInput>
                 <TextInput
-                  placeholder="Password"
+                  label="Password"
                   value={passwordSignIn}
                   onChangeText={(value) => setPasswordSignIn(value)}
                   style={styles.inputs}
+                  secureTextEntry={true}
                 ></TextInput>
                 <View style={styles.submitContainer}>
                   <TouchableOpacity
@@ -252,8 +266,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   inputs: {
-    backgroundColor: '#D9D9D9',
-    borderRadius: 15,
+    backgroundColor: "#D9D9D9",
+    borderRadius: 20,
     paddingLeft: 10,
     width: '100%',
     fontSize: 16,
