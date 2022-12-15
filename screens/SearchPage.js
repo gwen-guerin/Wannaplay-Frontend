@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import { Searchbar, ThemeProvider } from "react-native-paper";
 // import all the components we are going to use
 import {
   SafeAreaView,
@@ -11,110 +11,62 @@ import {
 } from "react-native";
 
 const App = () => {
-  const [search, setSearch] = useState("");
-  const [filteredDataSource, setFilteredDataSource] = useState([]);
-  const [masterDataSource, setMasterDataSource] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [results, setResults] = useState([]);
 
-  useEffect(() => {
-    fetch("")
-      .then((response) => response.json())
-      .then((responseJson) => {
-        setFilteredDataSource(responseJson);
-        setMasterDataSource(responseJson);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
-
-  const searchFilterFunction = (text) => {
-    // Check if searched text is not blank
-    if (text) {
-      // Inserted text is not blank
-      // Filter the masterDataSource and update FilteredDataSource
-      const newData = masterDataSource.filter(function (item) {
-        // Applying filter for the inserted text in search bar
-        const itemData = item.title
-          ? item.title.toUpperCase()
-          : "".toUpperCase();
-        const textData = text.toUpperCase();
-        return itemData.indexOf(textData) > -1;
-      });
-      setFilteredDataSource(newData);
-      setSearch(text);
-    } else {
-      // Inserted text is blank
-      // Update FilteredDataSource with masterDataSource
-      setFilteredDataSource(masterDataSource);
-      setSearch(text);
-    }
-  };
-
-  const ItemView = ({ item }) => {
-    return (
-      // Flat List Item
-      <Text style={styles.itemStyle} onPress={() => getItem(item)}>
-        {item.id}
-        {"."}
-        {item.title.toUpperCase()}
-      </Text>
-    );
-  };
-
-  const ItemSeparatorView = () => {
-    return (
-      // Flat List Item Separator
-      <View
-        style={{
-          height: 0.5,
-          width: "100%",
-          backgroundColor: "#C8C8C8",
-        }}
-      />
-    );
-  };
-
-  const getItem = (item) => {
-    // Function for click on an item
-    alert("Id : " + item.id + " Title : " + item.title);
+  const handleSearch = async (query) => {
+    const results = await fetch(`http://172.20.10.3:3000/search/${query}`);
+    setResults(results);
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={styles.container}>
-        <TextInput
-          style={styles.textInputStyle}
-          onChangeText={(text) => searchFilterFunction(text)}
-          value={search}
-          underlineColorAndroid="transparent"
-          placeholder="Search Here"
-        />
-        <FlatList
-          data={filteredDataSource}
-          keyExtractor={(item, index) => index.toString()}
-          ItemSeparatorComponent={ItemSeparatorView}
-          renderItem={ItemView}
+    <ThemeProvider styles={styles.container}>
+      <View style={styles.searchContainer}>
+        <Searchbar
+          styles={styles.searchBar}
+          placeholder="Rechercher"
+          onChange={(query) => setSearchQuery(query)}
+          onSearch={() => handleSearch(searchQuery)}
+          data={results}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              styles={styles.opac}
+              onPress={() => setSearchQuery(item.username)}
+            >
+              <Text styles={styles.text}>{item.username}</Text>
+            </TouchableOpacity>
+          )}
         />
       </View>
-    </SafeAreaView>
+    </ThemeProvider>
   );
 };
 
-const styles = StyleSheet.create({
+const styles = {
   container: {
-    backgroundColor: "white",
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
   },
-  itemStyle: {
-    padding: 10,
-  },
-  textInputStyle: {
-    height: 40,
-    borderWidth: 1,
+  searchContainer: {
+    width: "90%",
+    paddingTop: 40,
     paddingLeft: 20,
-    margin: 5,
-    borderColor: "#009688",
-    backgroundColor: "#FFFFFF",
   },
-});
+  searchBar: {
+    backgroundColor: "white",
+    borderWidth: 1,
+    borderColor: "gray",
+    borderRadius: 5,
+    padding: 5,
+  },
+  opac: {
+    opacity: 0.5,
+  },
+  text: {
+    fontSize: 16,
+    padding: 5,
+  },
+};
 
 export default App;
