@@ -14,14 +14,11 @@ import Slider from "@react-native-community/slider";
 //import { BTMultiSelect } from "@blump-tech/native-base-select";
 
 const Questions2 = () => {
-  const [currency, setCurrency] = useState("US Dollar");
   const [age, setAge] = useState(0);
   const [city, setCity] = useState("");
   const [department, setDepartment] = useState("");
   const [teacher, setTeacher] = useState(false);
-  const [tags, setTags] = useState([]);
   const [singer, setSinger] = useState(false);
-
   const [instruments, setInstruments] = useState({
     value: "",
     list: [
@@ -49,75 +46,72 @@ const Questions2 = () => {
   return (
     <View>
       <ScrollView>
-        <BackgroundImage source={require("../assets/illu_02.jpg")}>
-          <View style={styles.container}>
-            <View style={styles.questionblock}>
-              <Text>How old are you ?</Text>
-              <Slider
-                step={1}
-                minimumValue={7}
-                maximumValue={100}
-                value={age}
-                onValueChange={(slideValue) => setAge(slideValue)}
-                minimumTrackTintColor="#1fb28a"
-                maximumTrackTintColor="#d3d3d3"
-                thumbTintColor="#b9e4c9"
-              />
-              <Text>I am {age} years old</Text>
-            </View>
-            <TextInput
-              placeholder="Where do you live ?"
-              onChangeText={(city) => setCity(city)}
+        <View style={styles.container}>
+          <View style={styles.questionblock}>
+            <Text>How old are you ?</Text>
+            <Slider
+              step={1}
+              minimumValue={7}
+              maximumValue={100}
+              value={age}
+              onValueChange={(slideValue) => setAge(slideValue)}
+              minimumTrackTintColor="#1fb28a"
+              maximumTrackTintColor="#d3d3d3"
+              thumbTintColor="#b9e4c9"
             />
-            <TextInput
-              placeholder="Which department ?"
-              onChangeText={(department) => setCity(department)}
-            />
-            <View>
-              <Text>Do you wanna teach something ?</Text>
-              <Picker
-                selectedValue={teacher}
-                onValueChange={(teacher) => setTeacher(teacher)}
-              >
-                <Picker.Item label="No" value="I don't wanna teach :'(" />
-                <Picker.Item label="Yes" value="I wanna teach :)" />
-              </Picker>
-              <Text>{teacher}</Text>
-            </View>
-            <View>
-              <Text>Are you a singer ?</Text>
-              <Picker
-                selectedValue={singer}
-                onValueChange={(singer) => setSinger(singer)}
-              >
-                <Picker.Item
-                  label="No"
-                  value="Like a casserolle under shower"
-                />
-                <Picker.Item label="Yes" value="Better than Elvis !" />
-              </Picker>
-              <Text>{singer}</Text>
-            </View>
-            <BTMultiSelect
-              label="instruments"
-              placeholder="Select your instruments"
-              value={instruments.value}
-              list={instruments.list}
-              selectedList={instruments.selectedList}
-              onSelection={(value) => {
-                setInstruments({
-                  ...instruments,
-                  value: value.text,
-                  selectedList: value.selectedList,
-                  error: "",
-                });
-              }}
-              errorText={instruments.error}
-              pillStyle={{ backgroundColor: "yellow" }}
-              errorStyle={{ textColor: "red" }}
-            />
+            <Text>I am {age} years old</Text>
           </View>
-        </BackgroundImage>
+          <TextInput
+            value={city}
+            placeholder="Where do you live ?"
+            onChangeText={(city) => setCity(city)}
+          />
+          <TextInput
+            value={department}
+            placeholder="Which department ?"
+            onChangeText={(department) => setDepartment(department)}
+          />
+          <View>
+            <Text>Do you wanna teach something ?</Text>
+            <Picker
+              selectedValue={teacher}
+              onValueChange={(teacher) => setTeacher(teacher)}
+            >
+              <Picker.Item label="No" value="I don't wanna teach :'(" />
+              <Picker.Item label="Yes" value="I wanna teach :)" />
+            </Picker>
+            <Text>{teacher}</Text>
+          </View>
+          <View>
+            <Text>Are you a singer ?</Text>
+            <Picker
+              selectedValue={singer}
+              onValueChange={(singer) => setSinger(singer)}
+            >
+              <Picker.Item label="No" value="Like a casserolle under shower" />
+              <Picker.Item label="Yes" value="Better than Elvis !" />
+            </Picker>
+            <Text>{singer}</Text>
+          </View>
+          <BTMultiSelect
+            label="instruments"
+            placeholder="Select your instruments"
+            value={instruments.value}
+            list={instruments.list}
+            selectedList={instruments.selectedList}
+            onSelection={(value) => {
+              setInstruments({
+                ...instruments,
+                value: value.text,
+                selectedList: value.selectedList,
+                error: "",
+              });
+            }}
+            errorText={instruments.error}
+            pillStyle={{ backgroundColor: "yellow" }}
+            errorStyle={{ textColor: "red" }}
+          />
+        </View>
       </ScrollView>
     </View>
   );

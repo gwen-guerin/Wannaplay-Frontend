@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -15,6 +16,23 @@ import { NativeBaseProvider } from "native-base";
 import ChatsList from "./screens/ChatsList";
 import ChatScreen from "./screens/ChatScreen";
 import SearchPage from "./screens/SearchPage";
+=======
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Home from './screens/Home';
+import ProfileScreen from './screens/ProfileScreen';
+import UniversPage from './screens/UniversPage'
+import user from './reducers/user';
+import { configureStore } from '@reduxjs/toolkit';
+import { Provider } from 'react-redux';
+import Questions from './screens/Questions';
+import { NativeBaseProvider } from 'native-base';
+import ChatsList from './screens/ChatsList';
+import ChatScreen from './screens/ChatScreen';
+
+>>>>>>> 1b507ab12810d1043b46732c61df78257894b740
 const store = configureStore({
   reducer: { user },
 });
@@ -64,6 +82,7 @@ export default function App() {
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="TabNavigator" component={TabNavigator} />
             <Stack.Screen name="Chat" component={ChatScreen} />
+            <Stack.Screen name="Questions" component={Questions} />
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>

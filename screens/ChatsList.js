@@ -61,7 +61,7 @@ export default function ChatsList({ navigation }) {
           style={styles.input}
           placeholder="Search a friend..."
           placeholderTextColor={"white"}
-          mode="outlined"
+          // mode='outlined'
         />
         <ScrollView contentContainerStyle={styles.scrollList}>
           {chatBoxes}
