@@ -16,6 +16,7 @@ const initialState = {
     teacher: null,
     singer: null,
     status: null,
+    photos: [],
   },
 };
 
@@ -24,13 +25,7 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     login: (state, action) => {
-      // const { firstname, lastname, username, email, password, token } = action.payload;
-      // state.value.firstname = action.payload.firstname;
-      // state.value.lastname = action.payload.lasname;
       state.value.username = action.payload.username;
-      // state.value.email = action.payload.email;
-      // state.value.password = action.payload.password;
-      // state.value.token = action.payload.token; 
       state.value.age = action.payload.age;
       state.value.tags.push(action.payload.tags);
       state.value.city = action.payload.city;
@@ -38,6 +33,8 @@ export const userSlice = createSlice({
       state.value.status = action.payload.status;
       state.value.teacher = action.payload.teacher;
       state.value.singer = action.payload.singer;
+      state.value.photos.push(action.payload.photos);
+
 
     },
     logout: (state) => {
@@ -46,8 +43,6 @@ export const userSlice = createSlice({
       state.value.username = null;
       state.value.email = null;
       state.value.tags = [];
-      // state.value.password = null;
-      // state.value.token = null;
     },
   
     addFriend: (state, action) => {
@@ -56,8 +51,14 @@ export const userSlice = createSlice({
     removeFriend: (state, action) => {
       state.value = state.value.filter((e) => e.username !== action.payload);
     },
+    addPhoto: (state, action) => {
+      state.value.photos.push(action.payload);
+    },
+    removePhoto: (state, action) => {
+      state.value.photos = state.value.photos.filter((data) => data !== action.payload);
+    },
   }
 });
 
-export const { login, logout, question, addFriend, removeFriend } = userSlice.actions;
+export const { login, logout, question, addFriend, removeFriend, addPhoto, removePhoto } = userSlice.actions;
 export default userSlice.reducer;

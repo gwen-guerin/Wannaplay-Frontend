@@ -18,7 +18,7 @@ export default function ChatsList({ navigation }) {
   const [allUsers, setAllUsers] = useState([]);
 
   useEffect(() => {
-    fetch("http://172.20.10.3:3000/users/allUsers")
+    fetch("http://172.17.188.9:3000/users/allUsers")
       .then((response) => response.json())
       .then((data) => setAllUsers(data.usernames));
   }, []);

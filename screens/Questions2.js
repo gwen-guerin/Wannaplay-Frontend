@@ -20,6 +20,7 @@ const Questions2 = () => {
   const [teacher, setTeacher] = useState(false);
   const [singer, setSinger] = useState(false);
   const [instruments, setInstruments] = useState({
+   
     value: "",
     list: [
       { _id: 1, name: "Guitar" },
@@ -42,6 +43,7 @@ const Questions2 = () => {
     selectedList: [],
     error: "",
   });
+
 
   return (
     <View>
