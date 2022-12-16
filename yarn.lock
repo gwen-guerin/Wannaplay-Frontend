@@ -4192,6 +4192,11 @@ expo-linear-gradient@~12.0.1:
   resolved "https://registry.yarnpkg.com/expo-linear-gradient/-/expo-linear-gradient-12.0.1.tgz#452f793b0463ddf313aad431552f23acc85f5d64"
   integrity sha512-TMl/wBTVQOliL4S3DS5Aa3UFfVySr0mdJEHLG6kfBdMCLkr+tfLI2rGyJ+scS7xgMsvhTIaurhf1+Z0sL3aLCg==
 
+expo-location@^15.0.1:
+  version "15.0.1"
+  resolved "https://registry.yarnpkg.com/expo-location/-/expo-location-15.0.1.tgz#b132b8b50ce4d2dd9257b7b66cec44beeba253a4"
+  integrity sha512-GOAP24m8fMahFcBT75H07f2+IQAOCOdNTzb8Ci/19NZ+Y/CY2lIvb55V8zu7Gn0+76FKPb7XC3ebQaq4ctn1QA==
+
 expo-modules-autolinking@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/expo-modules-autolinking/-/expo-modules-autolinking-1.0.0.tgz#2daac20035e1ecf8e66d74dca9bd1b0d6c09166c"
@@ -4547,6 +4552,11 @@ gensync@^1.0.0-beta.2:
   version "1.0.0-beta.2"
   resolved "https://registry.yarnpkg.com/gensync/-/gensync-1.0.0-beta.2.tgz#32a6ee76c3d7f52d46b2b1ae5d93fea8580a25e0"
   integrity sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==
+
+geolib@^3.3.3:
+  version "3.3.3"
+  resolved "https://registry.yarnpkg.com/geolib/-/geolib-3.3.3.tgz#17f5a0dcdc0b051bd631b66f7131d2c14c54a15b"
+  integrity sha512-YO704pzdB/8QQekQuDmFD5uv5RAwAf4rOUPdcMhdEOz+HoPWD0sC7Qqdwb+LAvwIjXVRawx0QgZlocKYh8PFOQ==
 
 get-caller-file@^2.0.1:
   version "2.0.5"

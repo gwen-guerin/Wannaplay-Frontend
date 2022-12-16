@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Text,
   StyleSheet,
@@ -7,76 +7,76 @@ import {
   ScrollView,
   ImageBackground,
   TouchableOpacity,
-} from 'react-native';
-import { Picker } from '@react-native-picker/picker';
-import Slider from '@react-native-community/slider';
-import { BTMultiSelect } from '@blump-tech/native-base-select';
-import { useSelector } from 'react-redux';
+} from "react-native";
+import { Picker } from "@react-native-picker/picker";
+import Slider from "@react-native-community/slider";
+//import { BTMultiSelect } from '@blump-tech/native-base-select';
+import { useSelector } from "react-redux";
 
-export default function Questions({navigation}) {
+export default function Questions({ navigation }) {
   const user = useSelector((state) => state.user.value);
   // console.log('USER', user);
   const [age, setAge] = useState(0);
-  const [city, setCity] = useState('');
-  const [department, setDepartment] = useState('');
+  const [city, setCity] = useState("");
+  const [department, setDepartment] = useState("");
   const [teacher, setTeacher] = useState(false);
   const [instruTaught, setInstruTaught] = useState([]);
   const [tags, setTags] = useState([]);
   const [singer, setSinger] = useState(false);
 
   const [instruments, setInstruments] = useState({
-    value: '',
+    value: "",
     list: [
-      { _id: 1, name: 'Guitar' },
-      { _id: 2, name: 'Drums' },
-      { _id: 3, name: 'Piano' },
-      { _id: 4, name: 'Trumpet' },
-      { _id: 5, name: 'Violin' },
-      { _id: 6, name: 'Saxophone' },
-      { _id: 7, name: 'Flute' },
-      { _id: 8, name: 'Bass' },
-      { _id: 9, name: 'Harmonica' },
-      { _id: 10, name: 'BeatMaker' },
-      { _id: 11, name: 'BeatBox' },
-      { _id: 12, name: 'Banjo' },
-      { _id: 13, name: 'Harp' },
-      { _id: 14, name: 'Clarinet' },
-      { _id: 15, name: 'Oboe' },
-      { _id: 16, name: 'Synthesizer' },
+      { _id: 1, name: "Guitar" },
+      { _id: 2, name: "Drums" },
+      { _id: 3, name: "Piano" },
+      { _id: 4, name: "Trumpet" },
+      { _id: 5, name: "Violin" },
+      { _id: 6, name: "Saxophone" },
+      { _id: 7, name: "Flute" },
+      { _id: 8, name: "Bass" },
+      { _id: 9, name: "Harmonica" },
+      { _id: 10, name: "BeatMaker" },
+      { _id: 11, name: "BeatBox" },
+      { _id: 12, name: "Banjo" },
+      { _id: 13, name: "Harp" },
+      { _id: 14, name: "Clarinet" },
+      { _id: 15, name: "Oboe" },
+      { _id: 16, name: "Synthesizer" },
     ],
     selectedList: [],
-    error: '',
+    error: "",
   });
   const [teach, setTeach] = useState({
-    value: '',
+    value: "",
     list: [
-      { _id: 1, name: 'Voice' },
-      { _id: 2, name: 'Guitar' },
-      { _id: 3, name: 'Drums' },
-      { _id: 4, name: 'Piano' },
-      { _id: 5, name: 'Trumpet' },
-      { _id: 6, name: 'Violin' },
-      { _id: 7, name: 'Saxophone' },
-      { _id: 8, name: 'Flute' },
-      { _id: 9, name: 'Bass' },
-      { _id: 10, name: 'Harmonica' },
-      { _id: 11, name: 'BeatMaker' },
-      { _id: 12, name: 'BeatBox' },
-      { _id: 13, name: 'Banjo' },
-      { _id: 14, name: 'Harp' },
-      { _id: 15, name: 'Clarinet' },
-      { _id: 16, name: 'Oboe' },
-      { _id: 17, name: 'Synthesizer' },
+      { _id: 1, name: "Voice" },
+      { _id: 2, name: "Guitar" },
+      { _id: 3, name: "Drums" },
+      { _id: 4, name: "Piano" },
+      { _id: 5, name: "Trumpet" },
+      { _id: 6, name: "Violin" },
+      { _id: 7, name: "Saxophone" },
+      { _id: 8, name: "Flute" },
+      { _id: 9, name: "Bass" },
+      { _id: 10, name: "Harmonica" },
+      { _id: 11, name: "BeatMaker" },
+      { _id: 12, name: "BeatBox" },
+      { _id: 13, name: "Banjo" },
+      { _id: 14, name: "Harp" },
+      { _id: 15, name: "Clarinet" },
+      { _id: 16, name: "Oboe" },
+      { _id: 17, name: "Synthesizer" },
     ],
     selectedList: [],
-    error: '',
+    error: "",
   });
   // console.log(tags);
   const handleFormSubmit = () => {
     // console.log(user.firstname);
-    fetch('http://172.16.190.11:3000/users/signupForm', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    fetch("http://172.16.190.11:3000/users/signupForm", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         firstname: user.firstname,
         lastname: user.lastname,
@@ -104,23 +104,22 @@ export default function Questions({navigation}) {
           //   })
           // );
           setAge(25);
-          setCity('');
-          setDepartment('');
-          setTeacher('');
-          setInstruTaught('');
+          setCity("");
+          setDepartment("");
+          setTeacher("");
+          setInstruTaught("");
           setSinger(false);
           setTags([]);
-
         } else {
           // setError(!error);
-          alert('username already existing !');
+          alert("username already existing !");
         }
       });
   };
 
   return (
     <ImageBackground
-      source={require('../assets/illu_02.jpg')}
+      source={require("../assets/illu_02.jpg")}
       imageStyle={{ opacity: 0.25 }}
       style={styles.imgBack}
     >
@@ -169,7 +168,7 @@ export default function Questions({navigation}) {
                 selectInputStyle={styles.test}
                 label="What do you wanna teach ?"
                 placeholder="Choose your instrument"
-                placeHolderStyle={{ textColor: '#ffffff' }}
+                placeHolderStyle={{ textColor: "#ffffff" }}
                 value={teach.value}
                 list={teach.list}
                 selectedList={teach.selectedList}
@@ -179,18 +178,18 @@ export default function Questions({navigation}) {
                       ...teach,
                       value: value.text,
                       selectedList: value.selectedList,
-                      error: '',
+                      error: "",
                     }),
                       setInstruTaught(teach.value);
                   }
                 }}
                 errorText={teach.error}
                 pillStyle={{
-                  backgroundColor: '#ffffffaa',
+                  backgroundColor: "#ffffffaa",
                   borderRadius: 15,
-                  textColor: '#CE2174',
+                  textColor: "#CE2174",
                 }}
-                errorStyle={{ textColor: 'red' }}
+                errorStyle={{ textColor: "red" }}
               />
             ) : null}
           </View>
@@ -210,7 +209,7 @@ export default function Questions({navigation}) {
               selectInputStyle={styles.test}
               label="What do you play ?"
               placeholder="Select your instruments"
-              placeHolderStyle={{ textColor: '#ffffff' }}
+              placeHolderStyle={{ textColor: "#ffffff" }}
               value={instruments.value}
               list={instruments.list}
               selectedList={instruments.selectedList}
@@ -220,25 +219,25 @@ export default function Questions({navigation}) {
                     ...instruments,
                     value: value.text,
                     selectedList: value.selectedList,
-                    error: '',
+                    error: "",
                   }),
                     setTags(instruments.value);
                 }
               }}
               errorText={instruments.error}
               pillStyle={{
-                backgroundColor: '#ffffffaa',
+                backgroundColor: "#ffffffaa",
                 borderRadius: 15,
-                textColor: '#CE2174',
+                textColor: "#CE2174",
               }}
-              errorStyle={{ textColor: 'red' }}
+              errorStyle={{ textColor: "red" }}
             />
           </View>
           <TouchableOpacity
             style={styles.submitForm}
             onPress={() => handleFormSubmit()}
           >
-            <Text style={{ fontSize: 25, color: '#ffffff' }}>SUBMIT</Text>
+            <Text style={{ fontSize: 25, color: "#ffffff" }}>SUBMIT</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -251,30 +250,30 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     paddingLeft: 20,
     paddingRight: 20,
-    backgroundColor: 'rgba(80,0,0,0.3)',
+    backgroundColor: "rgba(80,0,0,0.3)",
   },
   scrollContainer: {
     height: 900,
-    display: 'flex',
-    justifyContent: 'space-around',
-    alignItems: 'stretch',
+    display: "flex",
+    justifyContent: "space-around",
+    alignItems: "stretch",
   },
   inputText: {
-    color: '#ffffff',
+    color: "#ffffff",
     fontSize: 25,
-    backgroundColor: '#CE2174aa',
+    backgroundColor: "#CE2174aa",
     borderRadius: 15,
     padding: 6,
   },
   test: {
-    backgroundColor: '#CE2174aa',
+    backgroundColor: "#CE2174aa",
     borderRadius: 20,
   },
   submitForm: {
-    width: '80%',
-    alignSelf: 'center',
-    alignItems: 'center',
-    backgroundColor: '#CE2174aa',
+    width: "80%",
+    alignSelf: "center",
+    alignItems: "center",
+    backgroundColor: "#CE2174aa",
     borderRadius: 15,
     padding: 6,
   },

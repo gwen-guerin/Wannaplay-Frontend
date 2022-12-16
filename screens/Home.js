@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Modal,
   TextInput,
+  Dimensions,
 } from "react-native";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
