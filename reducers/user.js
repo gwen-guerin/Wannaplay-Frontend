@@ -23,6 +23,7 @@ export const userSlice = createSlice({
   reducers: {
     login: (state, action) => {
       state.value.username = action.payload.username;
+      state.value.firstname = action.payload.firstname;
       state.value.age = action.payload.age;
       state.value.tags.push(action.payload.tags);
       state.value.status = action.payload.status;
@@ -34,10 +35,15 @@ export const userSlice = createSlice({
     },
     logout: (state) => {
       state.value.firstname = null;
-      state.value.lastname = null;
       state.value.username = null;
-      state.value.email = null;
+      state.value.password = null;
+      state.value.city = null;
+      state.value.department = null;
+      state.value.status = false;
+      state.value.password = null;
+      state.value.singer = null;
       state.value.tags = [];
+      state.value.photos = null;
     },
   
     addFriend: (state, action) => {

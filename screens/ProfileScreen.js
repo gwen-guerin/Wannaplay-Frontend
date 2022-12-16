@@ -1,24 +1,16 @@
-import {
-  Image,
-  View,
-  StyleSheet,
-  Text,
-  TextInput,
-  Button,
-  ScrollView,
-} from "react-native";
-import { useSelector } from "react-redux";
+import { View, StyleSheet, Text, ScrollView } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import FriendsCards from "../components/FriendsCards";
 import { FontAwesome5 } from "@expo/vector-icons";
 import UploadImage from "../components/UploadImage";
+import { SimpleLineIcons } from "@expo/vector-icons";
+import { logout } from "../reducers/user";
 
 // construction de  la page profile
-export default function ProfileScreen() {
+export default function ProfileScreen({ navigation }) {
   //useSelector
   const users = useSelector((state) => state.user.value);
-
-  // ALGO COLOR RANDOM POUR LES TAGS
 
   //Etats useState
   const [tags, setTags] = useState([]);
@@ -95,18 +87,25 @@ export default function ProfileScreen() {
     return <FriendsCards key={i} friend={friend} />;
   });
 
+  //handle du logout
+  const handleLogout = () => {
+    dispactch(logout());
+    navigation.navigate("Home");
+  };
+
   return (
     <View style={styles.container}>
-      <View>
+      <View style={styles.photoandlogout}>
         <UploadImage />
-        {/* <Text>Welcome {users.username}</Text> */}
+        <SimpleLineIcons
+          name="logout"
+          size={45}
+          color="black"
+          onPress={() => handleLogout()}
+        />
       </View>
       <ScrollView>
         <View style={styles.profilusernameandpicture}>
-          {/* <Image
-            style={styles.userPicture}
-            source={require("../assets/user.jpg")}
-          /> */}
           <Text style={styles.textUsername}>{users.username}</Text>
           <Text style={styleOnline}></Text>
         </View>
@@ -246,5 +245,12 @@ const styles = StyleSheet.create({
   tagandteach: {
     marginTop: 20,
     marginBottom: 20,
+  },
+  photoandlogout: {
+    flexDirection: "row",
+    width: 330,
+    // justifyContent: 'space-around',
+    alignItems: "center",
+    justifyContent: "space-between",
   },
 });
