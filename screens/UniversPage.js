@@ -43,7 +43,11 @@ export default function UniversPage() {
             .then((response) => response.json())
             .then((data) => {
               console.log(data.address.city);
+<<<<<<< HEAD
               fetch("http://172.16.190.11:3000/users/geoloc", {
+=======
+              fetch("http://172.17.188.19:3000/users/geoloc", {
+>>>>>>> 60d368e8e8dcc1adf894bef2a10f04e3d9e09f3e
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -74,26 +78,43 @@ export default function UniversPage() {
       <View style={styles.content}>
         <BlurView intensity={100} tint="dark" style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button}>
+            <Image
+              style={styles.logo1}
+              source={require("../assets/pngegg.png")}
+            />
             <Text style={styles.text}>Wanna Learn?</Text>
           </TouchableOpacity>
         </BlurView>
         <BlurView intensity={100} tint="dark" style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button}>
+            <Image style={styles.logo2} source={require("../assets/mic.png")} />
             <Text style={styles.text}>Wanna Learn?</Text>
           </TouchableOpacity>
         </BlurView>
         <BlurView intensity={100} tint="dark" style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button}>
+            <Image
+              style={styles.logo3}
+              source={require("../assets/music.png")}
+            />
             <Text style={styles.text}>Wanna Learn?</Text>
           </TouchableOpacity>
         </BlurView>
         <BlurView intensity={100} tint="dark" style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button}>
+            <Image
+              style={styles.logo4}
+              source={require("../assets/shopping.png")}
+            />
             <Text style={styles.text}>Wanna Learn?</Text>
           </TouchableOpacity>
         </BlurView>
         <BlurView intensity={100} tint="dark" style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button}>
+            <Image
+              style={styles.logo5}
+              source={require("../assets/learning.png")}
+            />
             <Text style={styles.text}>Wanna Learn?</Text>
           </TouchableOpacity>
         </BlurView>
@@ -153,17 +174,34 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "white",
-    textAlign: "center",
-  },
-  text: {
-    color: "white",
     paddingLeft: 15,
     paddingRight: 10,
-    fontSize: 20,
+    fontSize: 15,
     alignItems: "center",
+    justifyContent: "flex-end",
   },
   image: {
     height: "100%",
     width: "100%",
+  },
+  logo1: {
+    height: "60%",
+    width: "60%",
+  },
+  logo2: {
+    height: "60%",
+    width: "60%",
+  },
+  logo3: {
+    height: "50%",
+    width: "50%",
+  },
+  logo4: {
+    height: "60%",
+    width: "60%",
+  },
+  logo5: {
+    height: "60%",
+    width: "50%",
   },
 });
