@@ -46,15 +46,9 @@ export default function Home({ navigation }) {
   };
 
   const handleRegister = () => {
-<<<<<<< HEAD
     fetch('http:///172.17.188.9:3000/users/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-=======
-    fetch("http://172.16.190.11:3000/users/signup", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
->>>>>>> a8118473038f0a0523abf2cdfc197be156bb7001
       body: JSON.stringify({
         firstname: firstname,
         lastname: lastname,
