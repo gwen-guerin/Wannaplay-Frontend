@@ -20,9 +20,8 @@ export default function ProfileScreen() {
 // console.log("COUCOU AGE", users);
 
 // ALGO COLOR RANDOM POUR LES TAGS
-  const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];
-const randomIndex = Math.floor(Math.random() * colors.length);
-const randomColor = colors[randomIndex];
+
+
 
   //Etats useState
   const [tags, setTags] = useState([]);
@@ -35,7 +34,7 @@ const randomColor = colors[randomIndex];
 
   //useEffect utilisé pour charger la page profile de l'utilisateur au  moment de sa connection/signin
   useEffect(() => {
-    fetch(`http://172.16.190:3000/users/profile/${users.username}`)
+    fetch(`http://172.16.190.11:3000/users/profile/${users.username}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
@@ -58,8 +57,17 @@ const randomColor = colors[randomIndex];
 
   //on map sur l'état teacher pour faire ressortir les tags/les instruments que l'utilisateur veut enseigner
   const teacherTag = teacher.map((teacher, i) => {
+    function randomColor() {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+    const color = randomColor()
     return (
-      <Text style={[styles.textUser1, {backgroundColor: randomColor}]} key={i}>
+      <Text style={[styles.textUser1, {backgroundColor: color}]} key={i}>
         #{teacher}
       </Text>
     );
@@ -67,8 +75,17 @@ const randomColor = colors[randomIndex];
 
   //on map sur l'état tags pour faire ressortir les tags/les instruments pratiqué par l'utilisateur
   const tagsList = tags.map((tag, i) => {
+      function randomColor() {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+    const color = randomColor()
     return (
-      <Text style={[styles.textUser1, {backgroundColor: randomColor}]} key={i}>
+      <Text style={[styles.textUser1, {backgroundColor: color}]} key={i}>
         #{tag}
       </Text>
     );

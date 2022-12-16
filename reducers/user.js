@@ -6,14 +6,14 @@ const initialState = {
     lastname: null,
     username: null,
     email: null,
-    age: null,
+    age: 0,
     tags: [],
     location: [],
     friends: [],
     status: null,
     city: null,
     department: null,
-    teacher: null,
+    teacher: [],
     singer: null,
     status: null,
     photos: [],
@@ -25,24 +25,14 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     login: (state, action) => {
-<<<<<<< HEAD
-      console.log('payload',action.payload)
-      // const { firstname, lastname, username, email, password, token } = action.payload;
-      state.value.firstname = action.payload.firstname;
-      state.value.lastname = action.payload.lasname;
+      console.log("ACTION", action.payload);
       state.value.username = action.payload.username;
-      state.value.email = action.payload.email;
-      state.value.password = action.payload.password;
-      // state.value.token = action.payload.token; 
-=======
-      state.value.username = action.payload.username;
->>>>>>> 60d368e8e8dcc1adf894bef2a10f04e3d9e09f3e
       state.value.age = action.payload.age;
       state.value.tags.push(action.payload.tags);
       state.value.city = action.payload.city;
       state.value.department = action.payload.department;
       state.value.status = action.payload.status;
-      state.value.teacher = action.payload.teacher;
+      state.value.teacher.push(action.payload.teacher);
       state.value.singer = action.payload.singer;
       state.value.photos.push(action.payload.photos);
 

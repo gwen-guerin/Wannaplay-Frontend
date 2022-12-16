@@ -2,12 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Searchbar, ThemeProvider } from "react-native-paper";
 // import all the components we are going to use
 import {
-  SafeAreaView,
   Text,
-  StyleSheet,
   View,
-  FlatList,
-  TextInput,
 } from "react-native";
 
 const App = () => {
@@ -15,7 +11,7 @@ const App = () => {
   const [results, setResults] = useState([]);
 
   const handleSearch = async (query) => {
-    const results = await fetch(`http://172.16.190.14:3000/search/${query}`);
+    const results = await fetch(`http://172.16.190.11:3000/search/${query}`);
     setResults(results);
   };
 

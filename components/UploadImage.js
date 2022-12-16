@@ -38,7 +38,7 @@ useEffect(() => {
       quality: 1,
     });
     //on console.log le détail sur l'image. Si l'image est séléctionnée, alors on la "set" dans setImage
-    console.log(JSON.stringify(_image));
+    // console.log(JSON.stringify(_image));
     if (!_image.canceled) {
       setImage(_image.uri);
     }
@@ -55,13 +55,13 @@ useEffect(() => {
     type: 'image/jpeg'
   })
 
-  fetch('http://172.17.188.9:3000/upload', {
+  fetch('http://172.16.190.11:3000/upload', {
     method: 'POST',
     body: formData,
   })
   .then(res => res.json())
   .then(data => {
-    console.log(data)
+    // console.log(data)
     data.result && dispatch(addPhoto(data.url));
   })
 ///fin partie formData
