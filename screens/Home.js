@@ -6,19 +6,10 @@ import {
   TouchableOpacity,
   Modal,
   TextInput,
-<<<<<<< HEAD
-} from 'react-native';
-import { useDispatch } from 'react-redux';
-import { useState } from 'react';
-import { login } from '../reducers/user';
-import { Dimensions } from 'react-native';
-
-=======
 } from "react-native";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { login } from "../reducers/user";
->>>>>>> a8118473038f0a0523abf2cdfc197be156bb7001
 
 const EMAIL_REGEX =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
