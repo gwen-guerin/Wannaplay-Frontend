@@ -1,9 +1,4 @@
-import {
-  View,
-  StyleSheet,
-  Text,
-  ScrollView,
-} from "react-native";
+import { View, StyleSheet, Text, ScrollView } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import FriendsCards from "../components/FriendsCards";
@@ -13,7 +8,7 @@ import { SimpleLineIcons } from "@expo/vector-icons";
 import { logout } from "../reducers/user";
 
 // construction de  la page profile
-export default function ProfileScreen({navigation}) {
+export default function ProfileScreen({ navigation }) {
   //useSelector
   const users = useSelector((state) => state.user.value);
 
@@ -51,16 +46,16 @@ export default function ProfileScreen({navigation}) {
   //on map sur l'état teacher pour faire ressortir les tags/les instruments que l'utilisateur veut enseigner
   const teacherTag = teacher.map((teacher, i) => {
     function randomColor() {
-      const letters = '0123456789ABCDEF';
-      let color = '#';
+      const letters = "0123456789ABCDEF";
+      let color = "#";
       for (let i = 0; i < 6; i++) {
         color += letters[Math.floor(Math.random() * 16)];
       }
       return color;
     }
-    const color = randomColor()
+    const color = randomColor();
     return (
-      <Text style={[styles.textUser1, {backgroundColor: color}]} key={i}>
+      <Text style={[styles.textUser1, { backgroundColor: color }]} key={i}>
         #{teacher}
       </Text>
     );
@@ -68,17 +63,17 @@ export default function ProfileScreen({navigation}) {
 
   //on map sur l'état tags pour faire ressortir les tags/les instruments pratiqué par l'utilisateur
   const tagsList = tags.map((tag, i) => {
-      function randomColor() {
-      const letters = '0123456789ABCDEF';
-      let color = '#';
+    function randomColor() {
+      const letters = "0123456789ABCDEF";
+      let color = "#";
       for (let i = 0; i < 6; i++) {
         color += letters[Math.floor(Math.random() * 16)];
       }
       return color;
     }
-    const color = randomColor()
+    const color = randomColor();
     return (
-      <Text style={[styles.textUser1, {backgroundColor: color}]} key={i}>
+      <Text style={[styles.textUser1, { backgroundColor: color }]} key={i}>
         #{tag}
       </Text>
     );
