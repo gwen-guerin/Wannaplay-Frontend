@@ -7,12 +7,12 @@ import {
   ScrollView,
   ImageBackground,
   TouchableOpacity,
-} from 'react-native';
-import { Picker } from '@react-native-picker/picker';
-import Slider from '@react-native-community/slider';
-import { useSelector } from 'react-redux';
-import { Select } from 'native-base';
-import { Entypo } from '@expo/vector-icons';
+} from "react-native";
+import { Picker } from "@react-native-picker/picker";
+import Slider from "@react-native-community/slider";
+import { useSelector } from "react-redux";
+import { Select } from "native-base";
+import { Entypo } from "@expo/vector-icons";
 
 export default function Questions({ navigation }) {
   const user = useSelector((state) => state.user.value);
@@ -126,7 +126,7 @@ export default function Questions({ navigation }) {
         //   alert('username already existing !');
         // }
       });
-      navigation.navigate("TabNavigator")
+    navigation.navigate("TabNavigator");
   };
 
   return (
@@ -167,10 +167,12 @@ export default function Questions({ navigation }) {
             <Text style={styles.inputText}>Do you wanna teach something ?</Text>
             <Picker
               selectedValue={teacher}
-              onValueChange={(teacher) => {setTeacher(teacher), setInstruTaught([])}}
+              onValueChange={(teacher) => {
+                setTeacher(teacher), setInstruTaught([]);
+              }}
             >
-              <Picker.Item  style={styles.instruText} label="No" value={false} />
-              <Picker.Item  style={styles.instruText} label="Yes" value={true} />
+              <Picker.Item style={styles.instruText} label="No" value={false} />
+              <Picker.Item style={styles.instruText} label="Yes" value={true} />
             </Picker>
           </View>
           {/* Conditionnal rendering if he/she wanna teach something (needs to choose what) */}
@@ -218,8 +220,16 @@ export default function Questions({ navigation }) {
               selectedValue={singer}
               onValueChange={(singer) => setSinger(singer)}
             >
-              <Picker.Item style={styles.instruText} label="No" value="Like a casserolle under shower" />
-              <Picker.Item style={styles.instruText} label="Yes" value="Better than Elvis !" />
+              <Picker.Item
+                style={styles.instruText}
+                label="No"
+                value="Like a casserolle under shower"
+              />
+              <Picker.Item
+                style={styles.instruText}
+                label="Yes"
+                value="Better than Elvis !"
+              />
             </Picker>
             <Text>{singer}</Text>
           </View>
@@ -299,21 +309,21 @@ const styles = StyleSheet.create({
     padding: 6,
   },
   instruCard: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
     borderRadius: 20,
-    backgroundColor: '#C5C5C5aa',
+    backgroundColor: "#C5C5C5aa",
     padding: 5,
   },
   instruContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-around",
     marginTop: 5,
   },
   instruText: {
     fontSize: 20,
-  }
+  },
 });
