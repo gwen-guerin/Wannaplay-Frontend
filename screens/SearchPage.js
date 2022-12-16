@@ -15,7 +15,7 @@ const App = () => {
   const [results, setResults] = useState([]);
 
   const handleSearch = async (query) => {
-    const results = await fetch(`http://172.20.10.3:3000/search/${query}`);
+    const results = await fetch(`http://172.17.188.9:3000/search/${query}`);
     setResults(results);
   };
 

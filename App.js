@@ -13,6 +13,7 @@ import { NativeBaseProvider } from "native-base";
 import ChatsList from "./screens/ChatsList";
 import ChatScreen from "./screens/ChatScreen";
 import SearchPage from "./screens/SearchPage";
+
 const store = configureStore({
   reducer: { user },
 });

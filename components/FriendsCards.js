@@ -1,5 +1,4 @@
 import { Image, View, StyleSheet, Text } from "react-native";
-import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { FontAwesome5 } from "@expo/vector-icons";
 
@@ -29,7 +28,7 @@ export default function FriendsCards(props) {
     <View style={styles.container}>
       <Image
         style={styles.userPicture}
-        source={require("../assets/user.jpg")}
+        source={require("../assets/mia-khalifa.jpg")}
       />
       <View style={styles.friendonline}>
         <Text style={styles.textUser}>{friends.username}</Text>
