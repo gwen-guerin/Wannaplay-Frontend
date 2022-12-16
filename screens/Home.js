@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Modal,
   TextInput,
+  Dimensions,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
@@ -18,15 +19,15 @@ export default function Home({ navigation }) {
   const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = useState(false);
   const [modalSignInVisible, setModalSignInVisible] = useState(false);
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [usernameSignIn, setUsernameSignIn] = useState("");
-  const [passwordSignIn, setPasswordSignIn] = useState("");
-  const [error, setError] = useState(false);
-  const [currentPosition, setCurrentPosition] = useState()
+  const [firstname, setFirstname] = useState('');
+  const [lastname, setLastname] = useState('');
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [usernameSignIn, setUsernameSignIn] = useState('');
+  const [passwordSignIn, setPasswordSignIn] = useState('');
+  const [errorSignup, setErrorSignup] = useState(false);
+  const [errorSignin, setErrorSignin] = useState(false);
 
   const inputsObj = {
     firstname,
@@ -55,26 +56,26 @@ export default function Home({ navigation }) {
           dispatch(
             login({
               username: data.user.username,
-              // token: data.user.token,
-              // firstname: data.user.firstname,
-              // lastname: data.user.lastname,
-              // email: data.user.email,
-              // password: data.user.password,
+              firstname: data.user.firstname,
+              lastname: data.user.lastname,
+              email: data.user.email,
+              password: data.user.password,
             })
           );
-          setFirstname("");
-          setUsername("");
-          setPassword("");
-          setEmail("");
-          setLastname("");
-          setModalSignInVisible(!modalSignInVisible);
+          setFirstname('');
+          setUsername('');
+          setPassword('');
+          setEmail('');
+          setLastname('');
           setModalVisible(!modalVisible);
-          navigation.navigate("Questions");
+          navigation.navigate('Questions');
         } else {
-          alert("username already existing !");
+          alert('username already existing !');
+          setErrorSignup(true);
         }
       });
   };
+
   const handleSignUp = () => {
     return setModalVisible(!modalVisible);
   };
@@ -95,12 +96,21 @@ export default function Home({ navigation }) {
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
-          dispatch(login(data.user));
+          dispatch(
+            login({
+              username: usernameSignIn,
+            }))
+          setFirstname('');
+          setUsername('');
+          setPassword('');
+          setEmail('');
+          setLastname('');
           setModalSignInVisible(!modalSignInVisible),
-            navigation.navigate('TabNavigator');
+          navigation.navigate('TabNavigator');
+          setErrorSignin(false);
         } else {
           setModalSignInVisible(true);
-          setError(!error);
+          setErrorSignin(true);
         }
       });
   };
@@ -109,7 +119,6 @@ export default function Home({ navigation }) {
     <ImageBackground
       source={require('../assets/illu_02.jpg')}
       style={styles.background}
-      
     >
       <View style={styles.header}>
         <Text style={styles.title}>WannaPlay?</Text>
@@ -120,7 +129,9 @@ export default function Home({ navigation }) {
           <Modal visible={modalVisible} animationType="slide" transparent>
             <View style={{ backgroundColor: '#000000aa', flex: 1 }}>
               <View style={styles.modalContent}>
-                {error && <Text>Veuillez remplir tous les champs</Text>}
+                {errorSignup && (
+                  <Text>Attention, champs manquants ou incorrect !</Text>
+                )}
                 <TextInput
                   placeholder="First Name"
                   value={firstname}
@@ -179,7 +190,9 @@ export default function Home({ navigation }) {
           <Modal visible={modalSignInVisible} animationType="slide" transparent>
             <View style={{ backgroundColor: '#000000aa', flex: 1 }}>
               <View style={styles.modalContent}>
-                {error && <Text>Veuillez remplir tous les champs</Text>}
+                {errorSignin && (
+                  <Text>Attention, champs manquants ou incorrect !</Text>
+                )}
                 <TextInput
                   placeholder="Username"
                   value={usernameSignIn}
@@ -202,8 +215,8 @@ export default function Home({ navigation }) {
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() => {
+                      // dispatch(login(inputsObj));
                       submitSignIn();
-                      dispatch(login(inputsObj));
                     }}
                     style={styles.buttonsSub}
                   >
@@ -266,7 +279,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   inputs: {
-    backgroundColor: "#D9D9D9",
+    backgroundColor: '#D9D9D9',
     borderRadius: 20,
     paddingLeft: 10,
     width: '100%',

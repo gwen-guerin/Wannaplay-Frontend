@@ -24,12 +24,13 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     login: (state, action) => {
+      console.log('payload',action.payload)
       // const { firstname, lastname, username, email, password, token } = action.payload;
-      // state.value.firstname = action.payload.firstname;
-      // state.value.lastname = action.payload.lasname;
+      state.value.firstname = action.payload.firstname;
+      state.value.lastname = action.payload.lasname;
       state.value.username = action.payload.username;
-      // state.value.email = action.payload.email;
-      // state.value.password = action.payload.password;
+      state.value.email = action.payload.email;
+      state.value.password = action.payload.password;
       // state.value.token = action.payload.token; 
       state.value.age = action.payload.age;
       state.value.tags.push(action.payload.tags);
