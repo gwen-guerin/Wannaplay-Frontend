@@ -43,7 +43,7 @@ export default function UniversPage() {
             .then((response) => response.json())
             .then((data) => {
               console.log(data.address.city);
-              fetch("http://192.168.1.118:3000/users/geoloc", {
+              fetch("http://172.17.188.19:3000/users/geoloc", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -150,10 +150,6 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     justifyContent: "center",
     alignItems: "center",
-  },
-  text: {
-    color: "white",
-    textAlign: "center",
   },
   text: {
     color: "white",
