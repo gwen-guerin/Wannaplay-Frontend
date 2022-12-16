@@ -11,7 +11,8 @@ import {
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import Slider from "@react-native-community/slider";
-// import { BTMultiSelect } from "@blump-tech/native-base-select"; 
+import { BTMultiSelect } from "@blump-tech/native-base-select"; 
+import { FontAwesome5 } from '@expo/vector-icons';
 
 const Questions2 = () => {
 
@@ -21,6 +22,7 @@ const Questions2 = () => {
   const [teacher, setTeacher] = useState(false);
   const [singer, setSinger] = useState(false);
   const [instruments, setInstruments] = useState({
+   
     value: "",
     list: [
       { _id: 1, name: "Guitar" },
@@ -43,6 +45,7 @@ const Questions2 = () => {
     selectedList: [],
     error: "",
   });
+
 
   return (
     <View>
