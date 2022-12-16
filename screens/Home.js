@@ -6,12 +6,19 @@ import {
   TouchableOpacity,
   Modal,
   TextInput,
+<<<<<<< HEAD
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { login } from '../reducers/user';
 import { Dimensions } from 'react-native';
 
+=======
+} from "react-native";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
+import { login } from "../reducers/user";
+>>>>>>> a8118473038f0a0523abf2cdfc197be156bb7001
 
 const EMAIL_REGEX =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -28,7 +35,7 @@ export default function Home({ navigation }) {
   const [usernameSignIn, setUsernameSignIn] = useState("");
   const [passwordSignIn, setPasswordSignIn] = useState("");
   const [error, setError] = useState(false);
-  const [currentPosition, setCurrentPosition] = useState()
+  const [currentPosition, setCurrentPosition] = useState();
 
   const inputsObj = {
     firstname,
@@ -39,9 +46,15 @@ export default function Home({ navigation }) {
   };
 
   const handleRegister = () => {
+<<<<<<< HEAD
     fetch('http:///172.17.188.9:3000/users/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+=======
+    fetch("http://172.16.190.11:3000/users/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+>>>>>>> a8118473038f0a0523abf2cdfc197be156bb7001
       body: JSON.stringify({
         firstname: firstname,
         lastname: lastname,
@@ -99,7 +112,7 @@ export default function Home({ navigation }) {
         if (data.result) {
           dispatch(login(data.user));
           setModalSignInVisible(!modalSignInVisible),
-            navigation.navigate('TabNavigator');
+            navigation.navigate("TabNavigator");
         } else {
           setModalSignInVisible(true);
           setError(!error);
@@ -109,9 +122,8 @@ export default function Home({ navigation }) {
 
   return (
     <ImageBackground
-      source={require('../assets/illu_02.jpg')}
+      source={require("../assets/illu_02.jpg")}
       style={styles.background}
-      
     >
       <View style={styles.header}>
         <Text style={styles.title}>WannaPlay?</Text>
@@ -120,7 +132,7 @@ export default function Home({ navigation }) {
         <TouchableOpacity style={styles.signBtn} onPress={() => handleSignUp()}>
           <Text>SING'UP</Text>
           <Modal visible={modalVisible} animationType="slide" transparent>
-            <View style={{ backgroundColor: '#000000aa', flex: 1 }}>
+            <View style={{ backgroundColor: "#000000aa", flex: 1 }}>
               <View style={styles.modalContent}>
                 {error && <Text>Veuillez remplir tous les champs</Text>}
                 <TextInput
@@ -179,7 +191,7 @@ export default function Home({ navigation }) {
         <TouchableOpacity style={styles.signBtn} onPress={() => handleSignIn()}>
           <Text>SING'IN</Text>
           <Modal visible={modalSignInVisible} animationType="slide" transparent>
-            <View style={{ backgroundColor: '#000000aa', flex: 1 }}>
+            <View style={{ backgroundColor: "#000000aa", flex: 1 }}>
               <View style={styles.modalContent}>
                 {error && <Text>Veuillez remplir tous les champs</Text>}
                 <TextInput
@@ -221,12 +233,12 @@ export default function Home({ navigation }) {
   );
 }
 
-const win = Dimensions.get('window');
+const win = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   background: {
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "100%",
   },
   title: {
     fontSize: 50,
@@ -236,23 +248,23 @@ const styles = StyleSheet.create({
     // fontFamily: 'Atma-Bold'
   },
   header: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
     height: 90,
     marginBottom: 20,
     // fontSize: 200,
   },
   signInSignUpContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
   signBtn: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#CE2174',
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#CE2174",
     width: 200,
     height: 30,
     marginBottom: 20,
@@ -260,31 +272,31 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     borderRadius: 40,
-    backgroundColor: '#CE2174',
+    backgroundColor: "#CE2174",
     marginTop: 200,
     padding: 30,
     margin: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   inputs: {
     backgroundColor: "#D9D9D9",
     borderRadius: 20,
     paddingLeft: 10,
-    width: '100%',
+    width: "100%",
     fontSize: 16,
     marginBottom: 10,
   },
   submitContainer: {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   buttonsSub: {
-    backgroundColor: '#AAA8A8',
+    backgroundColor: "#AAA8A8",
     borderRadius: 15,
-    width: '45%',
-    alignItems: 'center',
+    width: "45%",
+    alignItems: "center",
   },
 });
