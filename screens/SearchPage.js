@@ -2,9 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Searchbar, ThemeProvider } from "react-native-paper";
 // import all the components we are going to use
 import {
-  SafeAreaView,
   Text,
-  StyleSheet,
   View,
   TextInput,
   TouchableOpacity,

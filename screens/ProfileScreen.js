@@ -18,6 +18,7 @@ export default function ProfileScreen() {
   //useSelector
   const users = useSelector((state) => state.user.value);
 
+<<<<<<< HEAD
   // ALGO COLOR RANDOM POUR LES TAGS
   const colors = [
     "red",
@@ -30,6 +31,11 @@ export default function ProfileScreen() {
   ];
   const randomIndex = Math.floor(Math.random() * colors.length);
   const randomColor = colors[randomIndex];
+=======
+// ALGO COLOR RANDOM POUR LES TAGS
+
+
+>>>>>>> 3e3265b97edb80b6c2b3f7e5b4ff98b0ccb40e4c
 
   //Etats useState
   const [tags, setTags] = useState([]);
@@ -42,7 +48,11 @@ export default function ProfileScreen() {
 
   //useEffect utilisé pour charger la page profile de l'utilisateur au  moment de sa connection/signin
   useEffect(() => {
+<<<<<<< HEAD
     fetch(`http://172.16.190.14:3000/users/profile/${users.username}`)
+=======
+    fetch(`http://172.16.190.11:3000/users/profile/${users.username}`)
+>>>>>>> 3e3265b97edb80b6c2b3f7e5b4ff98b0ccb40e4c
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
@@ -64,11 +74,24 @@ export default function ProfileScreen() {
 
   //on map sur l'état teacher pour faire ressortir les tags/les instruments que l'utilisateur veut enseigner
   const teacherTag = teacher.map((teacher, i) => {
+    function randomColor() {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+    const color = randomColor()
     return (
+<<<<<<< HEAD
       <Text
         style={[styles.textUser1, { backgroundColor: randomColor }]}
         key={i}
       >
+=======
+      <Text style={[styles.textUser1, {backgroundColor: color}]} key={i}>
+>>>>>>> 3e3265b97edb80b6c2b3f7e5b4ff98b0ccb40e4c
         #{teacher}
       </Text>
     );
@@ -76,11 +99,24 @@ export default function ProfileScreen() {
 
   //on map sur l'état tags pour faire ressortir les tags/les instruments pratiqué par l'utilisateur
   const tagsList = tags.map((tag, i) => {
+      function randomColor() {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+    const color = randomColor()
     return (
+<<<<<<< HEAD
       <Text
         style={[styles.textUser1, { backgroundColor: randomColor }]}
         key={i}
       >
+=======
+      <Text style={[styles.textUser1, {backgroundColor: color}]} key={i}>
+>>>>>>> 3e3265b97edb80b6c2b3f7e5b4ff98b0ccb40e4c
         #{tag}
       </Text>
     );

@@ -46,7 +46,6 @@ export default function UploadImage() {
       aspect: [4, 3],
       quality: 1,
     });
-
     if (!_image.canceled) {
       const formData = new FormData();
       formData.append("photoFromFront", {
