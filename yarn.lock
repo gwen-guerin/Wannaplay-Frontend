@@ -1058,11 +1058,6 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
-"@blump-tech/native-base-select@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@blump-tech/native-base-select/-/native-base-select-0.2.0.tgz#1dd60db9b5d9f7b5d837b27e60a0771132aff964"
-  integrity sha512-SjbTv8KCvvHnr4/pyErpmjOKc/VAaAXO1QENl+LhryjzraQrGz5ym4ueTulmLboyy94+5mMr4x0/d9qZXjsSiw==
-
 "@callstack/react-theme-provider@^3.0.8":
   version "3.0.8"
   resolved "https://registry.yarnpkg.com/@callstack/react-theme-provider/-/react-theme-provider-3.0.8.tgz#d0d7ac71e422133c5f7b78f4c4aa1bc57f156f50"

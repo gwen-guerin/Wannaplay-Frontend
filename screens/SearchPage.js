@@ -25,7 +25,7 @@ const App = () => {
 
   const handleSearch = () => {
     if (searchQuery.length > 0) {
-      fetch(`http://172.16.190.134:3000/search/${searchQuery}`)
+      fetch(`http://172.16.190.14:3000/search/${searchQuery}`)
         .then((response) => response.json())
         .then((data) => {
           setSearchResults(
@@ -37,7 +37,7 @@ const App = () => {
                     style={styles.avatar}
                   />
                   <View style={styles.userInfo}>
-                  <Text>{user.username}</Text>
+                    <Text>{user.username}</Text>
                   </View>
                 </TouchableOpacity>
               );
@@ -81,20 +81,20 @@ const styles = StyleSheet.create({
     // flex: 1,
     // backgroundColor: 'green',
     // width: Dimensions.get("screen").width * 0.95,
-    width: '95%',
+    width: "95%",
     flexDirection: "row",
     backgroundColor: "red",
     alignItems: "center",
     justifyContent: "space-around",
   },
   searchedButton: {
-    flexDirection:'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     width: Dimensions.get("screen").width * 0.35,
     height: Dimensions.get("screen").width * 0.35,
     backgroundColor: "green",
     borderRadius: 25,
-    margin: Dimensions.get("screen").width * 0.01
+    margin: Dimensions.get("screen").width * 0.01,
   },
   avatar: {
     height: Dimensions.get("screen").height * 0.08,
