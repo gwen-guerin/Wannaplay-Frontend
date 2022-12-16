@@ -21,7 +21,7 @@ export default function ChatScreen({ navigation, route: { params } }) {
 
   useEffect(() => {
     (() => {
-      console.log(messages);
+      // console.log(messages);
       fetch(`${BACKEND_ADDRESS}/chats/${params.username}`, { method: "PUT" });
 
       const subscription = pusher.subscribe("chat");

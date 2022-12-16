@@ -26,7 +26,9 @@ export default function Home({ navigation }) {
   const [password, setPassword] = useState("");
   const [usernameSignIn, setUsernameSignIn] = useState("");
   const [passwordSignIn, setPasswordSignIn] = useState("");
-  const [error, setError] = useState(false);
+  const [errorSignin, setErrorSignin] = useState(false);
+  const [errorSignup, setErrorSignup] = useState(false);
+
   const [currentPosition, setCurrentPosition] = useState();
 
   const inputsObj = {
@@ -38,7 +40,7 @@ export default function Home({ navigation }) {
   };
 
   const handleRegister = () => {
-    fetch('http:///172.17.188.9:3000/users/signup', {
+    fetch('http://172.16.190.11:3000/users/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -85,7 +87,7 @@ export default function Home({ navigation }) {
   };
 
   const submitSignIn = () => {
-    fetch('http://172.17.188.9:3000/users/signin', {
+    fetch('http://172.16.190.11:3000/users/signin', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
