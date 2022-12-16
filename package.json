@@ -21,6 +21,7 @@
     "@react-navigation/native-stack": "6",
     "@reduxjs/toolkit": "^1.9.1",
     "@types/react-native": "^0.70.8",
+    "babel-core": "^6.0.0",
     "bcrypt": "^5.1.0",
     "cloudinary": "^1.33.0",
     "expo": "~47.0.8",

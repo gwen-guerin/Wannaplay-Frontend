@@ -7,10 +7,10 @@ import {
   Modal,
   TextInput,
   Dimensions,
-} from "react-native";
-import { useDispatch } from "react-redux";
-import { useState } from "react";
-import { login } from "../reducers/user";
+} from 'react-native';
+import { useDispatch } from 'react-redux';
+import { useState } from 'react';
+import { login } from '../reducers/user';
 
 const EMAIL_REGEX =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -40,9 +40,9 @@ export default function Home({ navigation }) {
   };
 
   const handleRegister = () => {
-    fetch('http://172.16.190.11:3000/users/signup', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    fetch("http://172.16.190.134:3000/users/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         firstname: firstname,
         lastname: lastname,
@@ -87,9 +87,9 @@ export default function Home({ navigation }) {
   };
 
   const submitSignIn = () => {
-    fetch('http://172.16.190.11:3000/users/signin', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    fetch("http://172.16.190.134:3000/users/signin", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         username: usernameSignIn,
         password: passwordSignIn,

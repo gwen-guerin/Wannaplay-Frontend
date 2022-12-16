@@ -17,7 +17,6 @@ import UploadImage from '../components/UploadImage';
 export default function ProfileScreen() {
   //useSelector
   const users = useSelector((state) => state.user.value);
-// console.log("COUCOU AGE", users);
 
 // ALGO COLOR RANDOM POUR LES TAGS
 
