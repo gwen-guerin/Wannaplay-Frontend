@@ -10,7 +10,6 @@ import ProfileScreen from "./screens/ProfileScreen";
 import user from "./reducers/user";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
-import Questions2 from "./screens/Questions2";
 import { NativeBaseProvider } from "native-base";
 import ChatsList from "./screens/ChatsList";
 import ChatScreen from "./screens/ChatScreen";

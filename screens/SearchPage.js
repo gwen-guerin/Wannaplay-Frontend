@@ -25,7 +25,7 @@ const App = () => {
 
   const handleSearch = () => {
     if (searchQuery.length > 0) {
-      fetch(`http://172.16.190.132:3000/search/${searchQuery}`)
+      fetch(`http://172.16.190.134:3000/search/${searchQuery}`)
         .then((response) => response.json())
         .then((data) => {
           setSearchResults(

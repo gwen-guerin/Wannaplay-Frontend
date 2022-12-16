@@ -38,7 +38,7 @@ export default function Home({ navigation }) {
   };
 
   const handleRegister = () => {
-    fetch("http://172.16.190.132:3000/users/signup", {
+    fetch("http://172.16.190.134:3000/users/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -85,7 +85,7 @@ export default function Home({ navigation }) {
   };
 
   const submitSignIn = () => {
-    fetch("http://172.16.190.132:3000/users/signin", {
+    fetch("http://172.16.190.134:3000/users/signin", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
