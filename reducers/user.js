@@ -10,13 +10,10 @@ const initialState = {
     tags: [],
     location: [],
     friends: [],
-    status: null,
-    city: null,
-    department: null,
-    teacher: null,
+    teacher: [],
     singer: null,
     status: null,
-    photos: [],
+    photos: null,
   },
 };
 
@@ -28,12 +25,10 @@ export const userSlice = createSlice({
       state.value.username = action.payload.username;
       state.value.age = action.payload.age;
       state.value.tags.push(action.payload.tags);
-      state.value.city = action.payload.city;
-      state.value.department = action.payload.department;
       state.value.status = action.payload.status;
       state.value.teacher = action.payload.teacher;
       state.value.singer = action.payload.singer;
-      state.value.photos.push(action.payload.photos);
+      state.value.photos = action.payload.photos;
 
 
     },
@@ -52,10 +47,11 @@ export const userSlice = createSlice({
       state.value = state.value.filter((e) => e.username !== action.payload);
     },
     addPhoto: (state, action) => {
-      state.value.photos.push(action.payload);
+      console.log('payload',action.payload)
+      state.value.photos = action.payload;
     },
     removePhoto: (state, action) => {
-      state.value.photos = state.value.photos.filter((data) => data !== action.payload);
+      state.value.photos = null;
     },
   }
 });
