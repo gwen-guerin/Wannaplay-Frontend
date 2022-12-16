@@ -12,8 +12,8 @@ import {
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Pusher from "pusher-js/react-native";
 
-const pusher = new Pusher('295cd63eb30452706332', { cluster: 'eu' });
-const BACKEND_ADDRESS = 'http://172.17.188.9:3000';
+const pusher = new Pusher("295cd63eb30452706332", { cluster: "eu" });
+const BACKEND_ADDRESS = "http://172.16.190.14:3000";
 
 export default function ChatScreen({ navigation, route: { params } }) {
   const [messages, setMessages] = useState([]);
@@ -21,7 +21,7 @@ export default function ChatScreen({ navigation, route: { params } }) {
 
   useEffect(() => {
     (() => {
-      console.log(messages);
+      // console.log(messages);
       fetch(`${BACKEND_ADDRESS}/chats/${params.username}`, { method: "PUT" });
 
       const subscription = pusher.subscribe("chat");

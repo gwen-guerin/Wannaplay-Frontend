@@ -17,19 +17,18 @@ export default function ProfileScreen({navigation}) {
   //useSelector
   const users = useSelector((state) => state.user.value);
 
-  //useDispatch
-  const dispactch = useDispatch();
-
   //Etats useState
   const [tags, setTags] = useState([]);
   const [friends, setFriends] = useState([]);
   const [status, setStatus] = useState(false);
   const [city, setCity] = useState("");
   const [teacher, setTeacher] = useState([]);
+  const [age, setAge] = useState("");
+  const [error, setError] = useState(false);
 
   //useEffect utilisé pour charger la page profile de l'utilisateur au  moment de sa connection/signin
   useEffect(() => {
-    fetch(`http://172.17.188.9:3000/users/profile/${users.username}`)
+    fetch(`http://172.16.190.14:3000/users/profile/${users.username}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
@@ -38,6 +37,7 @@ export default function ProfileScreen({navigation}) {
           setStatus(true);
           setCity(data.user.location.city);
           setTeacher(data.user.teacher);
+          setAge(data.user.age);
         }
       });
   }, []);
@@ -50,8 +50,17 @@ export default function ProfileScreen({navigation}) {
 
   //on map sur l'état teacher pour faire ressortir les tags/les instruments que l'utilisateur veut enseigner
   const teacherTag = teacher.map((teacher, i) => {
+    function randomColor() {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+    const color = randomColor()
     return (
-      <Text style={styles.textUser1} key={i}>
+      <Text style={[styles.textUser1, {backgroundColor: color}]} key={i}>
         #{teacher}
       </Text>
     );
@@ -59,8 +68,17 @@ export default function ProfileScreen({navigation}) {
 
   //on map sur l'état tags pour faire ressortir les tags/les instruments pratiqué par l'utilisateur
   const tagsList = tags.map((tag, i) => {
+      function randomColor() {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+    const color = randomColor()
     return (
-      <Text style={styles.textUser1} key={i}>
+      <Text style={[styles.textUser1, {backgroundColor: color}]} key={i}>
         #{tag}
       </Text>
     );
@@ -68,6 +86,9 @@ export default function ProfileScreen({navigation}) {
 
   //on map sur l'état firends pour faire ressortir les amis de l'utilisateur
   const friendsList = friends.map((friend, i) => {
+    if (i > 0) {
+      setError(false);
+    }
     return <FriendsCards key={i} friend={friend} />;
   });
 
@@ -95,7 +116,7 @@ export default function ProfileScreen({navigation}) {
         </View>
         <View style={styles.descriptionUser}>
           <Text style={styles.textUser}>{users.firstname}</Text>
-          <Text style={styles.textUser}>Age:{users.age}</Text>
+          <Text style={styles.textUser}>Age:{age}</Text>
           <Text style={styles.textUser}>{city}</Text>
           <View style={styles.tagandteach}>
             <View style={styles.tagsList}>
@@ -108,14 +129,18 @@ export default function ProfileScreen({navigation}) {
             </View>
           </View>
         </View>
-        <View style={styles.firendsView}>
-          <Text style={styles.friends}>My friends</Text>
+        {error && (
+          <View>
+            <View style={styles.friendsView}>
+              <Text style={styles.friends}>My friends</Text>
 
-          <FontAwesome5 name="rocketchat" size={30} color="#CE2174" />
-        </View>
-        <ScrollView horizontal={true}>
-          <View style={styles.friendsTab}>{friendsList}</View>
-        </ScrollView>
+              <FontAwesome5 name="rocketchat" size={30} color="#CE2174" />
+            </View>
+            <ScrollView horizontal={true}>
+              <View style={styles.friendsTab}>{friendsList}</View>
+            </ScrollView>
+          </View>
+        )}
       </ScrollView>
     </View>
   );
@@ -163,7 +188,7 @@ const styles = StyleSheet.create({
     margin: 5,
     fontWeight: "500",
     color: "black",
-    backgroundColor: "#C5C5C5",
+    // backgroundColor: '#C5C5C5',
     borderRadius: 20,
     padding: 8,
   },
@@ -208,7 +233,7 @@ const styles = StyleSheet.create({
     backgroundColor: "green",
     borderRadius: 40,
   },
-  firendsView: {
+  friendsView: {
     marginTop: 30,
     display: "flex",
     flexDirection: "row",

@@ -26,7 +26,9 @@ export default function Home({ navigation }) {
   const [password, setPassword] = useState("");
   const [usernameSignIn, setUsernameSignIn] = useState("");
   const [passwordSignIn, setPasswordSignIn] = useState("");
-  const [error, setError] = useState(false);
+  const [errorSignin, setErrorSignin] = useState(false);
+  const [errorSignup, setErrorSignup] = useState(false);
+
   const [currentPosition, setCurrentPosition] = useState();
 
   const inputsObj = {
@@ -38,9 +40,9 @@ export default function Home({ navigation }) {
   };
 
   const handleRegister = () => {
-    fetch('http:///172.17.188.9:3000/users/signup', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    fetch("http://172.16.190.134:3000/users/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         firstname: firstname,
         lastname: lastname,
@@ -56,11 +58,10 @@ export default function Home({ navigation }) {
           dispatch(
             login({
               username: data.user.username,
-              // token: data.user.token,
-              // firstname: data.user.firstname,
-              // lastname: data.user.lastname,
-              // email: data.user.email,
-              // password: data.user.password,
+              firstname: data.user.firstname,
+              lastname: data.user.lastname,
+              email: data.user.email,
+              password: data.user.password,
             })
           );
           setFirstname("");
@@ -68,14 +69,15 @@ export default function Home({ navigation }) {
           setPassword("");
           setEmail("");
           setLastname("");
-          setModalSignInVisible(!modalSignInVisible);
           setModalVisible(!modalVisible);
           navigation.navigate("Questions");
         } else {
           alert("username already existing !");
+          setErrorSignup(true);
         }
       });
   };
+
   const handleSignUp = () => {
     return setModalVisible(!modalVisible);
   };
@@ -85,9 +87,9 @@ export default function Home({ navigation }) {
   };
 
   const submitSignIn = () => {
-    fetch('http://172.17.188.9:3000/users/signin', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    fetch("http://172.16.190.14:3000/users/signin", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         username: usernameSignIn,
         password: passwordSignIn,
@@ -96,12 +98,22 @@ export default function Home({ navigation }) {
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
-          dispatch(login(data.user));
+          dispatch(
+            login({
+              username: usernameSignIn,
+            })
+          );
+          setFirstname("");
+          setUsername("");
+          setPassword("");
+          setEmail("");
+          setLastname("");
           setModalSignInVisible(!modalSignInVisible),
             navigation.navigate("TabNavigator");
+          setErrorSignin(false);
         } else {
           setModalSignInVisible(true);
-          setError(!error);
+          setErrorSignin(true);
         }
       });
   };
@@ -120,7 +132,9 @@ export default function Home({ navigation }) {
           <Modal visible={modalVisible} animationType="slide" transparent>
             <View style={{ backgroundColor: "#000000aa", flex: 1 }}>
               <View style={styles.modalContent}>
-                {error && <Text>Veuillez remplir tous les champs</Text>}
+                {errorSignup && (
+                  <Text>Attention, champs manquants ou incorrect !</Text>
+                )}
                 <TextInput
                   placeholder="First Name"
                   value={firstname}
@@ -179,7 +193,9 @@ export default function Home({ navigation }) {
           <Modal visible={modalSignInVisible} animationType="slide" transparent>
             <View style={{ backgroundColor: "#000000aa", flex: 1 }}>
               <View style={styles.modalContent}>
-                {error && <Text>Veuillez remplir tous les champs</Text>}
+                {errorSignin && (
+                  <Text>Attention, champs manquants ou incorrect !</Text>
+                )}
                 <TextInput
                   placeholder="Username"
                   value={usernameSignIn}
@@ -202,8 +218,8 @@ export default function Home({ navigation }) {
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() => {
+                      // dispatch(login(inputsObj));
                       submitSignIn();
-                      dispatch(login(inputsObj));
                     }}
                     style={styles.buttonsSub}
                   >

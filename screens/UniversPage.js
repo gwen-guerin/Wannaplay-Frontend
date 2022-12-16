@@ -23,7 +23,7 @@ export default function UniversPage() {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.user.value);
-  // console.log(user);
+  // console.log('chcek',user);
 
   useEffect(() => {
     (async () => {
@@ -33,7 +33,7 @@ export default function UniversPage() {
       let url = "";
 
       if (status === "granted") {
-        console.log(status);
+        // console.log(status);
         Location.watchPositionAsync({ distanceInterval: 10 }, (location) => {
           latitude = location.coords.latitude;
           longitude = location.coords.longitude;
@@ -42,8 +42,7 @@ export default function UniversPage() {
           )
             .then((response) => response.json())
             .then((data) => {
-              console.log(data.address.city);
-              fetch("http://172.17.188.19:3000/users/geoloc", {
+              fetch("http://172.16.190.14:3000/users/geoloc", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({

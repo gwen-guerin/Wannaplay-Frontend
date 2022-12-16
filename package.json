@@ -9,7 +9,6 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "@blump-tech/native-base-select": "^0.2.0",
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "@react-native-async-storage/async-storage": "^1.17.11",
     "@react-native-community/blur": "^4.3.0",
@@ -22,6 +21,7 @@
     "@react-navigation/native-stack": "6",
     "@reduxjs/toolkit": "^1.9.1",
     "@types/react-native": "^0.70.8",
+    "babel-core": "^6.0.0",
     "bcrypt": "^5.1.0",
     "cloudinary": "^1.33.0",
     "expo": "~47.0.8",

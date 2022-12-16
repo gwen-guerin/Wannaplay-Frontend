@@ -10,111 +10,122 @@ import {
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import Slider from "@react-native-community/slider";
-//import { BTMultiSelect } from '@blump-tech/native-base-select';
 import { useSelector } from "react-redux";
+import { Select } from "native-base";
+import { Entypo } from "@expo/vector-icons";
 
 export default function Questions({ navigation }) {
   const user = useSelector((state) => state.user.value);
-  // console.log('USER', user);
+
   const [age, setAge] = useState(0);
   const [city, setCity] = useState("");
   const [department, setDepartment] = useState("");
   const [teacher, setTeacher] = useState(false);
-  const [instruTaught, setInstruTaught] = useState([]);
-  const [tags, setTags] = useState([]);
+  // const [tags, setTags] = useState([]);
   const [singer, setSinger] = useState(false);
 
-  const [instruments, setInstruments] = useState({
-    value: "",
-    list: [
-      { _id: 1, name: "Guitar" },
-      { _id: 2, name: "Drums" },
-      { _id: 3, name: "Piano" },
-      { _id: 4, name: "Trumpet" },
-      { _id: 5, name: "Violin" },
-      { _id: 6, name: "Saxophone" },
-      { _id: 7, name: "Flute" },
-      { _id: 8, name: "Bass" },
-      { _id: 9, name: "Harmonica" },
-      { _id: 10, name: "BeatMaker" },
-      { _id: 11, name: "BeatBox" },
-      { _id: 12, name: "Banjo" },
-      { _id: 13, name: "Harp" },
-      { _id: 14, name: "Clarinet" },
-      { _id: 15, name: "Oboe" },
-      { _id: 16, name: "Synthesizer" },
-    ],
-    selectedList: [],
-    error: "",
+  const [instruments, setInstruments] = useState([]);
+  const [instruTaught, setInstruTaught] = useState([]);
+
+  //FONCTIONS POUR DELETE INSTRU/TEACHING
+  const handleDeleteInstru = (instru) => {
+    setInstruments(instruments.filter((data) => data != instru));
+  };
+  const handleDeleteInstruTaught = (instru) => {
+    setInstruTaught(instruTaught.filter((data) => data !== instru));
+  };
+  // FONCTION POUR AJOUTER UN INSTRUMENT JOUé ET DISPLAY
+  function onSelectedInstru(itemAdded) {
+    let added = false;
+    instruments.map((data) => {
+      if (data == itemAdded) {
+        added = true;
+      }
+    });
+    if (!added) {
+      setInstruments((instruments) => [...instruments, itemAdded]);
+    }
+  }
+  const mapInstru = instruments.map((instru, i) => {
+    return (
+      <View key={i} style={styles.instruCard}>
+        <Text style={styles.instruText}>{instru}</Text>
+        <Entypo
+          name="cross"
+          size={20}
+          color="black"
+          onPress={() => handleDeleteInstru(instru)}
+        />
+      </View>
+    );
   });
-  const [teach, setTeach] = useState({
-    value: "",
-    list: [
-      { _id: 1, name: "Voice" },
-      { _id: 2, name: "Guitar" },
-      { _id: 3, name: "Drums" },
-      { _id: 4, name: "Piano" },
-      { _id: 5, name: "Trumpet" },
-      { _id: 6, name: "Violin" },
-      { _id: 7, name: "Saxophone" },
-      { _id: 8, name: "Flute" },
-      { _id: 9, name: "Bass" },
-      { _id: 10, name: "Harmonica" },
-      { _id: 11, name: "BeatMaker" },
-      { _id: 12, name: "BeatBox" },
-      { _id: 13, name: "Banjo" },
-      { _id: 14, name: "Harp" },
-      { _id: 15, name: "Clarinet" },
-      { _id: 16, name: "Oboe" },
-      { _id: 17, name: "Synthesizer" },
-    ],
-    selectedList: [],
-    error: "",
+
+  // FONCTION POUR AJOUTER UN INSTRU A ENSEIGNER
+  function onSelectedInstruTaught(itemAdded) {
+    let addTeach = false;
+    instruTaught.map((data) => {
+      if (data == itemAdded) {
+        addTeach = true;
+      }
+    });
+    if (!addTeach) {
+      setInstruTaught((instruTaught) => [...instruTaught, itemAdded]);
+    }
+  }
+  const mapInstruTaught = instruTaught.map((instru, i) => {
+    return (
+      <View key={i} style={styles.instruCard}>
+        <Text style={styles.instruText}>{instru}</Text>
+        <Entypo
+          name="cross"
+          size={20}
+          color="black"
+          onPress={() => handleDeleteInstruTaught(instru)}
+        />
+      </View>
+    );
   });
-  // console.log(tags);
+
+  // ROUTE POST DES DONNEES DU FORM EN DB
   const handleFormSubmit = () => {
     // console.log(user.firstname);
-    fetch('http://172.17.188.9:3000/users/signupForm', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    fetch("http://172.16.190.14:3000/users/signupForm", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        firstname: user.firstname,
-        lastname: user.lastname,
         username: user.username,
-        password: user.password,
-        email: user.email,
         age: age,
-        city: city,
         teacher: instruTaught,
-        tags: tags,
+        tags: instruments,
       }),
     })
       .then((response) => response.json())
       .then((data) => {
-        // console.log(data);
-        if (data.result) {
-          // dispatch(
-          //   login({
-          //     username: data.user.username,
-          //     token: data.user.token,
-          //     firstname: data.user.firstname,
-          //     lastname: data.user.lastname,
-          //     email: data.user.email,
-          //     password: data.user.password,
-          //   })
-          // );
-          setAge(25);
-          setCity("");
-          setDepartment("");
-          setTeacher("");
-          setInstruTaught("");
-          setSinger(false);
-          setTags([]);
-        } else {
-          // setError(!error);
-          alert("username already existing !");
-        }
+        console.log("DATA", data);
+        // if (data.result) {
+        //   // dispatch(
+        //   //   login({
+        //   //     username: data.user.username,
+        //   //     token: data.user.token,
+        //   //     firstname: data.user.firstname,
+        //   //     lastname: data.user.lastname,
+        //   //     email: data.user.email,
+        //   //     password: data.user.password,
+        //   //   })
+        //   // );
+        //   setAge(25);
+        //   setCity('');
+        //   setDepartment('');
+        //   setTeacher('');
+        //   setInstruTaught('');
+        //   setSinger(false);
+        //   setTags([]);
+        // } else {
+        //   // setError(!error);
+        //   alert('username already existing !');
+        // }
       });
+    navigation.navigate("TabNavigator");
   };
 
   return (
@@ -137,7 +148,7 @@ export default function Questions({ navigation }) {
               maximumTrackTintColor="#d3d3d3"
               thumbTintColor="#b9e4c9"
             />
-            <Text>I am {age} years old</Text>
+            <Text style={styles.instruText}>I am {age} years old</Text>
           </View>
           <TextInput
             style={styles.inputText}
@@ -155,42 +166,51 @@ export default function Questions({ navigation }) {
             <Text style={styles.inputText}>Do you wanna teach something ?</Text>
             <Picker
               selectedValue={teacher}
-              onValueChange={(teacher) => setTeacher(teacher)}
+              onValueChange={(teacher) => {
+                setTeacher(teacher), setInstruTaught([]);
+              }}
             >
-              <Picker.Item label="No" value={false} />
-              <Picker.Item label="Yes" value={true} />
+              <Picker.Item style={styles.instruText} label="No" value={false} />
+              <Picker.Item style={styles.instruText} label="Yes" value={true} />
             </Picker>
           </View>
           {/* Conditionnal rendering if he/she wanna teach something (needs to choose what) */}
           <View style={{ marginTop: -30 }}>
             {teacher ? (
-              <BTMultiSelect
-                selectInputStyle={styles.test}
-                label="What do you wanna teach ?"
-                placeholder="Choose your instrument"
-                placeHolderStyle={{ textColor: "#ffffff" }}
-                value={teach.value}
-                list={teach.list}
-                selectedList={teach.selectedList}
-                onSelection={(value) => {
-                  {
-                    setTeach({
-                      ...teach,
-                      value: value.text,
-                      selectedList: value.selectedList,
-                      error: "",
-                    }),
-                      setInstruTaught(teach.value);
-                  }
-                }}
-                errorText={teach.error}
-                pillStyle={{
-                  backgroundColor: "#ffffffaa",
-                  borderRadius: 15,
-                  textColor: "#CE2174",
-                }}
-                errorStyle={{ textColor: "red" }}
-              />
+              <View>
+                <View style={styles.inputText}>
+                  <Select
+                    placeholderTextColor="white"
+                    variant="unstyled"
+                    selectedValue={instruTaught}
+                    minWidth="200"
+                    placeholder="What do you wanna teach ?"
+                    fontSize={22}
+                    onValueChange={(itemValue) =>
+                      onSelectedInstruTaught(itemValue)
+                    }
+                  >
+                    <Select.Item label="Voice" value="Voice" />
+                    <Select.Item label="Guitar" value="Guitar" />
+                    <Select.Item label="Drums" value="Drums" />
+                    <Select.Item label="Piano" value="Piano" />
+                    <Select.Item label="Bass" value="Bass" />
+                    <Select.Item label="Trumpet" value="Trumpet" />
+                    <Select.Item label="Violin" value="Violin" />
+                    <Select.Item label="Saxophone" value="Saxo" />
+                    <Select.Item label="Flute" value="Flute" />
+                    <Select.Item label="Harmonica" value="Harmonica" />
+                    <Select.Item label="Beatmaker" value="Beatmaker" />
+                    <Select.Item label="Beatbox" value="Beatbox" />
+                    <Select.Item label="Banjo" value="Banjo" />
+                    <Select.Item label="Harp" value="Harp" />
+                    <Select.Item label="Clarinet" value="Clarinet" />
+                    <Select.Item label="Oboe" value="Oboe" />
+                    <Select.Item label="Synthetiser" value="Synthe" />
+                  </Select>
+                </View>
+                <View style={styles.instruContainer}>{mapInstruTaught}</View>
+              </View>
             ) : null}
           </View>
           <View style={teacher ? { marginTop: 0 } : { marginTop: -100 }}>
@@ -199,39 +219,49 @@ export default function Questions({ navigation }) {
               selectedValue={singer}
               onValueChange={(singer) => setSinger(singer)}
             >
-              <Picker.Item label="No" value="Like a casserolle under shower" />
-              <Picker.Item label="Yes" value="Better than Elvis !" />
+              <Picker.Item
+                style={styles.instruText}
+                label="No"
+                value="Like a casserolle under shower"
+              />
+              <Picker.Item
+                style={styles.instruText}
+                label="Yes"
+                value="Better than Elvis !"
+              />
             </Picker>
             <Text>{singer}</Text>
           </View>
           <View>
-            <BTMultiSelect
-              selectInputStyle={styles.test}
-              label="What do you play ?"
-              placeholder="Select your instruments"
-              placeHolderStyle={{ textColor: "#ffffff" }}
-              value={instruments.value}
-              list={instruments.list}
-              selectedList={instruments.selectedList}
-              onSelection={(value) => {
-                {
-                  setInstruments({
-                    ...instruments,
-                    value: value.text,
-                    selectedList: value.selectedList,
-                    error: "",
-                  }),
-                    setTags(instruments.value);
-                }
-              }}
-              errorText={instruments.error}
-              pillStyle={{
-                backgroundColor: "#ffffffaa",
-                borderRadius: 15,
-                textColor: "#CE2174",
-              }}
-              errorStyle={{ textColor: "red" }}
-            />
+            <View style={styles.inputText}>
+              <Select
+                placeholderTextColor="white"
+                variant="unstyled"
+                selectedValue={instruments}
+                minWidth="200"
+                placeholder="What do you play ?"
+                fontSize={25}
+                onValueChange={(itemValue) => onSelectedInstru(itemValue)}
+              >
+                <Select.Item label="Guitar" value="Guitar" />
+                <Select.Item label="Drums" value="Drums" />
+                <Select.Item label="Piano" value="Piano" />
+                <Select.Item label="Bass" value="Bass" />
+                <Select.Item label="Trumpet" value="Trumpet" />
+                <Select.Item label="Violin" value="Violin" />
+                <Select.Item label="Saxophone" value="Saxo" />
+                <Select.Item label="Flute" value="Flute" />
+                <Select.Item label="Harmonica" value="Harmonica" />
+                <Select.Item label="Beatmaker" value="Beatmaker" />
+                <Select.Item label="Beatbox" value="Beatbox" />
+                <Select.Item label="Banjo" value="Banjo" />
+                <Select.Item label="Harp" value="Harp" />
+                <Select.Item label="Clarinet" value="Clarinet" />
+                <Select.Item label="Oboe" value="Oboe" />
+                <Select.Item label="Synthetiser" value="Synthe" />
+              </Select>
+            </View>
+            <View style={styles.instruContainer}>{mapInstru}</View>
           </View>
           <TouchableOpacity
             style={styles.submitForm}
@@ -265,10 +295,10 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     padding: 6,
   },
-  test: {
-    backgroundColor: "#CE2174aa",
-    borderRadius: 20,
-  },
+  // selectContainer: {
+  //   backgroundColor: '#CE2174aa',
+  //   borderRadius: 20,
+  // },
   submitForm: {
     width: "80%",
     alignSelf: "center",
@@ -276,5 +306,23 @@ const styles = StyleSheet.create({
     backgroundColor: "#CE2174aa",
     borderRadius: 15,
     padding: 6,
+  },
+  instruCard: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 20,
+    backgroundColor: "#C5C5C5aa",
+    padding: 5,
+  },
+  instruContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginTop: 5,
+  },
+  instruText: {
+    fontSize: 20,
   },
 });
