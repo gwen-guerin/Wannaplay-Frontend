@@ -19,7 +19,7 @@ export default function ProfilScreen() {
   const [status, setStatus] = useState(false);
 
   useEffect(() => {
-    fetch(`http://172.17.188.19:3000/users/profile/${users.username}`)
+    fetch(`http://172.16.190:3000/users/profile/${users.username}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
