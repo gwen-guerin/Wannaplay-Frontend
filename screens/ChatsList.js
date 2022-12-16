@@ -7,18 +7,17 @@ import {
   TouchableOpacity,
   Image,
   useWindowDimensions,
-  // TextInput,
+  TextInput,
   Dimensions,
 } from "react-native";
 import { BlurView } from "expo-blur";
 import { useEffect, useState } from "react";
-import { TextInput } from "react-native-paper";
 
 export default function ChatsList({ navigation }) {
   const [allUsers, setAllUsers] = useState([]);
 
   useEffect(() => {
-    fetch("http://192.168.1.118:3000/users/allUsers")
+    fetch("http://172.16.190.132:3000/users/allUsers")
       .then((response) => response.json())
       .then((data) => setAllUsers(data.usernames));
   }, []);

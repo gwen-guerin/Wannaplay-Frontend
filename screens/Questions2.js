@@ -11,10 +11,9 @@ import {
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import Slider from "@react-native-community/slider";
-// import { BTMultiSelect } from "@blump-tech/native-base-select"; 
+//import { BTMultiSelect } from "@blump-tech/native-base-select";
 
 const Questions2 = () => {
-
   const [age, setAge] = useState(0);
   const [city, setCity] = useState("");
   const [department, setDepartment] = useState("");
@@ -46,10 +45,7 @@ const Questions2 = () => {
 
   return (
     <View>
-
       <ScrollView>
-      
-        
         <View style={styles.container}>
           <View style={styles.questionblock}>
             <Text>How old are you ?</Text>
@@ -62,19 +58,19 @@ const Questions2 = () => {
               minimumTrackTintColor="#1fb28a"
               maximumTrackTintColor="#d3d3d3"
               thumbTintColor="#b9e4c9"
-              />
+            />
             <Text>I am {age} years old</Text>
           </View>
           <TextInput
-          value={city}
+            value={city}
             placeholder="Where do you live ?"
             onChangeText={(city) => setCity(city)}
-            />
+          />
           <TextInput
             value={department}
             placeholder="Which department ?"
             onChangeText={(department) => setDepartment(department)}
-            />
+          />
           <View>
             <Text>Do you wanna teach something ?</Text>
             <Picker
@@ -91,7 +87,7 @@ const Questions2 = () => {
             <Picker
               selectedValue={singer}
               onValueChange={(singer) => setSinger(singer)}
-              >
+            >
               <Picker.Item label="No" value="Like a casserolle under shower" />
               <Picker.Item label="Yes" value="Better than Elvis !" />
             </Picker>
@@ -114,9 +110,8 @@ const Questions2 = () => {
             errorText={instruments.error}
             pillStyle={{ backgroundColor: "yellow" }}
             errorStyle={{ textColor: "red" }}
-            />
+          />
         </View>
-
       </ScrollView>
     </View>
   );
