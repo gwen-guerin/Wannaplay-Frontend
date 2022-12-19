@@ -22,7 +22,7 @@ export default function SearchTeacher() {
 
   const handleSearch = () => {
     console.log(searchQuery)
-    fetch(`http://172.17.188.25:3000/search/teacher/${searchQuery}`)
+    fetch(`http://192.168.1.15:3000/search/teacher/${searchQuery}`)
       .then((response) => response.json())
       .then((data) => {
         setSearchResults(

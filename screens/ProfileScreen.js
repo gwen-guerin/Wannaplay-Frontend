@@ -22,11 +22,11 @@ export default function ProfileScreen({ navigation }) {
   const [city, setCity] = useState("");
   const [teacher, setTeacher] = useState([]);
   const [age, setAge] = useState("");
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(true);
 
   //useEffect utilisé pour charger la page profile de l'utilisateur au  moment de sa connection/signin
   useEffect(() => {
-    fetch(`http://172.17.188.25:3000/users/profile/${users.username}`)
+    fetch(`http://192.168.1.15:3000/users/profile/${users.username}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
@@ -84,10 +84,11 @@ export default function ProfileScreen({ navigation }) {
 
   //on map sur l'état firends pour faire ressortir les amis de l'utilisateur
   const friendsList = friends.map((friend, i) => {
-    if (i > 0) {
-      setError(true);
+    if (friends.length === 0) {
+      setError(false);
+    } else {
+      return <FriendsCards key={i} friend={friend} />;
     }
-    return <FriendsCards key={i} friend={friend} />;
   });
 
   //handle du logout
@@ -110,6 +111,7 @@ export default function ProfileScreen({ navigation }) {
       <ScrollView>
         <View style={styles.profilusernameandpicture}>
           <Text style={styles.textUsername}>{users.username}</Text>
+          <Text style={styles.textUsername}>{users.city}</Text>
           <Text style={styleOnline}></Text>
         </View>
         <View style={styles.descriptionUser}>
@@ -137,7 +139,7 @@ export default function ProfileScreen({ navigation }) {
               <View style={styles.friendsTab}>{friendsList}</View>
             </ScrollView>
           </View>
-         )}  
+        )}
       </ScrollView>
     </View>
   );

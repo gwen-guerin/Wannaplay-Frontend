@@ -7,19 +7,24 @@ import { FontAwesome5 } from "@expo/vector-icons";
 //comment on fait pour concrètrement pour faire une demande d'amis ?? et pusher en BD ?
 export default function FriendsCards(props) {
   const [friends, setFriends] = useState({});
+  const [isFriendOnline, setIsFriendOnline] = useState(false);
 
   //useEffect à la connexion de l'utilisateur qui récupère les données des amis (username et photo)
   useEffect(() => {
-    fetch(`http://172.17.188.25:3000/users/profile/${props.friend}`)
+    fetch(`http://192.168.1.15:3000/users/profile/${props.friend}`)
       .then((res) => res.json())
       .then((data) => {
-        setFriends(data.user);
+        setFriends(data.user.friends);
+        setIsFriendOnline(data.user.status)
+        // console.log('INFOUSER', data.user)
+        // console.log(data.user.friends)
+        // console.log('FRIENDS', friends)
       });
-  }, []);
-
+    }, []);
+    
   //style conditionnel pour le statut online ou pas
   let styleOnline = styles.online;
-  if (friends.status) {
+  if (isFriendOnline) {
     styleOnline = styles.online1;
   }
 

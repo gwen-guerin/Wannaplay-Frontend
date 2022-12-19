@@ -36,9 +36,9 @@ export default function UploadImage() {
   
     //on borde la permission avec un useEffect afin de garantir que cette dernière soit déclenchée avant que l'utilisateur
     //n'interagisse avec le sélecteur d'image
-    // useEffect(() => {
-    //   checkForCameraRollPermission();
-    // }, []);
+    useEffect(() => {
+      checkForCameraRollPermission();
+    }, []);
   
   
   
@@ -58,7 +58,7 @@ export default function UploadImage() {
         type: "image/jpeg",
       });
 
-      fetch("http://172.17.188.25:3000/upload", {
+      fetch("http://192.168.1.15:3000/upload", {
         method: "POST",
         body: formData,
       })
@@ -66,7 +66,7 @@ export default function UploadImage() {
         .then((data) => {
           setImage(data.url);
           data.result && dispatch(addPhoto(data.url));
-          fetch("http://172.17.188.25:3000/users/photo", {
+          fetch("http://192.168.1.15:3000/users/photo", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -89,7 +89,7 @@ export default function UploadImage() {
           style={imageUploaderStyles.uploadBtn}
         >
           {/* <Text>{image ? 'Edit' : 'Upload'} Image</Text> */}
-          <AntDesign name="camera" size={30} color="black" onPress={() => checkForCameraRollPermission()}/>
+          <AntDesign name="camera" size={30} color="black"/>
         </TouchableOpacity>
       </View>
     </View>
