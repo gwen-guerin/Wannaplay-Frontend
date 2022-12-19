@@ -13,6 +13,7 @@ import ChatsList from "./screens/ChatsList";
 import ChatScreen from "./screens/ChatScreen";
 import SearchPage from "./screens/SearchPage";
 import Questions from "./screens/Questions";
+
 const store = configureStore({
   reducer: { user },
 });
