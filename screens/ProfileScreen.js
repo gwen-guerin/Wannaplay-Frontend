@@ -23,7 +23,7 @@ export default function ProfileScreen({ navigation }) {
 
   //useEffect utilisé pour charger la page profile de l'utilisateur au  moment de sa connection/signin
   useEffect(() => {
-    fetch(`http://192.168.1.118:3000/users/profile/${users.username}`)
+    fetch(`http://172.20.10.3:3000/users/profile/${users.username}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {

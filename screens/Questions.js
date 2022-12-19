@@ -89,9 +89,9 @@ export default function Questions({ navigation }) {
   // ROUTE POST DES DONNEES DU FORM EN DB
   const handleFormSubmit = () => {
     // console.log(user.firstname);
-    fetch('http://192.168.1.118:3000/users/signupForm', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    fetch("http://172.20.10.3:3000/users/signupForm", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         username: user.username,
         age: age,

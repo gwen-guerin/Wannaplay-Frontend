@@ -54,7 +54,7 @@ export default function UploadImage() {
         type: "image/jpeg",
       });
 
-      fetch("http://172.16.190.14:3000/upload", {
+      fetch("http://172.20.10.3:3000/upload", {
         method: "POST",
         body: formData,
       })
@@ -62,7 +62,7 @@ export default function UploadImage() {
         .then((data) => {
           setImage(data.url);
           data.result && dispatch(addPhoto(data.url));
-          fetch("http://172.16.190.14:3000/users/photo", {
+          fetch("http://172.20.10.3:3000/users/photo", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
