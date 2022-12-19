@@ -7,10 +7,10 @@ import {
   Modal,
   TextInput,
   Dimensions,
-} from 'react-native';
-import { useDispatch } from 'react-redux';
-import { useState } from 'react';
-import { login } from '../reducers/user';
+} from "react-native";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
+import { login } from "../reducers/user";
 
 const EMAIL_REGEX =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -64,15 +64,15 @@ export default function Home({ navigation }) {
               password: data.user.password,
             })
           );
-          setFirstname('');
-          setUsername('');
-          setPassword('');
-          setEmail('');
-          setLastname('');
+          setFirstname("");
+          setUsername("");
+          setPassword("");
+          setEmail("");
+          setLastname("");
           setModalVisible(!modalVisible);
-          navigation.navigate('Questions');
+          navigation.navigate("Questions");
         } else {
-          alert('username already existing !');
+          alert("username already existing !");
           setErrorSignup(true);
         }
       });
@@ -101,14 +101,15 @@ export default function Home({ navigation }) {
           dispatch(
             login({
               username: usernameSignIn,
-            }))
-          setFirstname('');
-          setUsername('');
-          setPassword('');
-          setEmail('');
-          setLastname('');
+            })
+          );
+          setFirstname("");
+          setUsername("");
+          setPassword("");
+          setEmail("");
+          setLastname("");
           setModalSignInVisible(!modalSignInVisible),
-          navigation.navigate('TabNavigator');
+            navigation.navigate("TabNavigator");
           setErrorSignin(false);
         } else {
           setModalSignInVisible(true);
@@ -281,7 +282,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   inputs: {
-    backgroundColor: '#D9D9D9',
+    backgroundColor: "#D9D9D9",
     borderRadius: 20,
     paddingLeft: 10,
     width: "100%",

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Text,
   StyleSheet,
@@ -18,8 +18,8 @@ export default function Questions({ navigation }) {
   const user = useSelector((state) => state.user.value);
 
   const [age, setAge] = useState(0);
-  const [city, setCity] = useState('');
-  const [department, setDepartment] = useState('');
+  const [city, setCity] = useState("");
+  const [department, setDepartment] = useState("");
   const [teacher, setTeacher] = useState(false);
   // const [tags, setTags] = useState([]);
   const [singer, setSinger] = useState(false);
@@ -88,7 +88,6 @@ export default function Questions({ navigation }) {
 
   // ROUTE POST DES DONNEES DU FORM EN DB
   const handleFormSubmit = () => {
-
     // console.log(user.firstname);
     fetch('http://192.168.1.118:3000/users/signupForm', {
       method: 'POST',
@@ -131,7 +130,7 @@ export default function Questions({ navigation }) {
 
   return (
     <ImageBackground
-      source={require('../assets/illu_02.jpg')}
+      source={require("../assets/illu_02.jpg")}
       imageStyle={{ opacity: 0.25 }}
       style={styles.imgBack}
     >
@@ -268,7 +267,7 @@ export default function Questions({ navigation }) {
             style={styles.submitForm}
             onPress={() => handleFormSubmit()}
           >
-            <Text style={{ fontSize: 25, color: '#ffffff' }}>SUBMIT</Text>
+            <Text style={{ fontSize: 25, color: "#ffffff" }}>SUBMIT</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -281,18 +280,18 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     paddingLeft: 20,
     paddingRight: 20,
-    backgroundColor: 'rgba(80,0,0,0.3)',
+    backgroundColor: "rgba(80,0,0,0.3)",
   },
   scrollContainer: {
     height: 900,
-    display: 'flex',
-    justifyContent: 'space-around',
-    alignItems: 'stretch',
+    display: "flex",
+    justifyContent: "space-around",
+    alignItems: "stretch",
   },
   inputText: {
-    color: '#ffffff',
+    color: "#ffffff",
     fontSize: 25,
-    backgroundColor: '#CE2174aa',
+    backgroundColor: "#CE2174aa",
     borderRadius: 15,
     padding: 6,
   },
@@ -301,10 +300,10 @@ const styles = StyleSheet.create({
   //   borderRadius: 20,
   // },
   submitForm: {
-    width: '80%',
-    alignSelf: 'center',
-    alignItems: 'center',
-    backgroundColor: '#CE2174aa',
+    width: "80%",
+    alignSelf: "center",
+    alignItems: "center",
+    backgroundColor: "#CE2174aa",
     borderRadius: 15,
     padding: 6,
   },
