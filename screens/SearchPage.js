@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Searchbar, ThemeProvider } from "react-native-paper";
+import { StyleSheet } from "react-native";
+import UsersCards from "../components/UsersCards";
+
 // import all the components we are going to use
 import {
   Text,
@@ -23,7 +26,7 @@ const App = () => {
 
   const handleSearch = () => {
     if (searchQuery.length > 0) {
-      fetch(`http://172.17.188.9:3000/search/${searchQuery}`)
+      fetch(`http://172.17.188.25:3000/search/${searchQuery}`)
         .then((response) => response.json())
         .then((data) => {
           setSearchResults(
@@ -57,6 +60,7 @@ const App = () => {
       />
       <ScrollView contentContainerStyle={styles.scrollList}>
         {searchResults}
+        {/* <UsersCards/> */}
       </ScrollView>
     </View>
   );

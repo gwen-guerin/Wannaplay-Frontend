@@ -30,6 +30,7 @@ export const userSlice = createSlice({
       state.value.teacher.push(action.payload.teacher);
       state.value.singer = action.payload.singer;
       state.value.photos = action.payload.photos;
+      state.value.department = action.payload.department;
 
 
     },
@@ -40,7 +41,6 @@ export const userSlice = createSlice({
       state.value.city = null;
       state.value.department = null;
       state.value.status = false;
-      state.value.password = null;
       state.value.singer = null;
       state.value.tags = [];
       state.value.photos = null;

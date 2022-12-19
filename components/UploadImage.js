@@ -18,26 +18,30 @@ export default function UploadImage() {
   const [image, setImage] = useState(null);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.value);
-
-  //autorisation pour l'accès à fichier média utilisateur
-  const checkForCameraRollPermission = async () => {
-    const { status } = await ImagePicker.getMediaLibraryPermissionsAsync();
-    console.log(status);
-    if (status !== "granted") {
-      alert(
-        "Please grant camera roll permissions inside your system's settings"
-      );
-    } else {
-      console.log("Media Permissions are granted");
-    }
-  };
-
-  //on borde la permission avec un useEffect afin de garantir que cette dernière soit déclenchée avant que l'utilisateur
-  //n'interagisse avec le sélecteur d'image
-  useEffect(() => {
-    checkForCameraRollPermission();
-  }, []);
-
+  
+ 
+  
+    //autorisation pour l'accès à fichier média utilisateur
+    const checkForCameraRollPermission = async () => {
+      const { status } = await ImagePicker.getMediaLibraryPermissionsAsync();
+      console.log(status);
+      if (status !== "granted") {
+        alert(
+          "Please grant camera roll permissions inside your system's settings"
+        );
+        } else {
+        console.log("Media Permissions are granted");
+      }
+    };
+  
+    //on borde la permission avec un useEffect afin de garantir que cette dernière soit déclenchée avant que l'utilisateur
+    //n'interagisse avec le sélecteur d'image
+    // useEffect(() => {
+    //   checkForCameraRollPermission();
+    // }, []);
+  
+  
+  
   // methode permettant d'ouvrir l'ui utilisateur pour choisir une image
   const addImage = async () => {
     let _image = await ImagePicker.launchImageLibraryAsync({
@@ -54,7 +58,7 @@ export default function UploadImage() {
         type: "image/jpeg",
       });
 
-      fetch("http://172.16.190.14:3000/upload", {
+      fetch("http://172.17.188.25:3000/upload", {
         method: "POST",
         body: formData,
       })
@@ -62,7 +66,7 @@ export default function UploadImage() {
         .then((data) => {
           setImage(data.url);
           data.result && dispatch(addPhoto(data.url));
-          fetch("http://172.16.190.14:3000/users/photo", {
+          fetch("http://172.17.188.25:3000/users/photo", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -85,7 +89,7 @@ export default function UploadImage() {
           style={imageUploaderStyles.uploadBtn}
         >
           {/* <Text>{image ? 'Edit' : 'Upload'} Image</Text> */}
-          <AntDesign name="camera" size={30} color="black" />
+          <AntDesign name="camera" size={30} color="black" onPress={() => checkForCameraRollPermission()}/>
         </TouchableOpacity>
       </View>
     </View>

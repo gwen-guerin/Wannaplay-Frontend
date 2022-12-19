@@ -12,6 +12,9 @@ export default function ProfileScreen({ navigation }) {
   //useSelector
   const users = useSelector((state) => state.user.value);
 
+  //useDispatch
+  const dispatch = useDispatch();
+
   //Etats useState
   const [tags, setTags] = useState([]);
   const [friends, setFriends] = useState([]);
@@ -23,7 +26,7 @@ export default function ProfileScreen({ navigation }) {
 
   //useEffect utilisé pour charger la page profile de l'utilisateur au  moment de sa connection/signin
   useEffect(() => {
-    fetch(`http://172.17.188.9:3000/users/profile/${users.username}`)
+    fetch(`http://172.17.188.25:3000/users/profile/${users.username}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
@@ -82,14 +85,14 @@ export default function ProfileScreen({ navigation }) {
   //on map sur l'état firends pour faire ressortir les amis de l'utilisateur
   const friendsList = friends.map((friend, i) => {
     if (i > 0) {
-      setError(false);
+      setError(true);
     }
     return <FriendsCards key={i} friend={friend} />;
   });
 
   //handle du logout
   const handleLogout = () => {
-    dispactch(logout());
+    dispatch(logout());
     navigation.navigate("Home");
   };
 
@@ -128,14 +131,13 @@ export default function ProfileScreen({ navigation }) {
           <View>
             <View style={styles.friendsView}>
               <Text style={styles.friends}>My friends</Text>
-
               <FontAwesome5 name="rocketchat" size={30} color="#CE2174" />
             </View>
             <ScrollView horizontal={true}>
               <View style={styles.friendsTab}>{friendsList}</View>
             </ScrollView>
           </View>
-        )}
+         )}  
       </ScrollView>
     </View>
   );
