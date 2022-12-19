@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   value: {
@@ -6,11 +6,14 @@ const initialState = {
     lastname: null,
     username: null,
     email: null,
-    age: 0,
+    age: null,
     tags: [],
     location: [],
     friends: [],
-    teacher: [],
+    status: null,
+    city: null,
+    department: null,
+    teacher: null,
     singer: null,
     status: null,
     photos: null,
@@ -19,7 +22,7 @@ const initialState = {
 };
 
 export const userSlice = createSlice({
-  name: 'user',
+  name: "user",
   initialState,
   reducers: {
     login: (state, action) => {
@@ -32,22 +35,31 @@ export const userSlice = createSlice({
       state.value.email = null;
       state.value.tags = [];
     },
-  
+
     addFriend: (state, action) => {
-    state.value.friends = state.value.friends.push(action.payload);
+      state.value.friends = state.value.friends.push(action.payload);
     },
     removeFriend: (state, action) => {
       state.value = state.value.filter((e) => e.username !== action.payload);
     },
     addPhoto: (state, action) => {
-      console.log('payload',action.payload)
-      state.value.photos = action.payload;
+      state.value.photos.push(action.payload);
     },
     removePhoto: (state, action) => {
-      state.value.photos = null;
+      state.value.photos = state.value.photos.filter(
+        (data) => data !== action.payload
+      );
     },
-  }
+  },
 });
 
-export const { login, logout, question, addFriend, removeFriend, addPhoto, removePhoto } = userSlice.actions;
+export const {
+  login,
+  logout,
+  question,
+  addFriend,
+  removeFriend,
+  addPhoto,
+  removePhoto,
+} = userSlice.actions;
 export default userSlice.reducer;

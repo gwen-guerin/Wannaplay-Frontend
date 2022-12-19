@@ -2,27 +2,23 @@ import { Image, View, StyleSheet, Text } from "react-native";
 import { useState, useEffect } from "react";
 import { FontAwesome5 } from "@expo/vector-icons";
 
-//composant pour afficher les amis sur la page de Profile
+//composant pour afficher les profils de tous les utilisateurs
 
-//comment on fait pour concrètrement pour faire une demande d'amis ?? et pusher en BD ?
-export default function FriendsCards(props) {
-  const [friends, setFriends] = useState({});
-
-  //useEffect à la connexion de l'utilisateur qui récupère les données des amis (username et photo)
+export default function UsersCards(props) {
+  //useEffect pour récupérer tous les utilisateurs
   useEffect(() => {
-    fetch(`http://192.168.0.11:3000/users/profile/${props.friend}`)
+    fetch(`http://172.20.10.3:3000/users/allUsers`)
       .then((res) => res.json())
       .then((data) => {
         setFriends(data.user);
       });
-    }, []);
-    console.log("FRIEND liste", data.user);
-    
+  }, []);
+
   //style conditionnel pour le statut online ou pas
-  // let styleOnline = styles.online;
-  // if (friends.status) {
-  //   styleOnline = styles.online1;
-  // }
+  let styleOnline = styles.online;
+  if (friends.status) {
+    styleOnline = styles.online1;
+  }
 
   //il faudra remplacer l'image par l'uri/l de la photo des amis
   return (
