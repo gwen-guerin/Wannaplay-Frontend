@@ -8,7 +8,29 @@ import SearchTeacher from "./searchPages/SearchTeacher";
 
 import { StyleSheet, Dimensions, TextInput, View } from "react-native";
 
-const Stack = createNativeStackNavigator();
+const handleSearch = () => {
+  if (searchQuery.length > 0) {
+    fetch(`http://172.20.10.3:3000/search/${searchQuery}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setSearchResults(
+          data.users.map((user, i) => {
+            return (
+              <TouchableOpacity key={i} style={styles.searchedButton}>
+                <Image
+                  source={require("../assets/mia-khalifa.jpg")}
+                  style={styles.avatar}
+                />
+                <View style={styles.userInfo}>
+                  <Text>{user.username}</Text>
+                </View>
+              </TouchableOpacity>
+            );
+          })
+        );
+      });
+  }
+};
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -16,7 +38,6 @@ const SearchNavigator = () => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        
         tabBarHideOnKeyboard: true,
         tabBarActiveTintColor: "#ec6e5b",
         tabBarInactiveTintColor: "#335561",
@@ -32,7 +53,10 @@ const SearchNavigator = () => {
 
 export default function SearchPage() {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }} style={styles.navigator}>
+    <Stack.Navigator
+      screenOptions={{ headerShown: false }}
+      style={styles.navigator}
+    >
       <Stack.Screen name="SearchNavigator" component={SearchNavigator} />
     </Stack.Navigator>
   );
@@ -45,6 +69,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   navigator: {
-    borderBottomColor: "#ec6e5b"
+    borderBottomColor: "#ec6e5b",
   },
 });

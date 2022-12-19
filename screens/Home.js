@@ -87,7 +87,11 @@ export default function Home({ navigation }) {
   };
 
   const submitSignIn = () => {
+<<<<<<< HEAD
     fetch("http://172.17.188.25:3000/users/signin", {
+=======
+    fetch("http://172.20.10.3:3000/users/signin", {
+>>>>>>> 853254604f6baa4ea86659ec3933cc2aa00071d4
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
