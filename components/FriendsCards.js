@@ -21,12 +21,13 @@ export default function FriendsCards(props) {
         // console.log('FRIENDS', friends)
       });
     }, []);
+    console.log("FRIEND liste", data.user);
     
   //style conditionnel pour le statut online ou pas
-  let styleOnline = styles.online;
-  if (isFriendOnline) {
-    styleOnline = styles.online1;
-  }
+  // let styleOnline = styles.online;
+  // if (friends.status) {
+  //   styleOnline = styles.online1;
+  // }
 
   //il faudra remplacer l'image par l'uri/l de la photo des amis
   return (

@@ -13,6 +13,7 @@ import ChatsList from "./screens/ChatsList";
 import ChatScreen from "./screens/ChatScreen";
 import SearchPage from "./screens/SearchPage";
 import Questions from "./screens/Questions";
+import UpdateProfile from "./screens/UpdateProfile"
 
 const store = configureStore({
   reducer: { user },
@@ -64,6 +65,7 @@ export default function App() {
             <Stack.Screen name="TabNavigator" component={TabNavigator} />
             <Stack.Screen name="Chat" component={ChatScreen} />
             <Stack.Screen name="Questions" component={Questions} />
+            <Stack.Screen name="UpdateProfile" component={UpdateProfile} />
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>

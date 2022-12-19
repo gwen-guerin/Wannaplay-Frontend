@@ -16,7 +16,8 @@ const initialState = {
     teacher: null,
     singer: null,
     status: null,
-    photos: [],
+    photos: null,
+    description: null,
   },
 };
 
@@ -26,14 +27,6 @@ export const userSlice = createSlice({
   reducers: {
     login: (state, action) => {
       state.value.username = action.payload.username;
-      state.value.age = action.payload.age;
-      state.value.tags.push(action.payload.tags);
-      state.value.city = action.payload.city;
-      state.value.department = action.payload.department;
-      state.value.status = action.payload.status;
-      state.value.teacher = action.payload.teacher;
-      state.value.singer = action.payload.singer;
-      state.value.photos.push(action.payload.photos);
     },
     logout: (state) => {
       state.value.firstname = null;

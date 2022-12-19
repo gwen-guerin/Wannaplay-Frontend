@@ -98,6 +98,7 @@ export default function Home({ navigation }) {
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
+          // console.log("DATAAA", data.user.firstname);
           dispatch(
             login({
               username: usernameSignIn,

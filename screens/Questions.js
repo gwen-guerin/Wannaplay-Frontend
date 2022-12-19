@@ -7,25 +7,22 @@ import {
   ScrollView,
   ImageBackground,
   TouchableOpacity,
-} from "react-native";
-import { Picker } from "@react-native-picker/picker";
-import Slider from "@react-native-community/slider";
-import { useSelector } from "react-redux";
-import { Select } from "native-base";
-import { Entypo } from "@expo/vector-icons";
+} from 'react-native';
+import { Picker } from '@react-native-picker/picker';
+import Slider from '@react-native-community/slider';
+import { useSelector } from 'react-redux';
+import { Select } from 'native-base';
+import { Entypo } from '@expo/vector-icons';
 
 export default function Questions({ navigation }) {
   const user = useSelector((state) => state.user.value);
 
   const [age, setAge] = useState(0);
-  const [city, setCity] = useState("");
-  const [department, setDepartment] = useState("");
+  const [city, setCity] = useState('');
   const [teacher, setTeacher] = useState(false);
-  // const [tags, setTags] = useState([]);
-  const [singer, setSinger] = useState(false);
-
   const [instruments, setInstruments] = useState([]);
   const [instruTaught, setInstruTaught] = useState([]);
+  const [description, setDescription] = useState([]);
 
   //FONCTIONS POUR DELETE INSTRU/TEACHING
   const handleDeleteInstru = (instru) => {
@@ -97,11 +94,12 @@ export default function Questions({ navigation }) {
         age: age,
         teacher: instruTaught,
         tags: instruments,
+        description: description,
       }),
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("DATA", data);
+        // console.log('DATA', data);
         // if (data.result) {
         //   // dispatch(
         //   //   login({
@@ -125,7 +123,7 @@ export default function Questions({ navigation }) {
         //   alert('username already existing !');
         // }
       });
-    navigation.navigate("TabNavigator");
+    navigation.navigate('TabNavigator');
   };
 
   return (
@@ -156,12 +154,6 @@ export default function Questions({ navigation }) {
             placeholderTextColor="#ffffffaa"
             onChangeText={(city) => setCity(city)}
           />
-          <TextInput
-            style={styles.inputText}
-            placeholder="Which department ?"
-            placeholderTextColor="#ffffffaa"
-            onChangeText={(department) => setDepartment(department)}
-          />
           <View>
             <Text style={styles.inputText}>Do you wanna teach something ?</Text>
             <Picker
@@ -190,7 +182,7 @@ export default function Questions({ navigation }) {
                       onSelectedInstruTaught(itemValue)
                     }
                   >
-                    <Select.Item label="Voice" value="Voice" />
+                    <Select.Item label="Singing" value="Singing" />
                     <Select.Item label="Guitar" value="Guitar" />
                     <Select.Item label="Drums" value="Drums" />
                     <Select.Item label="Piano" value="Piano" />
@@ -213,25 +205,6 @@ export default function Questions({ navigation }) {
               </View>
             ) : null}
           </View>
-          <View style={teacher ? { marginTop: 0 } : { marginTop: -100 }}>
-            <Text style={styles.inputText}>Are you a singer ?</Text>
-            <Picker
-              selectedValue={singer}
-              onValueChange={(singer) => setSinger(singer)}
-            >
-              <Picker.Item
-                style={styles.instruText}
-                label="No"
-                value="Like a casserolle under shower"
-              />
-              <Picker.Item
-                style={styles.instruText}
-                label="Yes"
-                value="Better than Elvis !"
-              />
-            </Picker>
-            <Text>{singer}</Text>
-          </View>
           <View>
             <View style={styles.inputText}>
               <Select
@@ -243,6 +216,7 @@ export default function Questions({ navigation }) {
                 fontSize={25}
                 onValueChange={(itemValue) => onSelectedInstru(itemValue)}
               >
+                <Select.Item label="Singer" value="Singer" />
                 <Select.Item label="Guitar" value="Guitar" />
                 <Select.Item label="Drums" value="Drums" />
                 <Select.Item label="Piano" value="Piano" />
@@ -263,6 +237,16 @@ export default function Questions({ navigation }) {
             </View>
             <View style={styles.instruContainer}>{mapInstru}</View>
           </View>
+          <TextInput
+            style={styles.inputText}
+            placeholder="Describe yourself in a few words ..."
+            placeholderTextColor={'#ffffff'}
+            multiline={true}
+            numberOfLines={4}
+            onChangeText={(text) => setDescription(text)}
+            value={description}
+            maxLength={300}
+          />
           <TouchableOpacity
             style={styles.submitForm}
             onPress={() => handleFormSubmit()}
@@ -295,10 +279,6 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     padding: 6,
   },
-  // selectContainer: {
-  //   backgroundColor: '#CE2174aa',
-  //   borderRadius: 20,
-  // },
   submitForm: {
     width: "80%",
     alignSelf: "center",
@@ -308,18 +288,18 @@ const styles = StyleSheet.create({
     padding: 6,
   },
   instruCard: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 20,
-    backgroundColor: "#C5C5C5aa",
+    backgroundColor: '#C5C5C5aa',
     padding: 5,
   },
   instruContainer: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-around",
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
     marginTop: 5,
   },
   instruText: {
