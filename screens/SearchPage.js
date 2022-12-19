@@ -9,6 +9,7 @@ import {
   ScrollView,
   Image,
   Dimensions,
+  StyleSheet
 } from "react-native";
 
 const App = () => {
@@ -23,7 +24,7 @@ const App = () => {
 
   const handleSearch = () => {
     if (searchQuery.length > 0) {
-      fetch(`http://172.16.190.134:3000/search/${searchQuery}`)
+      fetch(`http://192.168.0.11:3000/search/${searchQuery}`)
         .then((response) => response.json())
         .then((data) => {
           setSearchResults(

@@ -321,7 +321,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   modifyIcon: {
-    // backgroundColor: 'red',
     display: 'flex',
     alignItems: 'flex-end',
     marginTop: -15,

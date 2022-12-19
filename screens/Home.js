@@ -40,7 +40,7 @@ export default function Home({ navigation }) {
   };
 
   const handleRegister = () => {
-    fetch("http://172.16.190.134:3000/users/signup", {
+    fetch("http://192.168.0.11:3000/users/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -87,7 +87,7 @@ export default function Home({ navigation }) {
   };
 
   const submitSignIn = () => {
-    fetch("http://172.16.190.134:3000/users/signin", {
+    fetch("http://192.168.0.11:3000/users/signin", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -98,9 +98,12 @@ export default function Home({ navigation }) {
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
+          // console.log("DATAAA", data.user.firstname);
           dispatch(
             login({
               username: usernameSignIn,
+              age: data.user.age,
+              firstname: data.user.firstname
             }))
           setFirstname('');
           setUsername('');

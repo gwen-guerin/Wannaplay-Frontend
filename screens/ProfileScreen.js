@@ -17,22 +17,10 @@ import { useSelector } from 'react-redux';
 export default function ProfileScreen({ navigation }) {
   const userRed = useSelector((state) => state.user.value);
 
-  //Etats useState
-  // const [tags, setTags] = useState([]);
-  // const [friends, setFriends] = useState([]);
-  // const [status, setStatus] = useState(false);
-  // const [city, setCity] = useState('');
-  // const [teacher, setTeacher] = useState([]);
-  // const [age, setAge] = useState('');
-  // const [error, setError] = useState(false);
-  // const [description, setDescription] = useState('');
-  // const [username, setUsername] = useState('')
-
   const [user, setUser] = useState({
     firstname: null,
     tags: [],
     friends: [],
-    // status: false,
     city: null,
     age: null,
     teacher: [],

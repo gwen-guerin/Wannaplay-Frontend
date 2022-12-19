@@ -13,7 +13,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Pusher from "pusher-js/react-native";
 
 const pusher = new Pusher('295cd63eb30452706332', { cluster: 'eu' });
-const BACKEND_ADDRESS = 'http://172.16.190.134:3000';
+const BACKEND_ADDRESS = 'http://192.168.0.11:3000';
 
 export default function ChatScreen({ navigation, route: { params } }) {
   const [messages, setMessages] = useState([]);
