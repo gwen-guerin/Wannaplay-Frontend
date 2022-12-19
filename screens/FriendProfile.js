@@ -17,10 +17,22 @@ import { useSelector } from 'react-redux';
 export default function ProfileScreen({ navigation }) {
   const userRed = useSelector((state) => state.user.value);
 
+  //Etats useState
+  // const [tags, setTags] = useState([]);
+  // const [friends, setFriends] = useState([]);
+  // const [status, setStatus] = useState(false);
+  // const [city, setCity] = useState('');
+  // const [teacher, setTeacher] = useState([]);
+  // const [age, setAge] = useState('');
+  // const [error, setError] = useState(false);
+  // const [description, setDescription] = useState('');
+  // const [username, setUsername] = useState('')
+
   const [user, setUser] = useState({
     firstname: null,
     tags: [],
     friends: [],
+    // status: false,
     city: null,
     age: null,
     teacher: [],
@@ -57,8 +69,8 @@ export default function ProfileScreen({ navigation }) {
   //on map sur l'état teacher pour faire ressortir les tags/les instruments que l'utilisateur veut enseigner
   const teacherTag = user.teacher.map((teacher, i) => {
     function randomColor() {
-      const letters = "0123456789ABCDEF";
-      let color = "#";
+      const letters = '0123456789ABCDEF';
+      let color = '#';
       for (let i = 0; i < 6; i++) {
         color += letters[Math.floor(Math.random() * 16)];
       }
@@ -178,12 +190,12 @@ export default function ProfileScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "space-between",
-    width: "100%",
-    height: "100%",
+    justifyContent: 'space-between',
+    width: '100%',
+    height: '100%',
     paddingTop: 50,
     padding: 10,
-    backgroundColor: "#A8F9DE",
+    backgroundColor: '#A8F9DE',
   },
   userPicture: {
     borderRadius: 60,
@@ -191,12 +203,12 @@ const styles = StyleSheet.create({
     height: 80,
   },
   friendsTab: {
-    backgroundColor: "white",
+    backgroundColor: 'white',
     opacity: 0.9,
     borderRadius: 40,
     height: 140,
-    display: "flex",
-    flexDirection: "row",
+    display: 'flex',
+    flexDirection: 'row',
     padding: 10,
     opacity: 0.6,
   },
@@ -243,14 +255,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   background: {
-    width: "100%",
-    height: "100%",
+    width: '100%',
+    height: '100%',
   },
   friends: {
-    fontWeight: "bold",
+    fontWeight: 'bold',
     fontSize: 20,
     marginLeft: 5,
-    color: "#CE2174",
+    color: '#CE2174',
   },
   online: {
     height: 20,
@@ -266,16 +278,16 @@ const styles = StyleSheet.create({
   },
   friendsView: {
     marginTop: 30,
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
     marginBottom: 8,
   },
   tagsList: {
-    display: "flex",
-    flexDirection: "row",
-    flexWrap: "wrap",
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     borderRadius: 20,
   },
   tagandteach: {
@@ -309,7 +321,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   modifyIcon: {
-    // backgroundColor: 'red',
     display: 'flex',
     alignItems: 'flex-end',
     marginTop: -15,
