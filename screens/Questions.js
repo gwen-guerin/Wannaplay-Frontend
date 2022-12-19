@@ -90,7 +90,7 @@ export default function Questions({ navigation }) {
   const handleFormSubmit = () => {
 
     // console.log(user.firstname);
-    fetch('http://172.16.190.134:3000/users/signupForm', {
+    fetch('http://192.168.1.118:3000/users/signupForm', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

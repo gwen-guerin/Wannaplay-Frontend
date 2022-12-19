@@ -34,7 +34,7 @@ const randomColor = colors[randomIndex];
 
   //useEffect utilisé pour charger la page profile de l'utilisateur au  moment de sa connection/signin
   useEffect(() => {
-    fetch(`http://172.16.190.134:3000/users/profile/${users.username}`)
+    fetch(`http://192.168.1.118:3000/users/profile/${users.username}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
