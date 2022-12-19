@@ -1,67 +1,66 @@
-import React, { useState, useEffect } from "react";
-import { Searchbar, ThemeProvider } from "react-native-paper";
-// import all the components we are going to use
-import {
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-  ScrollView,
-  Image,
-  Dimensions,
-  StyleSheet,
-} from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
-const App = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [results, setResults] = useState([]);
-  const [searched, setSearched] = useState([]);
-  const [searchResults, setSearchResults] = useState([]);
+import SearchTags from "./searchPages/SearchTags";
+import SearchUser from "./searchPages/SearchUser";
+import SearchTeacher from "./searchPages/SearchTeacher";
 
-  useEffect(() => {
-    handleSearch();
-  }, [searchQuery]);
+import { StyleSheet, Dimensions, TextInput, View } from "react-native";
 
-  const handleSearch = () => {
-    if (searchQuery.length > 0) {
-      fetch(`http://172.20.10.3:3000/search/${searchQuery}`)
-        .then((response) => response.json())
-        .then((data) => {
-          setSearchResults(
-            data.users.map((user, i) => {
-              return (
-                <TouchableOpacity key={i} style={styles.searchedButton}>
-                  <Image
-                    source={require("../assets/mia-khalifa.jpg")}
-                    style={styles.avatar}
-                  />
-                  <View style={styles.userInfo}>
-                    <Text>{user.username}</Text>
-                  </View>
-                </TouchableOpacity>
-              );
-            })
-          );
-        });
-    }
-  };
+const handleSearch = () => {
+  if (searchQuery.length > 0) {
+    fetch(`http://172.20.10.3:3000/search/${searchQuery}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setSearchResults(
+          data.users.map((user, i) => {
+            return (
+              <TouchableOpacity key={i} style={styles.searchedButton}>
+                <Image
+                  source={require("../assets/mia-khalifa.jpg")}
+                  style={styles.avatar}
+                />
+                <View style={styles.userInfo}>
+                  <Text>{user.username}</Text>
+                </View>
+              </TouchableOpacity>
+            );
+          })
+        );
+      });
+  }
+};
 
+const Tab = createMaterialTopTabNavigator();
+
+const SearchNavigator = () => {
   return (
-    <View style={styles.container}>
-      <TextInput
-        style={styles.searchBar}
-        placeholder="Rechercher"
-        onChangeText={(value) => {
-          setSearchQuery(value);
-        }}
-        value={searchQuery}
-      />
-      <ScrollView contentContainerStyle={styles.scrollList}>
-        {searchResults}
-      </ScrollView>
-    </View>
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarHideOnKeyboard: true,
+        tabBarActiveTintColor: "#ec6e5b",
+        tabBarInactiveTintColor: "#335561",
+        headerShown: false,
+      })}
+    >
+      <Tab.Screen name="Users" component={SearchUser} />
+      <Tab.Screen name="Tags" component={SearchTags} />
+      <Tab.Screen name="Teachers" component={SearchTeacher} />
+    </Tab.Navigator>
   );
 };
+
+export default function SearchPage() {
+  return (
+    <Stack.Navigator
+      screenOptions={{ headerShown: false }}
+      style={styles.navigator}
+    >
+      <Stack.Screen name="SearchNavigator" component={SearchNavigator} />
+    </Stack.Navigator>
+  );
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -69,43 +68,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  searchBar: {
-    backgroundColor: "gray",
-    color: "white",
-    width: "85%",
-    height: "6%",
-    margin: "5%",
-  },
-  scrollList: {
-    // flex: 1,
-    // backgroundColor: 'green',
-    // width: Dimensions.get("screen").width * 0.95,
-    width: "95%",
-    flexDirection: "row",
-    backgroundColor: "red",
-    alignItems: "center",
-    justifyContent: "space-around",
-  },
-  searchedButton: {
-    flexDirection: "row",
-    alignItems: "center",
-    width: Dimensions.get("screen").width * 0.35,
-    height: Dimensions.get("screen").width * 0.35,
-    backgroundColor: "green",
-    borderRadius: 25,
-    margin: Dimensions.get("screen").width * 0.01,
-  },
-  avatar: {
-    height: Dimensions.get("screen").height * 0.08,
-    width: Dimensions.get("screen").height * 0.08,
-    backgroundColor: "grey",
-    borderRadius: 50,
-    margin: Dimensions.get("screen").width * 0.01,
-  },
-  text: {
-    fontSize: 16,
-    padding: 5,
+  navigator: {
+    borderBottomColor: "#ec6e5b",
   },
 });
-
-export default App;
