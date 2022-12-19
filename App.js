@@ -9,7 +9,7 @@ import user from "./reducers/user";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import { NativeBaseProvider } from "native-base";
-import ChatsList from "./screens/ChatsList";
+import Chats from "./screens/Chats";
 import ChatScreen from "./screens/ChatScreen";
 import SearchPage from "./screens/SearchPage";
 import Questions from "./screens/Questions";
@@ -48,7 +48,7 @@ const TabNavigator = () => {
     >
       <Tab.Screen name="Univers" component={UniversPage} />
       <Tab.Screen name="Profil" component={ProfileScreen} />
-      <Tab.Screen name="Chats" component={ChatsList} />
+      <Tab.Screen name="Chats" component={Chats} />
       <Tab.Screen name="Search" component={SearchPage} />
     </Tab.Navigator>
   );

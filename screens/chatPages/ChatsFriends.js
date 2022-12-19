@@ -13,53 +13,60 @@ import {
 import { BlurView } from "expo-blur";
 import { useEffect, useState } from "react";
 
-export default function ChatsList({ navigation }) {
+export default function ChatsFriends({ navigation }) {
   const [allUsers, setAllUsers] = useState([]);
+  const [chatBoxes, setChatBoxes] = useState([]);
 
   useEffect(() => {
     fetch("http://192.168.1.118:3000/users/allUsers")
       .then((response) => response.json())
-      .then((data) => setAllUsers(data.usernames));
+      .then((data) => {
+        console.log(data);
+        setAllUsers(data.usersList);
+      });
   }, []);
+
+  useEffect(() => {
+    setChatBoxes(
+      allUsers.map((data, i) => {
+        return (
+          <BlurView
+            key={i}
+            intensity={100}
+            tint="light"
+            style={styles.chatlinkContainer}
+          >
+            <TouchableOpacity
+              onPress={() => handleNavigation(data)}
+              style={styles.chatlink}
+            >
+              <Image
+                source={require("../../assets/mia-khalifa.jpg")}
+                style={styles.avatar}
+              />
+              <Text style={{ color: "black" }}> {data.username} </Text>
+            </TouchableOpacity>
+          </BlurView>
+        );
+      })
+    );
+  }, [allUsers]);
+
   const handleNavigation = (user) => {
     navigation.navigate("Chat", { username: "username", friend: user });
   };
 
-  const chatBoxes = allUsers.map((data, i) => {
-    return (
-      <BlurView
-        key={i}
-        intensity={100}
-        tint="dark"
-        style={styles.chatlinkContainer}
-      >
-        <TouchableOpacity
-          onPress={() => handleNavigation(data)}
-          style={styles.chatlink}
-        >
-          <Image
-            source={require("../assets/mia-khalifa.jpg")}
-            style={styles.avatar}
-          />
-          <Text style={{ color: "white" }}> {data} </Text>
-        </TouchableOpacity>
-      </BlurView>
-    );
-  });
-
   return (
     <View style={styles.container}>
-      <View style={styles.header}></View>
       <ImageBackground
-        source={require("../assets/esquise02.jpg")}
+        source={require("../../assets/esquise02.jpg")}
         style={styles.inset}
-        imageStyle={{ borderTopLeftRadius: 30, borderTopRightRadius: 30 }}
         blurRadius={0.3}
       >
         <TextInput
           style={styles.input}
           placeholder="Search a friend..."
-          placeholderTextColor={"white"}
+          placeholderTextColor={"black"}
           // mode='outlined'
         />
         <ScrollView contentContainerStyle={styles.scrollList}>
@@ -81,26 +88,21 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "space-between",
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
     backgroundColor: "#ffffff",
     width: "100%",
     paddingTop: 20,
     position: "relative",
-    borderTopColor: "#A8F9DE",
-    borderLeftColor: "#A8F9DE",
-    borderRightColor: "#A8F9DE",
-    borderTopWidth: 4,
-    borderRightWidth: 0.1,
-    borderLeftWidth: 0.1,
   },
   input: {
     height: "7%",
     width: "90%",
-    backgroundColor: "black",
+    backgroundColor: "white",
     borderRadius: 10,
     paddingLeft: "2%",
     marginBottom: "3%",
+    borderColor: "black",
+    borderWidth: 2,
+    borderRadius: 5,
   },
   header: {
     height: "10%",
@@ -119,6 +121,8 @@ const styles = StyleSheet.create({
     width: Dimensions.get("screen").width * 0.95,
     margin: Dimensions.get("screen").width * 0.01,
     borderRadius: 5,
+    borderWidth: 2,
+    borderColor: 'black',
   },
   chatlink: {
     flexDirection: "row",

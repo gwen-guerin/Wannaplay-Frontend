@@ -14,6 +14,7 @@ import {
   ImageBackground,
 } from "react-native";
 import { BlurView } from "expo-blur";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function SearchUser() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -21,9 +22,15 @@ export default function SearchUser() {
   const [searched, setSearched] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
 
+  const username = useSelector(state => state.user.value.username)
+
   useEffect(() => {
     handleSearch();
   }, [searchQuery]);
+
+  const addChat = (friendUsername) => {
+    fetch('http://192.168.1.118:3000/users/')
+  }
 
   const handleSearch = () => {
     if (searchQuery.length > 0) {
@@ -46,7 +53,7 @@ export default function SearchUser() {
                       style={styles.avatar}
                     />
                     <View style={styles.userInfo}>
-                      <Text>{user.username}</Text>
+                      <Text>{user}</Text>
                     </View>
                   </TouchableOpacity>
                 </BlurView>
