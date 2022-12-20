@@ -14,7 +14,7 @@ import { FontAwesome, FontAwesome5 } from '@expo/vector-icons';
 import { useSelector } from 'react-redux';
 
 // construction de  la page profile
-export default function ProfileScreen({ navigation }) {
+export default function FriendProfile({ navigation }) {
   const userRed = useSelector((state) => state.user.value);
 
   //Etats useState
@@ -46,7 +46,6 @@ export default function ProfileScreen({ navigation }) {
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
-          console.log('BIIIIITE', data);
           setUser({
             age: data.user.age,
             tags: data.user.tags,
@@ -112,10 +111,10 @@ export default function ProfileScreen({ navigation }) {
   //   });
   // }
 
-  const handleLogout = () => {
-    dispatch(logout());
-    navigation.navigate('Home');
-  };
+  // const handleLogout = () => {
+  //   dispatch(logout());
+  //   navigation.navigate('Home');
+  // };
 
   const handleModify = () => {
     navigation.navigate('UpdateProfile');
