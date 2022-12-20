@@ -9,6 +9,7 @@ import SearchTeacher from "./searchPages/SearchTeacher";
 import { StyleSheet, Dimensions, TextInput, View } from "react-native";
 
 const Stack = createNativeStackNavigator();
+const Tab = createMaterialTopTabNavigator();
 
 const handleSearch = () => {
   if (searchQuery.length > 0) {
@@ -34,7 +35,6 @@ const handleSearch = () => {
   }
 };
 
-const Tab = createMaterialTopTabNavigator();
 
 const SearchNavigator = () => {
   return (

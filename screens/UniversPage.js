@@ -55,7 +55,7 @@ export default function UniversPage() {
                 }),
               })
                 .then((response) => response.json())
-                .then((user) => console.log("user", user));
+                // .then((user) => console.log("user", user));
             });
         });
       }

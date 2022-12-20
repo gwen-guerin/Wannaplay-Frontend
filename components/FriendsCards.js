@@ -1,6 +1,7 @@
-import { Image, View, StyleSheet, Text } from "react-native";
-import { useState, useEffect } from "react";
-import { FontAwesome5 } from "@expo/vector-icons";
+import { Image, View, StyleSheet, Text } from 'react-native';
+import { useState, useEffect } from 'react';
+import { FontAwesome5 } from '@expo/vector-icons';
+import { useSelector } from 'react-redux';
 
 //composant pour afficher les amis sur la page de Profile
 
@@ -44,21 +45,25 @@ export default function FriendsCards(props) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingTop: 20,
-    justifyContent: "center",
-    alignItems: "center",
+    // flex: 1,
+    // paddingTop: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
     padding: 20,
+    borderColor: "black",
+    borderWidth: 1,
+    borderRadius: 10,
+    margin: 5,
   },
   textUser: {
-    color: "#CE2174",
+    color: '#CE2174',
     fontSize: 18,
   },
   online: {
     marginTop: 10,
     height: 15,
     width: 15,
-    backgroundColor: "red",
+    backgroundColor: 'red',
     borderRadius: 40,
     marginBottom: 8,
   },
@@ -66,7 +71,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     height: 15,
     width: 15,
-    backgroundColor: "green",
+    backgroundColor: 'green',
     borderRadius: 40,
     marginBottom: 8,
   },
@@ -75,8 +80,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     width: 100,
     height: 30,
-    alignItems: "center",
-    alignContent: "center",
+    alignItems: 'center',
+    alignContent: 'center',
+  },
+  photoFriend: {
+    width: 75,
+    height: 75,
+    borderRadius: 40,
   },
   photoFriend: {
     width: 75,
