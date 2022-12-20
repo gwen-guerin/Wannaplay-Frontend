@@ -16,25 +16,24 @@ import {
 import { BlurView } from "expo-blur";
 import { useSelector, useDispatch } from "react-redux";
 
-export default function SearchUser() {
+export default function SearchUser({ navigation }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [results, setResults] = useState([]);
   const [searched, setSearched] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
 
-  const username = useSelector(state => state.user.value.username)
+  const username = useSelector((state) => state.user.value.username);
 
   useEffect(() => {
     handleSearch();
   }, [searchQuery]);
 
   const addChat = (friendUsername) => {
-    fetch('http://192.168.1.118:3000/users/')
-  }
+    fetch("http://192.168.1.118:3000/users/");
+  };
 
   const handleSearch = () => {
     if (searchQuery.length > 0) {
-      console.log(searchQuery.length)
       fetch(`http://192.168.1.118:3000/search/${searchQuery}`)
         .then((response) => response.json())
         .then((data) => {
@@ -47,7 +46,10 @@ export default function SearchUser() {
                   tint="light"
                   style={styles.blurbox}
                 >
-                  <TouchableOpacity style={styles.searchedButton}>
+                  <TouchableOpacity
+                    style={styles.searchedButton}
+                    onPress={() => navigation.navigate("FriendProfile", {username: user})}
+                  >
                     <Image
                       source={require("../../assets/mia-khalifa.jpg")}
                       style={styles.avatar}

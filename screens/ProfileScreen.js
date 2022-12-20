@@ -30,11 +30,10 @@ export default function ProfileScreen({ navigation }) {
 
   //useEffect utilisé pour charger la page profile de l'utilisateur au  moment de sa connection/signin
   useEffect(() => {
-    fetch(`http://192.168.0.11:3000/users/profile/${userRed.username}`)
+    fetch(`http://192.168.1.118:3000/users/profile/${userRed.username}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
-          console.log('BIIIIITE', data);
           setUser({
             age: data.user.age,
             tags: data.user.tags,

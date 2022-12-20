@@ -12,23 +12,25 @@ import {
 } from "react-native";
 import { BlurView } from "expo-blur";
 import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { addFriend, setFriends } from "../../reducers/user";
 
 export default function ChatsFriends({ navigation }) {
-  const [allUsers, setAllUsers] = useState([]);
   const [chatBoxes, setChatBoxes] = useState([]);
+  const user = useSelector((state) => state.user.value);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    fetch("http://192.168.1.118:3000/users/allUsers")
+    fetch(`http://192.168.1.118:3000/users/friends/getFriends/${user.username}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
-        setAllUsers(data.usersList);
+        dispatch(setFriends({friends: data.friends}));
       });
   }, []);
 
   useEffect(() => {
     setChatBoxes(
-      allUsers.map((data, i) => {
+      user.friends.map((data, i) => {
         return (
           <BlurView
             key={i}
@@ -44,16 +46,19 @@ export default function ChatsFriends({ navigation }) {
                 source={require("../../assets/mia-khalifa.jpg")}
                 style={styles.avatar}
               />
-              <Text style={{ color: "black" }}> {data.username} </Text>
+              <Text style={{ color: "black" }}> {data} </Text>
             </TouchableOpacity>
           </BlurView>
         );
       })
     );
-  }, [allUsers]);
+  }, [user]);
 
   const handleNavigation = (user) => {
-    navigation.navigate("Chat", { username: "username", friend: user });
+    navigation.navigate("Chat", {
+      username: "username",
+      friend: user,
+    });
   };
 
   return (
@@ -122,7 +127,7 @@ const styles = StyleSheet.create({
     margin: Dimensions.get("screen").width * 0.01,
     borderRadius: 5,
     borderWidth: 2,
-    borderColor: 'black',
+    borderColor: "black",
   },
   chatlink: {
     flexDirection: "row",

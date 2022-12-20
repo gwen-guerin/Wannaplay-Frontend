@@ -54,15 +54,14 @@ export default function UploadImage() {
         type: "image/jpeg",
       });
 
-      fetch("http://192.168.0.11:3000/upload", {
+      fetch("http://192.168.1.118:3000/upload", {
         method: "POST",
         body: formData,
       })
         .then((res) => res.json())
         .then((data) => {
           setImage(data.url);
-          data.result && dispatch(addPhoto(data.url));
-          fetch("http://192.168.0.11:3000/users/photo", {
+          fetch("http://192.168.1.118:3000/users/photo", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

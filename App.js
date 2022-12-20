@@ -14,6 +14,7 @@ import ChatScreen from "./screens/ChatScreen";
 import SearchPage from "./screens/SearchPage";
 import Questions from "./screens/Questions";
 import UpdateProfile from "./screens/UpdateProfile"
+import FriendProfile from "./screens/FriendProfile";
 
 const store = configureStore({
   reducer: { user },
@@ -66,6 +67,7 @@ export default function App() {
             <Stack.Screen name="Chat" component={ChatScreen} />
             <Stack.Screen name="Questions" component={Questions} />
             <Stack.Screen name="UpdateProfile" component={UpdateProfile} />
+            <Stack.Screen name="FriendProfile" component={FriendProfile} />
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>

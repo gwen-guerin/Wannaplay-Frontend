@@ -20,7 +20,7 @@ export default function ChatsList({ navigation }) {
   useEffect(() => {
     fetch("http://192.168.0.11:3000/users/allUsers")
       .then((response) => response.json())
-      .then((data) => { console.log(data) 
+      .then((data) => {
         setAllUsers(data.usersList)});
   }, []);
 

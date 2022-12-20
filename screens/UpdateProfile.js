@@ -16,7 +16,6 @@ import { useSelector } from 'react-redux';
 
 export default function UpdateProfile({navigation}) {
   const user = useSelector((state) => state.user.value);
-  // console.log(user);
 
   const [age, setAge] = useState(0);
   const [teacher, setTeacher] = useState(false);
@@ -87,8 +86,7 @@ export default function UpdateProfile({navigation}) {
 
     // ROUTE POST DES DONNEES DU FORM EN DB
     const handleFormSubmit = () => {
-      // console.log(user.firstname);
-      fetch('http://192.168.0.11:3000/users/updateProfile', {
+      fetch('http://192.168.1.118:3000/users/updateProfile', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
