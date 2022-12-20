@@ -17,6 +17,7 @@ import { useSelector } from 'react-redux';
 export default function ProfileScreen({ navigation }) {
   const userRed = useSelector((state) => state.user.value);
 
+  const [error, setError] = useState(false)
   const [user, setUser] = useState({
     firstname: null,
     tags: [],
@@ -34,8 +35,7 @@ export default function ProfileScreen({ navigation }) {
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
-          console.log('BIIIIITE', data);
-          setUser({
+            setUser({
             age: data.user.age,
             tags: data.user.tags,
             friends: data.user.friends,
@@ -43,16 +43,18 @@ export default function ProfileScreen({ navigation }) {
             teacher: data.user.teacher,
             firstname: data.user.firstname,
             description: data.user.description,
+            status: data.user.status,
+            profilePicture: data.user.profilePicture
           });
         }
       });
   }, []);
 
   //style conditionnel pour le statut online ou pas
-  // let styleOnline = styles.online;
-  // if (status) {
-  //   styleOnline = styles.online1;
-  // }
+  let styleOnline = styles.online;
+  if (user.status) {
+    styleOnline = styles.online1;
+  }
 
   //on map sur l'état teacher pour faire ressortir les tags/les instruments que l'utilisateur veut enseigner
   const teacherTag = user.teacher.map((teacher, i) => {
@@ -91,14 +93,16 @@ export default function ProfileScreen({ navigation }) {
   });
 
   //on map sur l'état friends pour faire ressortir les amis de l'utilisateur
-  // if (friends.length > 0) {
-  //   setError(false);
-  // } else {
-  //   setError(true)
-  //   const friendsList = friends.map((friend, i) => {
-  //     return <FriendsCards key={i} friend={friend} />;
-  //   });
-  // }
+
+  const friendsList = user.friends.map((friend, i) => {  
+    // if(user.friends.lenght>=1) {
+
+    //   setError(true)
+    // }
+    return <FriendsCards key={i} friend={friend} />;
+    } 
+  );
+  
 
   const handleLogout = () => {
     dispatch(logout());
@@ -115,7 +119,7 @@ export default function ProfileScreen({ navigation }) {
         <View style={styles.nameAndTags}>
           <View style={styles.nameAndStatus}>
             <Text style={styles.textUsername}>#{userRed.username}</Text>
-            {/* <View style={styleOnline}></View> */}
+            <View style={styleOnline}></View>
             <SimpleLineIcons
               style={styles.logoLogout}
               name="logout"
@@ -159,19 +163,20 @@ export default function ProfileScreen({ navigation }) {
             <FontAwesome5 name="user-friends" size={24} color="black" />
           </TouchableOpacity>
         </View>
-        {/* {error && (
-          <View>
+      {/* {error && ( */}
+           <View>
             <View style={styles.friendsView}>
               <Text style={styles.friends}>My friends</Text>
-              <FontAwesome5 name="rocketchat" size={30} color="#CE2174" />
             </View>
             <ScrollView horizontal={true}>
               <View style={styles.friendsTab}>{friendsList}</View>
             </ScrollView>
           </View>
-        )} */}
+
+     {/* )}  */}
+       
       </ScrollView>
-    </View>
+    </View> 
   );
 }
 
@@ -202,7 +207,7 @@ const styles = StyleSheet.create({
   },
   friendsList: {
     borderWidth: 1,
-    width: 100,
+    width: 10,
     height: 100,
   },
   textUser: {
@@ -309,7 +314,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   modifyIcon: {
-    // backgroundColor: 'red',
     display: 'flex',
     alignItems: 'flex-end',
     marginTop: -15,

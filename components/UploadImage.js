@@ -19,7 +19,8 @@ export default function UploadImage() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.value);
   
- 
+
+
   
     //autorisation pour l'accès à fichier média utilisateur
     const checkForCameraRollPermission = async () => {
@@ -65,7 +66,7 @@ export default function UploadImage() {
         .then((res) => res.json())
         .then((data) => {
           setImage(data.url);
-          data.result && dispatch(addPhoto(data.url));
+          // data.result && dispatch(addPhoto(data.url));
           fetch("http://192.168.1.15:3000/users/photo", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
