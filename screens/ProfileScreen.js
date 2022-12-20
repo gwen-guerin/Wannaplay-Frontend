@@ -4,14 +4,14 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
-} from 'react-native';
-import { useState, useEffect } from 'react';
-import FriendsCards from '../components/FriendsCards';
-import UploadImage from '../components/UploadImage';
-import { SimpleLineIcons } from '@expo/vector-icons';
-import { logout } from '../reducers/user';
-import { FontAwesome, FontAwesome5 } from '@expo/vector-icons';
-import { useSelector } from 'react-redux';
+} from "react-native";
+import { useState, useEffect } from "react";
+import FriendsCards from "../components/FriendsCards";
+import UploadImage from "../components/UploadImage";
+import { SimpleLineIcons } from "@expo/vector-icons";
+import { logout } from "../reducers/user";
+import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
+import { useSelector } from "react-redux";
 
 // construction de  la page profile
 export default function ProfileScreen({ navigation }) {
@@ -30,11 +30,11 @@ export default function ProfileScreen({ navigation }) {
 
   //useEffect utilisé pour charger la page profile de l'utilisateur au  moment de sa connection/signin
   useEffect(() => {
-    fetch(`http://192.168.0.11:3000/users/profile/${userRed.username}`)
+    fetch(`http://172.20.10.3:3000/users/profile/${userRed.username}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
-          console.log('BIIIIITE', data);
+          console.log("BIIIIITE", data);
           setUser({
             age: data.user.age,
             tags: data.user.tags,
@@ -62,7 +62,7 @@ export default function ProfileScreen({ navigation }) {
       for (let i = 0; i < 6; i++) {
         color += letters[Math.floor(Math.random() * 16)];
       }
-      return color + 'aa';
+      return color + "aa";
     }
     const color = randomColor();
     return (
@@ -75,12 +75,12 @@ export default function ProfileScreen({ navigation }) {
   //on map sur l'état tags pour faire ressortir les tags/les instruments pratiqué par l'utilisateur
   const tagsList = user.tags.map((tag, i) => {
     function randomColor() {
-      const letters = '0123456789ABCDEF';
-      let color = '#';
+      const letters = "0123456789ABCDEF";
+      let color = "#";
       for (let i = 0; i < 6; i++) {
         color += letters[Math.floor(Math.random() * 16)];
       }
-      return color + 'aa';
+      return color + "aa";
     }
     const color = randomColor();
     return (
@@ -102,11 +102,11 @@ export default function ProfileScreen({ navigation }) {
 
   const handleLogout = () => {
     dispatch(logout());
-    navigation.navigate('Home');
+    navigation.navigate("Home");
   };
 
   const handleModify = () => {
-    navigation.navigate('UpdateProfile');
+    navigation.navigate("UpdateProfile");
   };
   return (
     <View style={styles.container}>
@@ -208,39 +208,39 @@ const styles = StyleSheet.create({
   textUser: {
     fontSize: 15,
     margin: 2,
-    color: '#CE2174',
-    alignItems: 'center',
-    fontWeight: '700',
+    color: "#CE2174",
+    alignItems: "center",
+    fontWeight: "700",
   },
   textDecription: {
     fontSize: 17,
-    color: '#CE2174',
-    alignItems: 'center',
+    color: "#CE2174",
+    alignItems: "center",
     padding: 5,
-    fontWeight: '700',
+    fontWeight: "700",
   },
   textUser1: {
     fontSize: 14,
-    fontWeight: '800',
-    color: 'black',
+    fontWeight: "800",
+    color: "black",
     borderRadius: 20,
     paddingVertical: 3,
     paddingHorizontal: 8,
     margin: 5,
   },
   textUsername: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     fontSize: 25,
-    alignItems: 'center',
-    color: '#CE2174',
+    alignItems: "center",
+    color: "#CE2174",
   },
   nameAndStatus: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
     width: 150,
-    justifyContent: 'space-around',
-    alignItems: 'center',
+    justifyContent: "space-around",
+    alignItems: "center",
   },
   background: {
     width: "100%",
@@ -280,38 +280,38 @@ const styles = StyleSheet.create({
   },
   tagandteach: {
     // backgroundColor: 'red',
-    display: 'flex',
+    display: "flex",
     marginTop: 20,
     marginBottom: 20,
   },
   headerProfile: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
   },
   nameAndTags: {
     marginLeft: 20,
     width: 150,
   },
   description: {
-    backgroundColor: '#C5C5C5',
-    display: 'flex',
-    alignItems: 'stretch',
+    backgroundColor: "#C5C5C5",
+    display: "flex",
+    alignItems: "stretch",
     borderRadius: 5,
-    width: '100%',
+    width: "100%",
     padding: 5,
     marginTop: 25,
   },
   infoContainer: {
-    backgroundColor: '#A3A3A3aa',
+    backgroundColor: "#A3A3A3aa",
     padding: 5,
     borderRadius: 5,
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   modifyIcon: {
     // backgroundColor: 'red',
-    display: 'flex',
-    alignItems: 'flex-end',
+    display: "flex",
+    alignItems: "flex-end",
     marginTop: -15,
   },
   iconContainer: {
@@ -319,5 +319,5 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-around",
-  }
+  },
 });

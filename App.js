@@ -13,8 +13,8 @@ import ChatsList from "./screens/ChatsList";
 import ChatScreen from "./screens/ChatScreen";
 import SearchPage from "./screens/SearchPage";
 import Questions from "./screens/Questions";
-import UpdateProfile from "./screens/UpdateProfile"
-
+import UpdateProfile from "./screens/UpdateProfile";
+import ConcertScreen from "./screens/ConcertScreen";
 const store = configureStore({
   reducer: { user },
 });
@@ -47,7 +47,7 @@ const TabNavigator = () => {
         headerShown: false,
       })}
     >
-      <Tab.Screen name="Univers" component={UniversPage} />
+      <Tab.Screen name="Univers" component={ConcertScreen} />
       <Tab.Screen name="Profil" component={ProfileScreen} />
       <Tab.Screen name="Chats" component={ChatsList} />
       <Tab.Screen name="Search" component={SearchPage} />

@@ -10,14 +10,14 @@ export default function FriendsCards(props) {
 
   //useEffect à la connexion de l'utilisateur qui récupère les données des amis (username et photo)
   useEffect(() => {
-    fetch(`http://192.168.0.11:3000/users/profile/${props.friend}`)
+    fetch(`http://172.20.10.3:3000/users/profile/${props.friend}`)
       .then((res) => res.json())
       .then((data) => {
         setFriends(data.user);
       });
-    }, []);
-    console.log("FRIEND liste", data.user);
-    
+  }, []);
+  console.log("FRIEND liste", data.user);
+
   //style conditionnel pour le statut online ou pas
   // let styleOnline = styles.online;
   // if (friends.status) {
