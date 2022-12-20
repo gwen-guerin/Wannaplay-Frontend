@@ -88,7 +88,7 @@ export default function UpdateProfile({navigation}) {
     // ROUTE POST DES DONNEES DU FORM EN DB
     const handleFormSubmit = () => {
       // console.log(user.firstname);
-      fetch('http://192.168.0.11:3000/users/updateProfile', {
+      fetch('http://192.168.1.20:3000/users/updateProfile', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -101,7 +101,7 @@ export default function UpdateProfile({navigation}) {
       })
         .then((response) => response.json())
         .then((data) => {
-          // console.log('DATA', data);
+          console.log('DATA', data);
           // if (data.result) {
           //   // dispatch(
           //   //   login({

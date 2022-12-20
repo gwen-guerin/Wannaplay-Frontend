@@ -86,7 +86,7 @@ export default function Questions({ navigation }) {
   // ROUTE POST DES DONNEES DU FORM EN DB
   const handleFormSubmit = () => {
     // console.log(user.firstname);
-    fetch('http://192.168.0.11:3000/users/signupForm', {
+    fetch('http://192.168.1.20:3000/users/signupForm', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -95,6 +95,7 @@ export default function Questions({ navigation }) {
         teacher: instruTaught,
         tags: instruments,
         description: description,
+        profilePicture: "../assets/jimi.jpg"
       }),
     })
     navigation.navigate('TabNavigator');

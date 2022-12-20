@@ -42,7 +42,7 @@ export default function FriendProfile({ navigation }) {
 
   //useEffect utilisé pour charger la page profile de l'utilisateur au  moment de sa connection/signin
   useEffect(() => {
-    fetch(`http://192.168.0.11:3000/users/profile/${userRed.username}`)
+    fetch(`http://192.168.1.20:3000/users/profile/${userRed.username}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {

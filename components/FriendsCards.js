@@ -13,7 +13,7 @@ export default function FriendsCards(props) {
   const [photo, setPhoto] = useState();
   //useEffect à la connexion de l'utilisateur qui récupère les données des amis (username et photo)
   useEffect(() => {
-    fetch(`http://192.168.0.11:3000/users/profile/${props.friend}`)
+    fetch(`http://192.168.1.20:3000/users/profile/${props.friend}`)
       .then((res) => res.json())
       .then((data) => {
         // console.log("DATAAAAA", data);
@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
   container: {
     // flex: 1,
     // paddingTop: 20,
+    // width: "30%",
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
@@ -53,6 +54,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     margin: 5,
+    backgroundColor: "green",
   },
   textUser: {
     color: '#CE2174',

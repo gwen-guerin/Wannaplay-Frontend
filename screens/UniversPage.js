@@ -42,7 +42,7 @@ export default function UniversPage() {
           )
             .then((response) => response.json())
             .then((data) => {
-              fetch("http://192.168.0.11:3000/users/geoloc", {
+              fetch("http://192.168.1.20:3000/users/geoloc", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({

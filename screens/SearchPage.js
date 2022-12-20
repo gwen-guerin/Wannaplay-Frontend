@@ -10,7 +10,7 @@ import { StyleSheet, Dimensions, TextInput, View } from "react-native";
 
 const handleSearch = () => {
   if (searchQuery.length > 0) {
-    fetch(`http://172.20.10.3:3000/search/${searchQuery}`)
+    fetch(`http://192.168.1.20:3000/search/${searchQuery}`)
       .then((response) => response.json())
       .then((data) => {
         setSearchResults(

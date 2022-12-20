@@ -3,7 +3,6 @@ import {
   StyleSheet,
   Text,
   ScrollView,
-  TouchableOpacity,
 } from 'react-native';
 import { useState, useEffect } from 'react';
 import FriendsCards from '../components/FriendsCards';
@@ -12,7 +11,6 @@ import { SimpleLineIcons } from '@expo/vector-icons';
 import { logout } from '../reducers/user';
 import { FontAwesome, FontAwesome5 } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
-
 
 // construction de  la page profile
 export default function ProfileScreen({ navigation }) {
@@ -32,11 +30,11 @@ export default function ProfileScreen({ navigation }) {
 
   //useEffect utilisé pour charger la page profile de l'utilisateur au  moment de sa connection/signin
   useEffect(() => {
-    fetch(`http://192.168.0.11:3000/users/profile/${userRed.username}`)
+    fetch(`http://192.168.1.20:3000/users/profile/${userRed.username}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
-          console.log("ERREUR", data);
+          console.log('ERREUR', data);
           setUser({
             age: data.user.age,
             tags: data.user.tags,
@@ -94,8 +92,9 @@ export default function ProfileScreen({ navigation }) {
   });
 
   //on map sur l'état friends pour faire ressortir les amis de l'utilisateur
-const friendsList = user.friends.map((friend, i) => {
-  return <FriendsCards key={i} friend={friend} />})
+  const friendsList = user.friends.map((friend, i) => {
+    return <FriendsCards key={i} friend={friend} />;
+  });
 
   const handleLogout = () => {
     dispatch(logout());
@@ -148,17 +147,9 @@ const friendsList = user.friends.map((friend, i) => {
             />
           </View>
         </View>
-        {/* <View style={styles.iconContainer}>
-          <TouchableOpacity>
-            <FontAwesome5 name="rocketchat" size={30} color="#CE2174" />
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <FontAwesome5 name="user-friends" size={24} color="black" />
-          </TouchableOpacity>
-        </View> */}
-        {/* {error && ( */}
-        <View style={styles.friendsCardsContainer}>{friendsList}</View>
-        {/* )} */}
+        <View style={styles.friendsCardsContainer}>
+          <ScrollView horizontal={true}>{friendsList}</ScrollView>
+        </View>
       </ScrollView>
     </View>
   );
@@ -244,13 +235,11 @@ const styles = StyleSheet.create({
   online: {
     height: 20,
     width: 20,
-    // backgroundColor: 'red',
     borderRadius: 40,
   },
   online1: {
     height: 20,
     width: 20,
-    // backgroundColor: 'green',
     borderRadius: 40,
   },
   friendsView: {
@@ -268,7 +257,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   tagandteach: {
-    // backgroundColor: 'red',
     display: 'flex',
     marginTop: 20,
     marginBottom: 20,
@@ -309,11 +297,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
   friendsCardsContainer: {
-    display: "flex",
-    flexDirection: "row",
-    width: "100%",
-    backgroundColor: "red",
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    height: 600,
+    backgroundColor: 'red',
     marginTop: 25,
-    
-  }
+  },
 });

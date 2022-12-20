@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import {
   SafeAreaView,
@@ -21,7 +21,7 @@ export default function SearchTags() {
   const [searchResults, setSearchResults] = useState([]);
 
   const handleSearch = () => {
-    fetch(`http://192.168.1.118:3000/search/tags/${searchQuery}`)
+    fetch(`http://192.168.1.20:3000/search/tags/${searchQuery}`)
       .then((response) => response.json())
       .then((data) => {
         setSearchResults(
