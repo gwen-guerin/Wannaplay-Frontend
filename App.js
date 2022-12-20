@@ -13,15 +13,9 @@ import Chats from "./screens/Chats";
 import ChatScreen from "./screens/ChatScreen";
 import SearchPage from "./screens/SearchPage";
 import Questions from "./screens/Questions";
-<<<<<<< HEAD
-import UpdateProfile from "./screens/UpdateProfile"
-import ConcertScreen from "./screens/ConcertScreen";
-
-=======
 import UpdateProfile from "./screens/UpdateProfile";
 import FriendProfile from "./screens/FriendProfile";
 import ConcertScreen from "./screens/ConcertScreen";
->>>>>>> c9e9c311b59bde866680dbc99a43eafee791a2f4
 const store = configureStore({
   reducer: { user },
 });

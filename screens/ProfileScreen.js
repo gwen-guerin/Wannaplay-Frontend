@@ -9,7 +9,7 @@ import FriendsCards from '../components/FriendsCards';
 import UploadImage from '../components/UploadImage';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { logout } from '../reducers/user';
-import { FontAwesome, FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 
 // construction de  la page profile
