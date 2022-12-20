@@ -9,7 +9,33 @@ import SearchTeacher from "./searchPages/SearchTeacher";
 import { StyleSheet, Dimensions, TextInput, View } from "react-native";
 const Stack = createNativeStackNavigator();
 
+
 const Tab = createMaterialTopTabNavigator();
+
+const handleSearch = () => {
+  if (searchQuery.length > 0) {
+    fetch(`http://192.168.1.15:3000/search/${searchQuery}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setSearchResults(
+          data.users.map((user, i) => {
+            return (
+              <TouchableOpacity key={i} style={styles.searchedButton}>
+                <Image
+                  source={require("../assets/mia-khalifa.jpg")}
+                  style={styles.avatar}
+                />
+                <View style={styles.userInfo}>
+                  <Text>{user.username}</Text>
+                </View>
+              </TouchableOpacity>
+            );
+          })
+        );
+      });
+  }
+};
+
 
 const SearchNavigator = () => {
   return (

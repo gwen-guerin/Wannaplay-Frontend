@@ -17,6 +17,7 @@ export default function ProfileScreen({ navigation }) {
   const dispatch = useDispatch();
   const userRed = useSelector((state) => state.user.value);
 
+  const [error, setError] = useState(false)
   const [user, setUser] = useState({
     firstname: null,
     tags: [],
@@ -30,7 +31,7 @@ export default function ProfileScreen({ navigation }) {
 
   //useEffect utilisé pour charger la page profile de l'utilisateur au  moment de sa connection/signin
   useEffect(() => {
-    fetch(`http://192.168.1.20:3000/users/profile/${userRed.username}`)
+    fetch(`http://192.168.1.15:3000/users/profile/${userRed.username}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
@@ -50,10 +51,10 @@ export default function ProfileScreen({ navigation }) {
   }, []);
 
   //style conditionnel pour le statut online ou pas
-  // let styleOnline = styles.online;
-  // if (status) {
-  //   styleOnline = styles.online1;
-  // }
+  let styleOnline = styles.online;
+  if (user.status) {
+    styleOnline = styles.online1;
+  }
 
   //on map sur l'état teacher pour faire ressortir les tags/les instruments que l'utilisateur veut enseigner
   const teacherTag = user.teacher.map((teacher, i) => {
@@ -105,13 +106,18 @@ export default function ProfileScreen({ navigation }) {
     navigation.navigate("UpdateProfile");
   };
   return (
+    <ImageBackground
+      source={require("../assets/illu_02.jpg")}
+      imageStyle={{ opacity: 0.4 }}
+      style={styles.imgBack}
+    >
     <View style={styles.container}>
       <View style={styles.headerProfile}>
         <UploadImage />
         <View style={styles.nameAndTags}>
           <View style={styles.nameAndStatus}>
             <Text style={styles.textUsername}>#{userRed.username}</Text>
-            {/* <View style={styleOnline}></View> */}
+            <View style={styleOnline}></View>
             <SimpleLineIcons
               style={styles.logoLogout}
               name="logout"
@@ -129,7 +135,6 @@ export default function ProfileScreen({ navigation }) {
           </View>
         </View>
       </View>
-      <ScrollView>
         <View style={styles.description}>
           <View style={styles.infoContainer}>
             <Text style={styles.textUser}>About me : </Text>
@@ -144,14 +149,15 @@ export default function ProfileScreen({ navigation }) {
               name="pencil-square-o"
               size={16}
               color="#A3A3A3"
-            />
+              />
           </View>
         </View>
-        <View style={styles.friendsCardsContainer}>
-          <ScrollView horizontal={true}>{friendsList}</ScrollView>
-        </View>
+       
+        <ScrollView style={styles.friendsCardsContainer} horizontal={true}>{friendsList}
+
       </ScrollView>
-    </View>
+    </View> 
+    </ImageBackground>
   );
 }
 
@@ -163,7 +169,11 @@ const styles = StyleSheet.create({
     height: "100%",
     paddingTop: 50,
     padding: 10,
-    backgroundColor: "#A8F9DE",
+    // backgroundColor: "#A8F9DE",
+  },
+  imgBack: {
+    width: "100%",
+    height: "100%",
   },
   userPicture: {
     borderRadius: 60,
@@ -182,7 +192,7 @@ const styles = StyleSheet.create({
   },
   friendsList: {
     borderWidth: 1,
-    width: 100,
+    width: 10,
     height: 100,
   },
   textUser: {
@@ -221,10 +231,6 @@ const styles = StyleSheet.create({
     width: 150,
     justifyContent: "space-around",
     alignItems: "center",
-  },
-  background: {
-    width: "100%",
-    height: "100%",
   },
   friends: {
     fontWeight: "bold",
@@ -298,13 +304,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   friendsCardsContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-    height: 600,
-    backgroundColor: 'red',
+    display: "flex",
+    flexDirection: "row",
+    width: "100%",
+    // backgroundColor: "red",
     marginTop: 25,
+    // paddingTop: 10,
   },
 });

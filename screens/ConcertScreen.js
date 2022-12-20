@@ -28,6 +28,7 @@ export default function ConcertScreen({ navigation }) {
   return (
     <View styles={styles.container}>
       <Text>{concert.eventName}</Text>
+      <Text>{concert.type}</Text>
     </View>
   );
 }
@@ -37,8 +38,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    fontSize: 25,
+    fontSize: 50,
     color: 'black',
     backgroundColor: 'red',
+    width: '100%',
+    height: '100%',
   },
 });
+

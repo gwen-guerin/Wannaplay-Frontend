@@ -15,13 +15,12 @@ export default function UploadImage() {
   const user = useSelector((state) => state.user.value);
 
   useEffect(() => {
-    fetch(`http://192.168.1.20:3000/users/profile/${user.username}`)
+    fetch(`http://192.168.1.15:3000/users/profile/${user.username}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
           setImage(data.user.profilePicture);
         }
-        // console.log("datauserprofile", data.user.profilePicture);
       });
   }, []);
 

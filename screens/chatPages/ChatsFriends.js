@@ -21,7 +21,7 @@ export default function ChatsFriends({ navigation }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    fetch(`http://192.168.1.118:3000/users/friends/getFriends/${user.username}`)
+    fetch(`http://192.168.1.15:3000/users/friends/getFriends/${user.username}`)
       .then((response) => response.json())
       .then((data) => {
         dispatch(setFriends({friends: data.friends}));
@@ -57,7 +57,7 @@ export default function ChatsFriends({ navigation }) {
   const handleNavigation = (user) => {
     navigation.navigate("Chat", {
       username: "username",
-      friend: user,
+      friend: user,   
     });
   };
 
@@ -115,8 +115,7 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
   },
   scrollList: {
-    // flex: 1,
-    // backgroundColor: 'green',
+  
     alignItems: "center",
   },
   chatlinkContainer: {
