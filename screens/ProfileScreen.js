@@ -11,10 +11,11 @@ import UploadImage from "../components/UploadImage";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import { logout } from "../reducers/user";
 import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 // construction de  la page profile
 export default function ProfileScreen({ navigation }) {
+  const dispatch = useDispatch();
   const userRed = useSelector((state) => state.user.value);
 
   const [user, setUser] = useState({
@@ -43,6 +44,7 @@ export default function ProfileScreen({ navigation }) {
             teacher: data.user.teacher,
             firstname: data.user.firstname,
             description: data.user.description,
+            profilePicture: data.user.profilePicture,
           });
         }
       });
@@ -91,14 +93,9 @@ export default function ProfileScreen({ navigation }) {
   });
 
   //on map sur l'état friends pour faire ressortir les amis de l'utilisateur
-  // if (friends.length > 0) {
-  //   setError(false);
-  // } else {
-  //   setError(true)
-  //   const friendsList = friends.map((friend, i) => {
-  //     return <FriendsCards key={i} friend={friend} />;
-  //   });
-  // }
+  const friendsList = user.friends.map((friend, i) => {
+    return <FriendsCards key={i} friend={friend} />;
+  });
 
   const handleLogout = () => {
     dispatch(logout());
@@ -119,7 +116,7 @@ export default function ProfileScreen({ navigation }) {
             <SimpleLineIcons
               style={styles.logoLogout}
               name="logout"
-              size={20}
+              size={15}
               color="black"
               onPress={() => handleLogout()}
             />
@@ -151,25 +148,17 @@ export default function ProfileScreen({ navigation }) {
             />
           </View>
         </View>
-        <View style={styles.iconContainer}>
+        {/* <View style={styles.iconContainer}>
           <TouchableOpacity>
             <FontAwesome5 name="rocketchat" size={30} color="#CE2174" />
           </TouchableOpacity>
           <TouchableOpacity>
             <FontAwesome5 name="user-friends" size={24} color="black" />
           </TouchableOpacity>
-        </View>
-        {/* {error && (
-          <View>
-            <View style={styles.friendsView}>
-              <Text style={styles.friends}>My friends</Text>
-              <FontAwesome5 name="rocketchat" size={30} color="#CE2174" />
-            </View>
-            <ScrollView horizontal={true}>
-              <View style={styles.friendsTab}>{friendsList}</View>
-            </ScrollView>
-          </View>
-        )} */}
+        </View> */}
+        {/* {error && ( */}
+        <View style={styles.friendsCardsContainer}>{friendsList}</View>
+        {/* )} */}
       </ScrollView>
     </View>
   );
@@ -230,7 +219,7 @@ const styles = StyleSheet.create({
   },
   textUsername: {
     fontWeight: "bold",
-    fontSize: 25,
+    fontSize: 20,
     alignItems: "center",
     color: "#CE2174",
   },
@@ -309,7 +298,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   modifyIcon: {
-    // backgroundColor: 'red',
     display: "flex",
     alignItems: "flex-end",
     marginTop: -15,
@@ -319,5 +307,12 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-around",
+  },
+  friendsCardsContainer: {
+    display: "flex",
+    flexDirection: "row",
+    width: "100%",
+    backgroundColor: "red",
+    marginTop: 25,
   },
 });

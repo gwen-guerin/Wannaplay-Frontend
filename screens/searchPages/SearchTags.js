@@ -39,7 +39,7 @@ export default function SearchTags() {
                     style={styles.avatar}
                   />
                   <View style={styles.userInfo}>
-                    <Text>{user.username}</Text>
+                    <Text>{user}</Text>
                   </View>
                 </TouchableOpacity>
               </BlurView>

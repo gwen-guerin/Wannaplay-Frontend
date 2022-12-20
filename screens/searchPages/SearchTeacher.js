@@ -14,6 +14,8 @@ import {
   ImageBackground,
 } from "react-native";
 
+import { BlurView } from "expo-blur";
+
 export default function SearchTeacher() {
   const [searchQuery, setSearchQuery] = useState("");
   const [results, setResults] = useState([]);
@@ -40,7 +42,7 @@ export default function SearchTeacher() {
                     style={styles.avatar}
                   />
                   <View style={styles.userInfo}>
-                    <Text>{user.username}</Text>
+                    <Text>{user}</Text>
                   </View>
                 </TouchableOpacity>
               </BlurView>

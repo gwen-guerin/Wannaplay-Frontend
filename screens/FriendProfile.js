@@ -4,31 +4,24 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import { useState, useEffect } from "react";
 import FriendsCards from "../components/FriendsCards";
 import UploadImage from "../components/UploadImage";
 import { SimpleLineIcons } from "@expo/vector-icons";
-import { logout } from "../reducers/user";
-import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
-import { useSelector } from "react-redux";
+import { addToFriends, removeFromFriends, logout } from "../reducers/user";
+import { FontAwesome, FontAwesome5, Ionicons } from "@expo/vector-icons";
+import { useSelector, useDispatch } from "react-redux";
+import { setStatusBarNetworkActivityIndicatorVisible } from "expo-status-bar";
 
 // construction de  la page profile
-export default function ProfileScreen({ navigation }) {
+export default function FriendProfile({ navigation, route: { params } }) {
   const userRed = useSelector((state) => state.user.value);
-
-  //Etats useState
-  // const [tags, setTags] = useState([]);
-  // const [friends, setFriends] = useState([]);
-  // const [status, setStatus] = useState(false);
-  // const [city, setCity] = useState('');
-  // const [teacher, setTeacher] = useState([]);
-  // const [age, setAge] = useState('');
-  // const [error, setError] = useState(false);
-  // const [description, setDescription] = useState('');
-  // const [username, setUsername] = useState('')
-
+  const dispatch = useDispatch();
+  const [friend, setFriend] = useState(false);
   const [user, setUser] = useState({
+    username: null,
     firstname: null,
     tags: [],
     friends: [],
@@ -48,6 +41,8 @@ export default function ProfileScreen({ navigation }) {
         if (data.result) {
           console.log("BIIIIITE", data);
           setUser({
+            username: data.user.username,
+            firstname: data.user.firstname,
             age: data.user.age,
             tags: data.user.tags,
             friends: data.user.friends,
@@ -55,16 +50,64 @@ export default function ProfileScreen({ navigation }) {
             teacher: data.user.teacher,
             firstname: data.user.firstname,
             description: data.user.description,
+            profilePicture: data.user.profilePicture,
           });
         }
       });
   }, []);
 
-  //style conditionnel pour le statut online ou pas
-  // let styleOnline = styles.online;
-  // if (status) {
-  //   styleOnline = styles.online1;
-  // }
+  const isFriend = () => {
+    for (let i = 0; i < userRed.friends.length; i++) {
+      if (userRed.friends[i] === params.username) setFriend(true);
+    }
+  };
+
+  const addOrDelete = () => {
+    if (friend) {
+      return (
+        <TouchableOpacity onPress={() => removeFriend()}>
+          <Ionicons name="person-remove" size={30} color="#CE2174" />
+        </TouchableOpacity>
+      );
+    } else
+      return (
+        <TouchableOpacity onPress={() => addFriend()}>
+          <Ionicons name="person-add" size={30} color="#CE2174" />
+        </TouchableOpacity>
+      );
+  };
+
+  const addFriend = () => {
+    fetch("http://192.168.1.118:3000/friends/addFriend", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: userRed.username,
+        friend: user.username,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        dispatch(addToFriends({ friend: params.username }));
+        setFriend(true);
+      });
+  };
+
+  const removeFriend = () => {
+    fetch("http://192.168.1.118:3000/friends/removeFriend", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: userRed.username,
+        friend: user.username,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        dispatch(removeFromFriends({ friend: params.username }));
+        setFriend(false);
+      });
+  };
 
   //on map sur l'état teacher pour faire ressortir les tags/les instruments que l'utilisateur veut enseigner
   const teacherTag = user.teacher.map((teacher, i) => {
@@ -123,10 +166,13 @@ export default function ProfileScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.headerProfile}>
-        <UploadImage />
+        <Image
+          source={{ uri: user.profilePicture }}
+          style={styles.profilePicture}
+        />
         <View style={styles.nameAndTags}>
           <View style={styles.nameAndStatus}>
-            <Text style={styles.textUsername}>#{userRed.username}</Text>
+            <Text style={styles.textUsername}>#{user.username}</Text>
             {/* <View style={styleOnline}></View> */}
             <SimpleLineIcons
               style={styles.logoLogout}
@@ -139,39 +185,38 @@ export default function ProfileScreen({ navigation }) {
           <View style={styles.tagandteach}>
             <View style={styles.tagsList}>{tagsList}</View>
             <View style={styles.tagsList}>
-              <Text style={styles.textUser}>Wanna teach : </Text>
+              {user.teacher && (
+                <Text style={styles.textUser}>Wanna teach : </Text>
+              )}
               {teacherTag}
             </View>
           </View>
         </View>
       </View>
-      <ScrollView>
-        <View style={styles.description}>
-          <View style={styles.infoContainer}>
-            <Text style={styles.textUser}>About me : </Text>
-            <Text style={styles.textUser}>{user.firstname}</Text>
-            <Text style={styles.textUser}>{user.age}ans</Text>
-            <Text style={styles.textUser}>{user.city}</Text>
-          </View>
-          <Text style={styles.textDecription}>{user.description}</Text>
-          <View style={styles.modifyIcon}>
-            <FontAwesome
-              onPress={() => handleModify()}
-              name="pencil-square-o"
-              size={16}
-              color="#A3A3A3"
-            />
-          </View>
+      <View style={styles.description}>
+        <View style={styles.infoContainer}>
+          <Text style={styles.textUser}>About me : </Text>
+          <Text style={styles.textUser}>{user.firstname}</Text>
+          <Text style={styles.textUser}>{user.age}ans</Text>
+          <Text style={styles.textUser}>{user.city}</Text>
         </View>
-        <View style={styles.iconContainer}>
-          <TouchableOpacity>
-            <FontAwesome5 name="rocketchat" size={30} color="#CE2174" />
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <FontAwesome5 name="user-friends" size={24} color="black" />
-          </TouchableOpacity>
+        <Text style={styles.textDecription}>{user.description}</Text>
+        <View style={styles.modifyIcon}>
+          <FontAwesome
+            onPress={() => handleModify()}
+            name="pencil-square-o"
+            size={16}
+            color="#A3A3A3"
+          />
         </View>
-        {/* {error && (
+      </View>
+      <View style={styles.iconContainer}>
+        <TouchableOpacity>
+          <FontAwesome5 name="rocketchat" size={30} color="#CE2174" />
+        </TouchableOpacity>
+        {addOrDelete()}
+      </View>
+      {/* {error && (
           <View>
             <View style={styles.friendsView}>
               <Text style={styles.friends}>My friends</Text>
@@ -182,7 +227,6 @@ export default function ProfileScreen({ navigation }) {
             </ScrollView>
           </View>
         )} */}
-      </ScrollView>
     </View>
   );
 }
@@ -197,7 +241,7 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "#A8F9DE",
   },
-  userPicture: {
+  profilePicture: {
     borderRadius: 60,
     width: 80,
     height: 80,
@@ -307,7 +351,6 @@ const styles = StyleSheet.create({
   },
   description: {
     backgroundColor: "#C5C5C5",
-    display: "flex",
     alignItems: "stretch",
     borderRadius: 5,
     width: "100%",
@@ -321,14 +364,18 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   modifyIcon: {
-    display: "flex",
     alignItems: "flex-end",
     marginTop: -15,
   },
   iconContainer: {
     marginTop: 60,
-    display: "flex",
     flexDirection: "row",
     justifyContent: "space-around",
   },
+  // friendButton: {
+  //   height: '30%',
+  //   width: '30%',
+  //   borderColor: "red",
+  //   borderWidth: 2,
+  // },
 });

@@ -16,7 +16,6 @@ import { useSelector } from "react-redux";
 
 export default function UpdateProfile({ navigation }) {
   const user = useSelector((state) => state.user.value);
-  // console.log(user);
 
   const [age, setAge] = useState(0);
   const [teacher, setTeacher] = useState(false);

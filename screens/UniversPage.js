@@ -53,9 +53,7 @@ export default function UniversPage() {
                     longitude: longitude,
                   },
                 }),
-              })
-                .then((response) => response.json())
-                .then((user) => console.log("user", user));
+              }).then((response) => response.json());
             });
         });
       }

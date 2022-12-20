@@ -96,33 +96,7 @@ export default function Questions({ navigation }) {
         tags: instruments,
         description: description,
       }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // console.log('DATA', data);
-        // if (data.result) {
-        //   // dispatch(
-        //   //   login({
-        //   //     username: data.user.username,
-        //   //     token: data.user.token,
-        //   //     firstname: data.user.firstname,
-        //   //     lastname: data.user.lastname,
-        //   //     email: data.user.email,
-        //   //     password: data.user.password,
-        //   //   })
-        //   // );
-        //   setAge(25);
-        //   setCity('');
-        //   setDepartment('');
-        //   setTeacher('');
-        //   setInstruTaught('');
-        //   setSinger(false);
-        //   setTags([]);
-        // } else {
-        //   // setError(!error);
-        //   alert('username already existing !');
-        // }
-      });
+    });
     navigation.navigate("TabNavigator");
   };
 

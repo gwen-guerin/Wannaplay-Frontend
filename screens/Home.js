@@ -58,10 +58,6 @@ export default function Home({ navigation }) {
           dispatch(
             login({
               username: data.user.username,
-              firstname: data.user.firstname,
-              lastname: data.user.lastname,
-              email: data.user.email,
-              password: data.user.password,
             })
           );
           setFirstname("");
