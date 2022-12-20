@@ -29,11 +29,7 @@ export const userSlice = createSlice({
       state.value.username = action.payload.username;
     },
     logout: (state) => {
-      state.value.firstname = null;
-      state.value.lastname = null;
       state.value.username = null;
-      state.value.email = null;
-      state.value.tags = [];
     },
 
     addToFriends: (state, action) => {

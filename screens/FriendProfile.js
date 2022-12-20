@@ -161,7 +161,7 @@ export default function FriendProfile({ navigation, route: { params } }) {
 
   const handleLogout = () => {
     dispatch(logout());
-    navigation.navigate("Home");
+    navigation.navigate('Home');
   };
 
   const handleModify = () => {
