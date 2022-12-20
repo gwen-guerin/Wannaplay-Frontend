@@ -78,16 +78,16 @@ export default function UploadImage() {
           type: "image/jpeg",
         });
         // console.log("POUETTT", image);
-        fetch("http://192.168.0.11:3000/upload", {
-          method: "POST",
+        fetch('http://192.168.1.20:3000/upload', {
+          method: 'POST',
           body: formData,
         })
           .then((res) => res.json())
           .then((data) => {
             console.log("IMAAAAGE", data);
-            fetch("http://192.168.0.11:3000/users/photo", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
+            fetch('http://192.168.1.20:3000/users/photo', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
                 username: user.username,
                 profilePicture: data.url,

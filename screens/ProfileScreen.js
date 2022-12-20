@@ -37,7 +37,7 @@ export default function ProfileScreen({ navigation }) {
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
-          console.log("BIIIIITE", data);
+          console.log('ERREUR', data);
           setUser({
             age: data.user.age,
             tags: data.user.tags,
@@ -243,13 +243,11 @@ const styles = StyleSheet.create({
   online: {
     height: 20,
     width: 20,
-    // backgroundColor: 'red',
     borderRadius: 40,
   },
   online1: {
     height: 20,
     width: 20,
-    // backgroundColor: 'green',
     borderRadius: 40,
   },
   friendsView: {
@@ -308,10 +306,20 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   friendsCardsContainer: {
+<<<<<<< HEAD
     display: "flex",
     flexDirection: "row",
     width: "100%",
     // backgroundColor: "red",
+=======
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    height: 600,
+    backgroundColor: 'red',
+>>>>>>> 12061e4d54184acca7c6d622189798ff358ced1e
     marginTop: 25,
     // paddingTop: 10,
   },

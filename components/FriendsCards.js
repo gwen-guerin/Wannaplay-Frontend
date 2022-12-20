@@ -1,9 +1,8 @@
-import { Image, View, StyleSheet, Text } from "react-native";
-import { useState, useEffect } from "react";
-import { FontAwesome5 } from "@expo/vector-icons";
-import { useSelector } from "react-redux";
+import { Image, View, StyleSheet, Text } from 'react-native';
+import { useState, useEffect } from 'react';
+import { FontAwesome5 } from '@expo/vector-icons';
+import { useSelector } from 'react-redux';
 
-//composant pour afficher les amis sur la page de Profile
 
 //comment on fait pour concrètrement pour faire une demande d'amis ?? et pusher en BD ?
 export default function FriendsCards(props) {
@@ -63,7 +62,7 @@ const styles = StyleSheet.create({
     height: "60%",
   },
   textUser: {
-    color: "#CE2174",
+    color: '#CE2174',
     fontSize: 18,
     width: 180,
     textAlign: "center",
@@ -72,7 +71,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     height: 15,
     width: 15,
-    backgroundColor: "red",
+    backgroundColor: 'red',
     borderRadius: 40,
     marginBottom: 8,
   },
@@ -80,7 +79,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     height: 15,
     width: 15,
-    backgroundColor: "green",
+    backgroundColor: 'green',
     borderRadius: 40,
     marginBottom: 8,
   },

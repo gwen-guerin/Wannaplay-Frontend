@@ -95,6 +95,7 @@ export default function Questions({ navigation }) {
         teacher: instruTaught,
         tags: instruments,
         description: description,
+        profilePicture: "../assets/jimi.jpg"
       }),
     });
     navigation.navigate("TabNavigator");
