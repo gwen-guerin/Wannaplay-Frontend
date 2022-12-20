@@ -15,7 +15,7 @@ import SearchPage from "./screens/SearchPage";
 import Questions from "./screens/Questions";
 import UpdateProfile from "./screens/UpdateProfile";
 import FriendProfile from "./screens/FriendProfile";
-
+import ConcertScreen from "./screens/ConcertScreen";
 const store = configureStore({
   reducer: { user },
 });
