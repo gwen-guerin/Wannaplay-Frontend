@@ -306,20 +306,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   friendsCardsContainer: {
-<<<<<<< HEAD
     display: "flex",
     flexDirection: "row",
     width: "100%",
     // backgroundColor: "red",
-=======
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-    height: 600,
-    backgroundColor: 'red',
->>>>>>> 12061e4d54184acca7c6d622189798ff358ced1e
     marginTop: 25,
     // paddingTop: 10,
   },
