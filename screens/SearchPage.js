@@ -7,8 +7,9 @@ import SearchUser from "./searchPages/SearchUser";
 import SearchTeacher from "./searchPages/SearchTeacher";
 
 import { StyleSheet, Dimensions, TextInput, View } from "react-native";
-
 const Stack = createNativeStackNavigator();
+
+
 const Tab = createMaterialTopTabNavigator();
 
 const handleSearch = () => {
