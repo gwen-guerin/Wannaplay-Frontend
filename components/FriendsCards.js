@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useSelector } from 'react-redux';
 
-//composant pour afficher les amis sur la page de Profile
 
 //comment on fait pour concrètrement pour faire une demande d'amis ?? et pusher en BD ?
 export default function FriendsCards(props) {
@@ -44,9 +43,6 @@ export default function FriendsCards(props) {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    // paddingTop: 20,
-    // width: "30%",
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
