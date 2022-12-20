@@ -16,6 +16,8 @@ import Questions from "./screens/Questions";
 import UpdateProfile from "./screens/UpdateProfile";
 import FriendProfile from "./screens/FriendProfile";
 import ConcertScreen from "./screens/ConcertScreen";
+
+
 const store = configureStore({
   reducer: { user },
 });
@@ -32,7 +34,7 @@ const TabNavigator = () => {
 
           if (route.name === "Profil") {
             iconName = "user";
-          } else if (route.name === "Univers") {
+          } else if (route.name === "Concert") {
             iconName = "home";
           } else if (route.name === "Chats") {
             iconName = "wechat";
@@ -48,7 +50,7 @@ const TabNavigator = () => {
         headerShown: false,
       })}
     >
-      <Tab.Screen name="Univers" component={ConcertScreen} />
+      <Tab.Screen name="Concert" component={ConcertScreen} />
       <Tab.Screen name="Profil" component={ProfileScreen} />
       <Tab.Screen name="Chats" component={Chats} />
       <Tab.Screen name="Search" component={SearchPage} />
