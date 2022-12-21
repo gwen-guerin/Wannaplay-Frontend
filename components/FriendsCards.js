@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 //comment on fait pour concrètrement pour faire une demande d'amis ?? et pusher en BD ?
 export default function FriendsCards(props) {
   const [friends, setFriends] = useState([]);
-  const [isFriendOnline, setIsFriendOnline] = useState(false);
+  const [isFriendOnline, setIsFriendOnline] = useState();
   const [photo, setPhoto] = useState("");
 
   //useEffect à la connexion de l'utilisateur qui récupère les données des amis (username et photo)
@@ -18,6 +18,7 @@ export default function FriendsCards(props) {
         setFriends(data.user.username);
         setIsFriendOnline(data.user.status);
         setPhoto(data.user.profilePicture);
+        console.log("STATUS", data.user.status)
       });
   }, []);
 
@@ -51,12 +52,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 20,
   
-    backgroundColor: "#A8F9DEaa",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4.84,
-    elevation: 5,
+    backgroundColor: "#ffffffaa",
+    elevation: 1,
     borderRadius: 10,
     margin: 5,
     height: "60%",

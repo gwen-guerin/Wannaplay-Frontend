@@ -98,6 +98,7 @@ export default function Home({ navigation }) {
           dispatch(
             login({
               username: usernameSignIn,
+              status: true,
             })
           );
           setFirstname("");

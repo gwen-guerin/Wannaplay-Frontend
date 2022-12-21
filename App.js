@@ -13,14 +13,10 @@ import Chats from "./screens/Chats";
 import ChatScreen from "./screens/ChatScreen";
 import SearchPage from "./screens/SearchPage";
 import Questions from "./screens/Questions";
-
 import UpdateProfile from "./screens/UpdateProfile"
 import ConcertScreen from "./screens/ConcertScreen";
-
-
-import UpdateProfile from "./screens/UpdateProfile";
 import FriendProfile from "./screens/FriendProfile";
-import ConcertScreen from "./screens/ConcertScreen";
+
 const store = configureStore({
   reducer: { user },
 });
@@ -34,7 +30,6 @@ const TabNavigator = () => {
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => {
           let iconName = "";
-
           if (route.name === "Profil") {
             iconName = "user";
           } else if (route.name === "Concert") {

@@ -3,7 +3,6 @@ import {
   StyleSheet,
   Text,
   ScrollView,
-  TouchableOpacity,
   ImageBackground
 } from "react-native";
 import { useState, useEffect } from "react";
@@ -11,15 +10,15 @@ import FriendsCards from "../components/FriendsCards";
 import UploadImage from "../components/UploadImage";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import { logout } from "../reducers/user";
-import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 
 // construction de  la page profile
 export default function ProfileScreen({ navigation }) {
+  
   const dispatch = useDispatch();
   const userRed = useSelector((state) => state.user.value);
 
-  const [error, setError] = useState(false)
   const [user, setUser] = useState({
     firstname: null,
     tags: [],
@@ -54,7 +53,7 @@ export default function ProfileScreen({ navigation }) {
 
   //style conditionnel pour le statut online ou pas
   let styleOnline = styles.online;
-  if (user.status) {
+  if (userRed.status) {
     styleOnline = styles.online1;
   }
 
@@ -101,6 +100,7 @@ export default function ProfileScreen({ navigation }) {
 
   const handleLogout = () => {
     dispatch(logout());
+
     navigation.navigate("Home");
   };
 
@@ -244,11 +244,14 @@ const styles = StyleSheet.create({
     height: 20,
     width: 20,
     borderRadius: 40,
+    backgroundColor: "red",
   },
   online1: {
     height: 20,
     width: 20,
     borderRadius: 40,
+    backgroundColor: "green",
+
   },
   friendsView: {
     marginTop: 30,
@@ -265,7 +268,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   tagandteach: {
-    // backgroundColor: 'red',
     display: "flex",
     marginTop: 20,
     marginBottom: 20,
@@ -280,7 +282,7 @@ const styles = StyleSheet.create({
     width: 150,
   },
   description: {
-    backgroundColor: "#C5C5C5",
+    backgroundColor: "#ffffffaa",
     display: "flex",
     alignItems: "stretch",
     borderRadius: 5,
@@ -289,7 +291,7 @@ const styles = StyleSheet.create({
     marginTop: 25,
   },
   infoContainer: {
-    backgroundColor: "#A3A3A3aa",
+    backgroundColor: "#E5EAE9",
     padding: 5,
     borderRadius: 5,
     flexDirection: "row",
@@ -309,8 +311,6 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     width: "100%",
-    // backgroundColor: "red",
     marginTop: 25,
-    // paddingTop: 10,
   },
 });

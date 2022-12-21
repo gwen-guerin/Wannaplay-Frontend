@@ -55,7 +55,7 @@ export default function SearchTeacher() {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require("../../assets/esquise02.jpg")}
+        source={require("../../assets/illu_02.jpg")}
         style={styles.background}
       >
         <View style={styles.searchContainer}>
