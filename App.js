@@ -48,8 +48,8 @@ const TabNavigator = () => {
         headerShown: false,
       })}
     >
-      <Tab.Screen name="Concert" component={ConcertScreen} />
       <Tab.Screen name="Profil" component={ProfileScreen} />
+      <Tab.Screen name="Concert" component={ConcertScreen} />
       <Tab.Screen name="Chats" component={Chats} />
       <Tab.Screen name="Search" component={SearchPage} />
     </Tab.Navigator>

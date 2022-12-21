@@ -9,7 +9,7 @@ export default function UsersCards(props) {
 
   //useEffect pour récupérer tous les utilisateurs
   useEffect(() => {
-    fetch(`http://192.168.1.15:3000/users/usersList`)
+    fetch(`http://172.16.190.27:3000/users/usersList`)
       .then((res) => res.json())
       .then((data) => {
         setUsersList(data.usersList)

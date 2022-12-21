@@ -2,18 +2,14 @@ import {
   View,
   StyleSheet,
   Text,
-  ScrollView,
   TouchableOpacity,
   Image,
+  ImageBackground
 } from "react-native";
 import { useState, useEffect } from "react";
-import FriendsCards from "../components/FriendsCards";
-import UploadImage from "../components/UploadImage";
-import { SimpleLineIcons } from "@expo/vector-icons";
 import { addToFriends, removeFromFriends, logout } from "../reducers/user";
 import { FontAwesome, FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
-import { setStatusBarNetworkActivityIndicatorVisible } from "expo-status-bar";
 
 // construction de  la page profile
 export default function FriendProfile({ navigation, route: { params } }) {
@@ -25,7 +21,7 @@ export default function FriendProfile({ navigation, route: { params } }) {
     firstname: null,
     tags: [],
     friends: [],
-    // status: false,
+    status: false,
     city: null,
     age: null,
     teacher: [],
@@ -35,11 +31,10 @@ export default function FriendProfile({ navigation, route: { params } }) {
 
   //useEffect utilisé pour charger la page profile de l'utilisateur au  moment de sa connection/signin
   useEffect(() => {
-    fetch(`http:///192.168.1.15:3000/users/profile/${userRed.username}`)
+    fetch(`http://172.16.190.27:3000/users/profile/${params.username}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
-          console.log("BIIIIITE", data);
           setUser({
             username: data.user.username,
             firstname: data.user.firstname,
@@ -51,34 +46,35 @@ export default function FriendProfile({ navigation, route: { params } }) {
             firstname: data.user.firstname,
             description: data.user.description,
             profilePicture: data.user.profilePicture,
+            status: data.user.status,
           });
         }
       });
   }, []);
 
-  const isFriend = () => {
-    for (let i = 0; i < userRed.friends.length; i++) {
-      if (userRed.friends[i] === params.username) setFriend(true);
-    }
-  };
+  // const isFriend = () => {
+  //   for (let i = 0; i < userRed.friends.length; i++) {
+  //     if (userRed.friends[i] === params.username) setFriend(true);
+  //   }
+  // };
 
   const addOrDelete = () => {
     if (friend) {
       return (
-        <TouchableOpacity onPress={() => removeFriend()}>
+        <TouchableOpacity style={styles.ionIcons} onPress={() => removeFriend()}>
           <Ionicons name="person-remove" size={30} color="#CE2174" />
         </TouchableOpacity>
       );
     } else
       return (
-        <TouchableOpacity onPress={() => addFriend()}>
+        <TouchableOpacity style={styles.ionIcons} onPress={() => addFriend()}>
           <Ionicons name="person-add" size={30} color="#CE2174" />
         </TouchableOpacity>
       );
   };
 
   const addFriend = () => {
-    fetch("http://192.168.1.118:3000/friends/addFriend", {
+    fetch("http://172.17.188.35:3000/friends/addFriend", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -94,7 +90,7 @@ export default function FriendProfile({ navigation, route: { params } }) {
   };
 
   const removeFriend = () => {
-    fetch("http://192.168.1.118:3000/friends/removeFriend", {
+    fetch("http://172.16.190.27:3000/friends/removeFriend", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -122,9 +118,10 @@ export default function FriendProfile({ navigation, route: { params } }) {
     const color = randomColor();
     return (
       <Text style={[styles.textUser1, { backgroundColor: color }]} key={i}>
-        #{teacher}
-      </Text>
-    );
+
+    #{teacher}
+  </Text>
+);
   });
 
   //on map sur l'état tags pour faire ressortir les tags/les instruments pratiqué par l'utilisateur
@@ -140,9 +137,10 @@ export default function FriendProfile({ navigation, route: { params } }) {
     const color = randomColor();
     return (
       <Text style={[styles.textUser1, { backgroundColor: color }]} key={i}>
-        #{tag}
-      </Text>
-    );
+
+    #{tag}
+  </Text>
+);
   });
 
   //on map sur l'état friends pour faire ressortir les amis de l'utilisateur
@@ -162,8 +160,13 @@ export default function FriendProfile({ navigation, route: { params } }) {
 
   const handleModify = () => {
     navigation.navigate("UpdateProfile");
-  };
+  }; 
   return (
+    <ImageBackground
+    source={require("../assets/illu_02.jpg")}
+    imageStyle={{ opacity: 0.4 }}
+    style={styles.imgBack}
+  >
     <View style={styles.container}>
       <View style={styles.headerProfile}>
         <Image
@@ -173,14 +176,14 @@ export default function FriendProfile({ navigation, route: { params } }) {
         <View style={styles.nameAndTags}>
           <View style={styles.nameAndStatus}>
             <Text style={styles.textUsername}>#{user.username}</Text>
-            {/* <View style={styleOnline}></View> */}
-            <SimpleLineIcons
+            {/* <View style={styleOnline}></View> /}
+            {/ <SimpleLineIcons
               style={styles.logoLogout}
               name="logout"
               size={20}
-              color="black"
-              onPress={() => handleLogout()}
-            />
+              color="black" /}
+              {/ // onPress={() => handleLogout()}
+            /> */}
           </View>
           <View style={styles.tagandteach}>
             <View style={styles.tagsList}>{tagsList}</View>
@@ -211,23 +214,14 @@ export default function FriendProfile({ navigation, route: { params } }) {
         </View>
       </View>
       <View style={styles.iconContainer}>
-        <TouchableOpacity>
+        <TouchableOpacity style={styles.ionIcons} >
           <FontAwesome5 name="rocketchat" size={30} color="#CE2174" />
         </TouchableOpacity>
         {addOrDelete()}
       </View>
-      {/* {error && (
-          <View>
-            <View style={styles.friendsView}>
-              <Text style={styles.friends}>My friends</Text>
-              <FontAwesome5 name="rocketchat" size={30} color="#CE2174" />
-            </View>
-            <ScrollView horizontal={true}>
-              <View style={styles.friendsTab}>{friendsList}</View>
-            </ScrollView>
-          </View>
-        )} */}
     </View>
+    </ImageBackground>
+
   );
 }
 
@@ -239,12 +233,12 @@ const styles = StyleSheet.create({
     height: "100%",
     paddingTop: 50,
     padding: 10,
-    backgroundColor: "#A8F9DE",
+    // backgroundColor: "#A8F9DE",
   },
   profilePicture: {
     borderRadius: 60,
-    width: 80,
-    height: 80,
+    width: 120,
+    height: 120,
   },
   friendsTab: {
     backgroundColor: "white",
@@ -350,15 +344,15 @@ const styles = StyleSheet.create({
     width: 150,
   },
   description: {
-    backgroundColor: "#C5C5C5",
+    backgroundColor: "#ffffffaa",
     alignItems: "stretch",
     borderRadius: 5,
     width: "100%",
     padding: 5,
-    marginTop: 25,
+    marginTop: -170,
   },
   infoContainer: {
-    backgroundColor: "#A3A3A3aa",
+    backgroundColor: "#E5EAE9",
     padding: 5,
     borderRadius: 5,
     flexDirection: "row",
@@ -372,10 +366,20 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
   },
-  // friendButton: {
-  //   height: '30%',
-  //   width: '30%',
-  //   borderColor: "red",
-  //   borderWidth: 2,
-  // },
+  imgBack: {
+    width: "100%",
+    height: "100%",
+  },
+
+  ionIcons: {
+borderRadius: 40,
+display: "flex",
+justifyContent: "center",
+alignItems: "center",
+    // width: 100,
+    // height: 100,
+    padding: 20,
+    backgroundColor: '#ffffffaa'
+  }
 });
+

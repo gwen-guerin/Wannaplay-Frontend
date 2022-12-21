@@ -29,13 +29,13 @@ export default function SearchUser({ navigation }) {
   }, [searchQuery]);
 
   const addChat = (friendUsername) => {
-    fetch("http://192.168.1.118:3000/users/");
+    fetch("http://172.16.190.27:3000/users/");
   };
 
   const handleSearch = () => {
     if (searchQuery.length > 0) {
-      console.log(searchQuery.length)
-      fetch(`http://192.168.1.15:3000/search/${searchQuery}`)
+      // console.log(searchQuery.length)
+      fetch(`http://172.16.190.27:3000/search/${searchQuery}`)
         .then((response) => response.json())
         .then((data) => {
           setSearchResults(
@@ -72,7 +72,7 @@ export default function SearchUser({ navigation }) {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require("../../assets/esquise02.jpg")}
+        source={require("../../assets/illu_02.jpg")}
         style={styles.background}
       >
         <View style={styles.searchContainer}>

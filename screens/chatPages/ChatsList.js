@@ -6,7 +6,6 @@ import {
   Text,
   TouchableOpacity,
   Image,
-  useWindowDimensions,
   TextInput,
   Dimensions,
 } from "react-native";
@@ -18,7 +17,7 @@ export default function ChatsList({ navigation }) {
   const [chatBoxes, setChatBoxes] = useState([]);
 
   useEffect(() => {
-    fetch("http://192.168.1.15:3000/users/allUsers")
+    fetch("http://172.16.190.27:3000/users/allUsers")
       .then((response) => response.json())
       .then((data) => {
         setAllUsers(data.usersList)});

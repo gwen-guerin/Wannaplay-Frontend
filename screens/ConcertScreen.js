@@ -10,11 +10,11 @@ export default function ConcertScreen({ navigation }) {
   });
 
   useEffect(() => {
-    fetch(`http://192.168.1.20:3000/concerts`)
+    fetch(`http://172.16.190.27:3000/concerts`)
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
-          console.log('NTM', data.concert);
+          // console.log(data.concert);
           setConcert({
             eventName: data.concert.eventName,
             date: data.concert.date,

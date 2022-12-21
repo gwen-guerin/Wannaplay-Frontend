@@ -40,7 +40,7 @@ export default function Home({ navigation }) {
   };
 
   const handleRegister = () => {
-    fetch("http://192.168.1.15:3000/users/signup", {
+    fetch("http://172.16.190.27:3000/users/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -55,9 +55,11 @@ export default function Home({ navigation }) {
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {
+          // console.log(data.result);
           dispatch(
             login({
-              username: data.user.username,
+              username: data.user,
+              status: true,
             })
           );
           setFirstname("");
@@ -83,7 +85,7 @@ export default function Home({ navigation }) {
   };
 
   const submitSignIn = () => {
-    fetch("http://192.168.1.15:3000/users/signin", {
+    fetch("http://172.16.190.27:3000/users/signin", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -98,6 +100,7 @@ export default function Home({ navigation }) {
           dispatch(
             login({
               username: usernameSignIn,
+              status: true,
             })
           );
           setFirstname("");
@@ -113,6 +116,16 @@ export default function Home({ navigation }) {
           setErrorSignin(true);
         }
       });
+      fetch("http://172.16.190.27:3000/users/isOnline", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: usernameSignIn,
+        }),
+      }).then(res => res.json())
+      .then(data => {
+        console.log("STATUS", data);
+      })
   };
 
   return (

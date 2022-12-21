@@ -21,7 +21,7 @@ export default function ChatsFriends({ navigation }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    fetch(`http://192.168.1.15:3000/users/friends/getFriends/${user.username}`)
+    fetch(`http://172.16.190.27:3000/users/friends/getFriends/${user.username}`)
       .then((response) => response.json())
       .then((data) => {
         dispatch(setFriends({friends: data.friends}));

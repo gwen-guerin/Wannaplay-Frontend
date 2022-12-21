@@ -3,6 +3,7 @@ import {
   StyleSheet,
   Text,
   ScrollView,
+  ImageBackground
 } from 'react-native';
 import { useState, useEffect } from 'react';
 import FriendsCards from '../components/FriendsCards';
@@ -11,13 +12,14 @@ import { SimpleLineIcons } from '@expo/vector-icons';
 import { logout } from '../reducers/user';
 import { FontAwesome } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
+import { useIsFocused } from '@react-navigation/native';
 
 // construction de  la page profile
 export default function ProfileScreen({ navigation }) {
   const dispatch = useDispatch();
   const userRed = useSelector((state) => state.user.value);
-
-  const [error, setError] = useState(false)
+  const isFocused = useIsFocused()
+  
   const [user, setUser] = useState({
     firstname: null,
     tags: [],
@@ -31,7 +33,7 @@ export default function ProfileScreen({ navigation }) {
 
   //useEffect utilisé pour charger la page profile de l'utilisateur au  moment de sa connection/signin
   useEffect(() => {
-    fetch(`http://192.168.1.15:3000/users/profile/${userRed.username}`)
+    fetch(`http://172.16.190.27:3000/users/profile/${userRed.username}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
@@ -48,11 +50,11 @@ export default function ProfileScreen({ navigation }) {
           });
         }
       });
-  }, []);
+  }, [isFocused]);
 
   //style conditionnel pour le statut online ou pas
   let styleOnline = styles.online;
-  if (user.status) {
+  if (userRed.status) {
     styleOnline = styles.online1;
   }
 
@@ -98,6 +100,16 @@ export default function ProfileScreen({ navigation }) {
   });
 
   const handleLogout = () => {
+    fetch("http://172.16.190.27:3000/users/isOffline", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: userRed.username,
+      }),
+    }).then(res => res.json())
+    .then(data => {
+      console.log("STATUS", data);
+    })
     dispatch(logout());
     navigation.navigate("Home");
   };
@@ -152,7 +164,6 @@ export default function ProfileScreen({ navigation }) {
               />
           </View>
         </View>
-       
         <ScrollView style={styles.friendsCardsContainer} horizontal={true}>{friendsList}
 
       </ScrollView>
@@ -239,11 +250,13 @@ const styles = StyleSheet.create({
     color: "#CE2174",
   },
   online: {
+    backgroundColor: "green",
     height: 20,
     width: 20,
     borderRadius: 40,
   },
   online1: {
+    backgroundColor: "green",
     height: 20,
     width: 20,
     borderRadius: 40,
@@ -263,7 +276,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   tagandteach: {
-    // backgroundColor: 'red',
     display: "flex",
     marginTop: 20,
     marginBottom: 20,
@@ -278,7 +290,7 @@ const styles = StyleSheet.create({
     width: 150,
   },
   description: {
-    backgroundColor: "#C5C5C5",
+    backgroundColor: "#ffffffaa",
     display: "flex",
     alignItems: "stretch",
     borderRadius: 5,
@@ -287,7 +299,7 @@ const styles = StyleSheet.create({
     marginTop: 25,
   },
   infoContainer: {
-    backgroundColor: "#A3A3A3aa",
+    backgroundColor: "#E5EAE9",
     padding: 5,
     borderRadius: 5,
     flexDirection: "row",
@@ -307,8 +319,6 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     width: "100%",
-    // backgroundColor: "red",
     marginTop: 25,
-    // paddingTop: 10,
   },
 });

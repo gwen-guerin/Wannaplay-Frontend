@@ -3,23 +3,26 @@ import { useState, useEffect } from 'react';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useSelector } from 'react-redux';
 
-
 //comment on fait pour concrètrement pour faire une demande d'amis ?? et pusher en BD ?
 export default function FriendsCards(props) {
+  const userRed = useSelector((state) => state.user.value);
+  // console.log("object", userRed);
   const [friends, setFriends] = useState([]);
   const [isFriendOnline, setIsFriendOnline] = useState(false);
-  const [photo, setPhoto] = useState("");
+  const [photo, setPhoto] = useState();
+
 
   //useEffect à la connexion de l'utilisateur qui récupère les données des amis (username et photo)
   useEffect(() => {
-    fetch(`http://192.168.1.15:3000/users/profile/${props.friend}`)
+    fetch(`http://172.16.190.27:3000/users/profile/${props.friend}`)
       .then((res) => res.json())
       .then((data) => {
+        console.log("userusername", data.user.username);
         setFriends(data.user.username);
         setIsFriendOnline(data.user.status);
         setPhoto(data.user.profilePicture);
       });
-  }, []);
+  }, [props.friend]);
 
   //style conditionnel pour le statut online ou pas
   let styleOnline = styles.online;
@@ -50,13 +53,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
     padding: 20,
-  
-    backgroundColor: "#A8F9DEaa",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4.84,
-    elevation: 5,
+
+    backgroundColor: "#ffffffaa",
+    elevation: 1,
     borderRadius: 10,
     margin: 5,
     height: "60%",
