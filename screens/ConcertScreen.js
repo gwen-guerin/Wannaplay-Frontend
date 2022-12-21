@@ -1,74 +1,48 @@
-import { StyleSheet, View, Text, ImageBackground } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import { useEffect, useState } from "react";
+import IPAdress from "../IPAdress";
 
 export default function ConcertScreen({ navigation }) {
-  const [concerts, setConcerts] = useState([]);
-  const [list, setList] = useState([]);
+  const [concert, setConcert] = useState({
+    eventName: null,
+    date: null,
+    style: null,
+    place: null,
+  });
 
   useEffect(() => {
-    fetch("http://172.16.190.30:3000/concerts")
+    fetch(`http://${IPAdress}:3000/concerts`)
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
-          console.log("NTM", data.concert);
-          setConcerts(data.concerts);
+          // console.log(data.concert);
+          setConcert({
+            eventName: data.concert.eventName,
+            date: data.concert.date,
+            style: data.concert.style,
+            place: data.concert.place,
+          });
         }
       });
   }, []);
 
-  useEffect(() => {
-    console.log(concerts);
-    setList(
-      concerts.map((data, i) => {
-        return (
-          <View style={styles.ev} key={i}>
-            <Text style={styles.text}>
-              {data.eventName} | {data.date} | {data.type} | {data.places}
-            </Text>
-          </View>
-        );
-      })
-    );
-  }, [concerts]);
-
   return (
-    <ImageBackground
-      source={require("../assets/illu_02.jpg")}
-      style={styles.container}
-    >
-      <View>{list}</View>
-    </ImageBackground>
+    <View styles={styles.container}>
+      <Text>{concert.eventName}</Text>
+      <Text>{concert.type}</Text>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    display: "flex",
+    flex: 1,
+    justifyContent: "center",
     alignItems: "center",
-    justifyContent: "space-between",
-    borderBottomColor: "#ccc",
-    backgroundColor: "#A8F9DE",
-    height: "100%",
+    fontSize: 50,
+    color: "black",
+    backgroundColor: "red",
     width: "100%",
-  },
-  ev: {
-    fontSize: 25,
-    fontWeight: "bold",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    backgroundColor: "#19205C",
-    margin: 20,
-    borderWidth: 1,
-    borderColor: "black",
-    borderRadius: 5,
-    
-  },
-  text: {
-    fontSize: 25,
-    color: "#CE2174",
-    fontWeight: "bold",
-    backgroundColor: "#C5C5C5",
     height: "100%",
-    width: "100%",
   },
 });

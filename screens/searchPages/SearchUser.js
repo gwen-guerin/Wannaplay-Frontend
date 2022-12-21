@@ -29,13 +29,22 @@ export default function SearchUser({ navigation }) {
   }, [searchQuery]);
 
   const addChat = (friendUsername) => {
+<<<<<<< HEAD
     fetch("http://192.168.1.117:3000/users/");
+=======
+    fetch("http://172.16.190.27:3000/users/");
+>>>>>>> 52c9800e493853141baea8a490cda72e9f58168e
   };
 
   const handleSearch = () => {
     if (searchQuery.length > 0) {
+<<<<<<< HEAD
       console.log(searchQuery.length);
       fetch(`http://192.168.1.117:3000/search/${searchQuery}`)
+=======
+      // console.log(searchQuery.length)
+      fetch(`http://172.16.190.27:3000/search/${searchQuery}`)
+>>>>>>> 52c9800e493853141baea8a490cda72e9f58168e
         .then((response) => response.json())
         .then((data) => {
           setSearchResults(
@@ -72,7 +81,7 @@ export default function SearchUser({ navigation }) {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require("../../assets/esquise02.jpg")}
+        source={require("../../assets/illu_02.jpg")}
         style={styles.background}
       >
         <View style={styles.searchContainer}>

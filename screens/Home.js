@@ -11,6 +11,7 @@ import {
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { login } from "../reducers/user";
+import IPAdress from "../IPAdress";
 
 const EMAIL_REGEX =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -40,7 +41,7 @@ export default function Home({ navigation }) {
   };
 
   const handleRegister = () => {
-    fetch("http://172.16.190.30:3000/users/signup", {
+    fetch(`http://${IPAdress}:3000/users/signup`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -55,9 +56,11 @@ export default function Home({ navigation }) {
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {
+          // console.log(data.result);
           dispatch(
             login({
-              username: data.user.username,
+              username: data.user,
+              status: true,
             })
           );
           setFirstname("");
@@ -83,7 +86,7 @@ export default function Home({ navigation }) {
   };
 
   const submitSignIn = () => {
-    fetch("http://172.16.190.30:3000/users/signin", {
+    fetch(`http://${IPAdress}:3000/users/signin`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -98,6 +101,7 @@ export default function Home({ navigation }) {
           dispatch(
             login({
               username: usernameSignIn,
+              status: true,
             })
           );
           setFirstname("");
@@ -112,6 +116,17 @@ export default function Home({ navigation }) {
           setModalSignInVisible(true);
           setErrorSignin(true);
         }
+      });
+    fetch(`http://${IPAdress}:3000/users/isOnline`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: usernameSignIn,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("STATUS", data);
       });
   };
 

@@ -2,18 +2,15 @@ import {
   View,
   StyleSheet,
   Text,
-  ScrollView,
   TouchableOpacity,
   Image,
+  ImageBackground,
 } from "react-native";
 import { useState, useEffect } from "react";
-import FriendsCards from "../components/FriendsCards";
-import UploadImage from "../components/UploadImage";
-import { SimpleLineIcons } from "@expo/vector-icons";
 import { addToFriends, removeFromFriends, logout } from "../reducers/user";
 import { FontAwesome, FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
-import { setStatusBarNetworkActivityIndicatorVisible } from "expo-status-bar";
+import IPAdress from "../IPAdress";
 
 // construction de  la page profile
 export default function FriendProfile({ navigation, route: { params } }) {
@@ -25,7 +22,7 @@ export default function FriendProfile({ navigation, route: { params } }) {
     firstname: null,
     tags: [],
     friends: [],
-    // status: false,
+    status: false,
     city: null,
     age: null,
     teacher: [],
@@ -35,11 +32,10 @@ export default function FriendProfile({ navigation, route: { params } }) {
 
   //useEffect utilisé pour charger la page profile de l'utilisateur au  moment de sa connection/signin
   useEffect(() => {
-    fetch(`http://172.16.190.30:3000/users/profile/${userRed.username}`)
+    fetch(`http://${IPAdress}:3000/users/profile/${params.username}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
-          console.log("BIIIIITE", data);
           setUser({
             username: data.user.username,
             firstname: data.user.firstname,
@@ -51,34 +47,38 @@ export default function FriendProfile({ navigation, route: { params } }) {
             firstname: data.user.firstname,
             description: data.user.description,
             profilePicture: data.user.profilePicture,
+            status: data.user.status,
           });
         }
       });
   }, []);
 
-  const isFriend = () => {
-    for (let i = 0; i < userRed.friends.length; i++) {
-      if (userRed.friends[i] === params.username) setFriend(true);
-    }
-  };
+  // const isFriend = () => {
+  //   for (let i = 0; i < userRed.friends.length; i++) {
+  //     if (userRed.friends[i] === params.username) setFriend(true);
+  //   }
+  // };
 
   const addOrDelete = () => {
     if (friend) {
       return (
-        <TouchableOpacity onPress={() => removeFriend()}>
+        <TouchableOpacity
+          style={styles.ionIcons}
+          onPress={() => removeFriend()}
+        >
           <Ionicons name="person-remove" size={30} color="#CE2174" />
         </TouchableOpacity>
       );
     } else
       return (
-        <TouchableOpacity onPress={() => addFriend()}>
+        <TouchableOpacity style={styles.ionIcons} onPress={() => addFriend()}>
           <Ionicons name="person-add" size={30} color="#CE2174" />
         </TouchableOpacity>
       );
   };
 
   const addFriend = () => {
-    fetch("http://172.16.190.30:3000/friends/addFriend", {
+    fetch(`http://${IPAdress}:3000/friends/addFriend`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -94,7 +94,7 @@ export default function FriendProfile({ navigation, route: { params } }) {
   };
 
   const removeFriend = () => {
-    fetch("http://172.16.190.30:3000/friends/removeFriend", {
+    fetch(`http://${IPAdress}:3000/friends/removeFriend`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -164,70 +164,65 @@ export default function FriendProfile({ navigation, route: { params } }) {
     navigation.navigate("UpdateProfile");
   };
   return (
-    <View style={styles.container}>
-      <View style={styles.headerProfile}>
-        <Image
-          source={{ uri: user.profilePicture }}
-          style={styles.profilePicture}
-        />
-        <View style={styles.nameAndTags}>
-          <View style={styles.nameAndStatus}>
-            <Text style={styles.textUsername}>#{user.username}</Text>
-            {/* <View style={styleOnline}></View> */}
-            <SimpleLineIcons
+    <ImageBackground
+      source={require("../assets/illu_02.jpg")}
+      imageStyle={{ opacity: 0.4 }}
+      style={styles.imgBack}
+    >
+      <View style={styles.container}>
+        <View style={styles.headerProfile}>
+          <Image
+            source={{ uri: user.profilePicture }}
+            style={styles.profilePicture}
+          />
+          <View style={styles.nameAndTags}>
+            <View style={styles.nameAndStatus}>
+              <Text style={styles.textUsername}>#{user.username}</Text>
+              {/* <View style={styleOnline}></View> /}
+            {/ <SimpleLineIcons
               style={styles.logoLogout}
               name="logout"
               size={20}
-              color="black"
-              onPress={() => handleLogout()}
+              color="black" /}
+              {/ // onPress={() => handleLogout()}
+            /> */}
+            </View>
+            <View style={styles.tagandteach}>
+              <View style={styles.tagsList}>{tagsList}</View>
+              <View style={styles.tagsList}>
+                {user.teacher && (
+                  <Text style={styles.textUser}>Wanna teach : </Text>
+                )}
+                {teacherTag}
+              </View>
+            </View>
+          </View>
+        </View>
+        <View style={styles.description}>
+          <View style={styles.infoContainer}>
+            <Text style={styles.textUser}>About me : </Text>
+            <Text style={styles.textUser}>{user.firstname}</Text>
+            <Text style={styles.textUser}>{user.age}ans</Text>
+            <Text style={styles.textUser}>{user.city}</Text>
+          </View>
+          <Text style={styles.textDecription}>{user.description}</Text>
+          <View style={styles.modifyIcon}>
+            <FontAwesome
+              onPress={() => handleModify()}
+              name="pencil-square-o"
+              size={16}
+              color="#A3A3A3"
             />
           </View>
-          <View style={styles.tagandteach}>
-            <View style={styles.tagsList}>{tagsList}</View>
-            <View style={styles.tagsList}>
-              {user.teacher && (
-                <Text style={styles.textUser}>Wanna teach : </Text>
-              )}
-              {teacherTag}
-            </View>
-          </View>
+        </View>
+        <View style={styles.iconContainer}>
+          <TouchableOpacity style={styles.ionIcons}>
+            <FontAwesome5 name="rocketchat" size={30} color="#CE2174" />
+          </TouchableOpacity>
+          {addOrDelete()}
         </View>
       </View>
-      <View style={styles.description}>
-        <View style={styles.infoContainer}>
-          <Text style={styles.textUser}>About me : </Text>
-          <Text style={styles.textUser}>{user.firstname}</Text>
-          <Text style={styles.textUser}>{user.age}ans</Text>
-          <Text style={styles.textUser}>{user.city}</Text>
-        </View>
-        <Text style={styles.textDecription}>{user.description}</Text>
-        <View style={styles.modifyIcon}>
-          <FontAwesome
-            onPress={() => handleModify()}
-            name="pencil-square-o"
-            size={16}
-            color="#A3A3A3"
-          />
-        </View>
-      </View>
-      <View style={styles.iconContainer}>
-        <TouchableOpacity>
-          <FontAwesome5 name="rocketchat" size={30} color="#CE2174" />
-        </TouchableOpacity>
-        {addOrDelete()}
-      </View>
-      {/* {error && (
-          <View>
-            <View style={styles.friendsView}>
-              <Text style={styles.friends}>My friends</Text>
-              <FontAwesome5 name="rocketchat" size={30} color="#CE2174" />
-            </View>
-            <ScrollView horizontal={true}>
-              <View style={styles.friendsTab}>{friendsList}</View>
-            </ScrollView>
-          </View>
-        )} */}
-    </View>
+    </ImageBackground>
   );
 }
 
@@ -239,12 +234,12 @@ const styles = StyleSheet.create({
     height: "100%",
     paddingTop: 50,
     padding: 10,
-    backgroundColor: "#A8F9DE",
+    // backgroundColor: "#A8F9DE",
   },
   profilePicture: {
     borderRadius: 60,
-    width: 80,
-    height: 80,
+    width: 120,
+    height: 120,
   },
   friendsTab: {
     backgroundColor: "white",
@@ -350,15 +345,15 @@ const styles = StyleSheet.create({
     width: 150,
   },
   description: {
-    backgroundColor: "#C5C5C5",
+    backgroundColor: "#ffffffaa",
     alignItems: "stretch",
     borderRadius: 5,
     width: "100%",
     padding: 5,
-    marginTop: 25,
+    marginTop: -170,
   },
   infoContainer: {
-    backgroundColor: "#A3A3A3aa",
+    backgroundColor: "#E5EAE9",
     padding: 5,
     borderRadius: 5,
     flexDirection: "row",
@@ -372,10 +367,19 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
   },
-  // friendButton: {
-  //   height: '30%',
-  //   width: '30%',
-  //   borderColor: "red",
-  //   borderWidth: 2,
-  // },
+  imgBack: {
+    width: "100%",
+    height: "100%",
+  },
+
+  ionIcons: {
+    borderRadius: 40,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    // width: 100,
+    // height: 100,
+    padding: 20,
+    backgroundColor: "#ffffffaa",
+  },
 });

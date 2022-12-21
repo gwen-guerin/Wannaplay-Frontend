@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import {
   SafeAreaView,
@@ -21,7 +21,11 @@ export default function SearchTags() {
   const [searchResults, setSearchResults] = useState([]);
 
   const handleSearch = () => {
+<<<<<<< HEAD
     fetch(`http://192.168.1.117:3000/search/tags/${searchQuery}`)
+=======
+    fetch(`http://172.16.190.27:3000/search/tags/${searchQuery}`)
+>>>>>>> 52c9800e493853141baea8a490cda72e9f58168e
       .then((response) => response.json())
       .then((data) => {
         setSearchResults(
@@ -52,7 +56,7 @@ export default function SearchTags() {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require("../../assets/esquise02.jpg")}
+        source={require("../../assets/illu_02.jpg")}
         style={styles.background}
       >
         <View style={styles.searchContainer}>

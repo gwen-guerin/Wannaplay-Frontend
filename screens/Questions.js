@@ -13,6 +13,7 @@ import Slider from "@react-native-community/slider";
 import { useSelector } from "react-redux";
 import { Select } from "native-base";
 import { Entypo } from "@expo/vector-icons";
+import IPAdress from "../IPAdress";
 
 export default function Questions({ navigation }) {
   const user = useSelector((state) => state.user.value);
@@ -22,7 +23,7 @@ export default function Questions({ navigation }) {
   const [teacher, setTeacher] = useState(false);
   const [instruments, setInstruments] = useState([]);
   const [instruTaught, setInstruTaught] = useState([]);
-  const [description, setDescription] = useState([]);
+  const [description, setDescription] = useState();
 
   //FONCTIONS POUR DELETE INSTRU/TEACHING
   const handleDeleteInstru = (instru) => {
@@ -95,8 +96,10 @@ export default function Questions({ navigation }) {
         teacher: instruTaught,
         tags: instruments,
         description: description,
+        profilePicture: "../assets/jimi.jpg",
       }),
     });
+
     navigation.navigate("TabNavigator");
   };
 

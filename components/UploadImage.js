@@ -9,19 +9,19 @@ import {
 import { AntDesign } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import { useSelector } from "react-redux";
+import IPAdress from "../IPAdress";
 
 export default function UploadImage() {
   const [image, setImage] = useState(null);
   const user = useSelector((state) => state.user.value);
 
   useEffect(() => {
-    fetch(`http://172.16.190.30:3000/users/profile/${user.username}`)
+    fetch(`http://${IPAdress}:3000/users/profile/${user.username}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
           setImage(data.user.profilePicture);
         }
-        // console.log("datauserprofile", data.user.profilePicture);
       });
   }, []);
 
@@ -79,14 +79,14 @@ export default function UploadImage() {
           type: "image/jpeg",
         });
         // console.log("POUETTT", image);
-        fetch("http://172.16.190.30:3000/upload", {
+        fetch(`http://${IPAdress}:3000/upload`, {
           method: "POST",
           body: formData,
         })
           .then((res) => res.json())
           .then((data) => {
             console.log("IMAAAAGE", data);
-            fetch("http://172.16.190.30:3000/users/photo", {
+            fetch(`http://${IPAdress}:3000/users/photo`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({

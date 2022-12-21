@@ -3,20 +3,23 @@ import {
   StyleSheet,
   Text,
   ScrollView,
-  TouchableOpacity,
+  ImageBackground,
 } from "react-native";
 import { useState, useEffect } from "react";
 import FriendsCards from "../components/FriendsCards";
 import UploadImage from "../components/UploadImage";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import { logout } from "../reducers/user";
-import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
+import { useIsFocused } from "@react-navigation/native";
+import IPAdress from "../IPAdress";
 
 // construction de  la page profile
 export default function ProfileScreen({ navigation }) {
   const dispatch = useDispatch();
   const userRed = useSelector((state) => state.user.value);
+  const isFocused = useIsFocused();
 
   const [user, setUser] = useState({
     firstname: null,
@@ -31,11 +34,11 @@ export default function ProfileScreen({ navigation }) {
 
   //useEffect utilisé pour charger la page profile de l'utilisateur au  moment de sa connection/signin
   useEffect(() => {
-    fetch(`http://172.16.190.30:3000/users/profile/${userRed.username}`)
+    fetch(`http://${IPAdress}:3000/users/profile/${userRed.username}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
-          console.log("BIIIIITE", data);
+          console.log("ERREUR", data);
           setUser({
             age: data.user.age,
             tags: data.user.tags,
@@ -48,13 +51,13 @@ export default function ProfileScreen({ navigation }) {
           });
         }
       });
-  }, []);
+  }, [isFocused]);
 
   //style conditionnel pour le statut online ou pas
-  // let styleOnline = styles.online;
-  // if (status) {
-  //   styleOnline = styles.online1;
-  // }
+  let styleOnline = styles.online;
+  if (userRed.status) {
+    styleOnline = styles.online1;
+  }
 
   //on map sur l'état teacher pour faire ressortir les tags/les instruments que l'utilisateur veut enseigner
   const teacherTag = user.teacher.map((teacher, i) => {
@@ -98,6 +101,17 @@ export default function ProfileScreen({ navigation }) {
   });
 
   const handleLogout = () => {
+    fetch(`http://${IPAdress}:3000/users/isOffline`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: userRed.username,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("STATUS", data);
+      });
     dispatch(logout());
     navigation.navigate("Home");
   };
@@ -106,31 +120,35 @@ export default function ProfileScreen({ navigation }) {
     navigation.navigate("UpdateProfile");
   };
   return (
-    <View style={styles.container}>
-      <View style={styles.headerProfile}>
-        <UploadImage />
-        <View style={styles.nameAndTags}>
-          <View style={styles.nameAndStatus}>
-            <Text style={styles.textUsername}>#{userRed.username}</Text>
-            {/* <View style={styleOnline}></View> */}
-            <SimpleLineIcons
-              style={styles.logoLogout}
-              name="logout"
-              size={15}
-              color="black"
-              onPress={() => handleLogout()}
-            />
-          </View>
-          <View style={styles.tagandteach}>
-            <View style={styles.tagsList}>{tagsList}</View>
-            <View style={styles.tagsList}>
-              <Text style={styles.textUser}>Wanna teach : </Text>
-              {teacherTag}
+    <ImageBackground
+      source={require("../assets/illu_02.jpg")}
+      imageStyle={{ opacity: 0.4 }}
+      style={styles.imgBack}
+    >
+      <View style={styles.container}>
+        <View style={styles.headerProfile}>
+          <UploadImage />
+          <View style={styles.nameAndTags}>
+            <View style={styles.nameAndStatus}>
+              <Text style={styles.textUsername}>#{userRed.username}</Text>
+              <View style={styleOnline}></View>
+              <SimpleLineIcons
+                style={styles.logoLogout}
+                name="logout"
+                size={15}
+                color="black"
+                onPress={() => handleLogout()}
+              />
+            </View>
+            <View style={styles.tagandteach}>
+              <View style={styles.tagsList}>{tagsList}</View>
+              <View style={styles.tagsList}>
+                <Text style={styles.textUser}>Wanna teach : </Text>
+                {teacherTag}
+              </View>
             </View>
           </View>
         </View>
-      </View>
-      <ScrollView>
         <View style={styles.description}>
           <View style={styles.infoContainer}>
             <Text style={styles.textUser}>About me : </Text>
@@ -148,19 +166,11 @@ export default function ProfileScreen({ navigation }) {
             />
           </View>
         </View>
-        {/* <View style={styles.iconContainer}>
-          <TouchableOpacity>
-            <FontAwesome5 name="rocketchat" size={30} color="#CE2174" />
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <FontAwesome5 name="user-friends" size={24} color="black" />
-          </TouchableOpacity>
-        </View> */}
-        {/* {error && ( */}
-        <View style={styles.friendsCardsContainer}>{friendsList}</View>
-        {/* )} */}
-      </ScrollView>
-    </View>
+        <ScrollView style={styles.friendsCardsContainer} horizontal={true}>
+          {friendsList}
+        </ScrollView>
+      </View>
+    </ImageBackground>
   );
 }
 
@@ -172,7 +182,11 @@ const styles = StyleSheet.create({
     height: "100%",
     paddingTop: 50,
     padding: 10,
-    backgroundColor: "#A8F9DE",
+    // backgroundColor: "#A8F9DE",
+  },
+  imgBack: {
+    width: "100%",
+    height: "100%",
   },
   userPicture: {
     borderRadius: 60,
@@ -191,7 +205,7 @@ const styles = StyleSheet.create({
   },
   friendsList: {
     borderWidth: 1,
-    width: 100,
+    width: 10,
     height: 100,
   },
   textUser: {
@@ -231,10 +245,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
   },
-  background: {
-    width: "100%",
-    height: "100%",
-  },
   friends: {
     fontWeight: "bold",
     fontSize: 20,
@@ -242,15 +252,15 @@ const styles = StyleSheet.create({
     color: "#CE2174",
   },
   online: {
+    backgroundColor: "green",
     height: 20,
     width: 20,
-    // backgroundColor: 'red',
     borderRadius: 40,
   },
   online1: {
+    backgroundColor: "green",
     height: 20,
     width: 20,
-    // backgroundColor: 'green',
     borderRadius: 40,
   },
   friendsView: {
@@ -268,7 +278,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   tagandteach: {
-    // backgroundColor: 'red',
     display: "flex",
     marginTop: 20,
     marginBottom: 20,
@@ -283,7 +292,7 @@ const styles = StyleSheet.create({
     width: 150,
   },
   description: {
-    backgroundColor: "#C5C5C5",
+    backgroundColor: "#ffffffaa",
     display: "flex",
     alignItems: "stretch",
     borderRadius: 5,
@@ -292,7 +301,7 @@ const styles = StyleSheet.create({
     marginTop: 25,
   },
   infoContainer: {
-    backgroundColor: "#A3A3A3aa",
+    backgroundColor: "#E5EAE9",
     padding: 5,
     borderRadius: 5,
     flexDirection: "row",
@@ -312,7 +321,6 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     width: "100%",
-    backgroundColor: "red",
     marginTop: 25,
   },
 });

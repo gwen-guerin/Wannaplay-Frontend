@@ -1,4 +1,3 @@
-import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
@@ -7,9 +6,35 @@ import SearchUser from "./searchPages/SearchUser";
 import SearchTeacher from "./searchPages/SearchTeacher";
 
 import { StyleSheet, Dimensions, TextInput, View } from "react-native";
-const Stack = createNativeStackNavigator();
+import IPAdress from "../IPAdress";
 
+const Stack = createNativeStackNavigator();
 const Tab = createMaterialTopTabNavigator();
+
+const handleSearch = () => {
+  if (searchQuery.length > 0) {
+    fetch(`http://${IPAdress}:3000/search/${searchQuery}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setSearchResults(
+          data.users.map((user, i) => {
+            return (
+              <TouchableOpacity key={i} style={styles.searchedButton}>
+                <Image
+                  source={require("../assets/mia-khalifa.jpg")}
+                  style={styles.avatar}
+                />
+                <View style={styles.userInfo}>
+                  <Text>{user.username}</Text>
+                </View>
+              </TouchableOpacity>
+            );
+          })
+        );
+      });
+  }
+};
+
 
 const SearchNavigator = () => {
   return (
