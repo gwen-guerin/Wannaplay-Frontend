@@ -35,7 +35,7 @@ export default function FriendProfile({ navigation, route: { params } }) {
 
   //useEffect utilisé pour charger la page profile de l'utilisateur au  moment de sa connection/signin
   useEffect(() => {
-    fetch(`http://172.20.10.3:3000/users/profile/${userRed.username}`)
+    fetch(`http://172.16.190.30:3000/users/profile/${userRed.username}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
@@ -78,7 +78,7 @@ export default function FriendProfile({ navigation, route: { params } }) {
   };
 
   const addFriend = () => {
-    fetch("http://192.168.1.118:3000/friends/addFriend", {
+    fetch("http://172.16.190.30:3000/friends/addFriend", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -94,7 +94,7 @@ export default function FriendProfile({ navigation, route: { params } }) {
   };
 
   const removeFriend = () => {
-    fetch("http://192.168.1.118:3000/friends/removeFriend", {
+    fetch("http://172.16.190.30:3000/friends/removeFriend", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

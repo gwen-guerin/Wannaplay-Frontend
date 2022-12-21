@@ -13,7 +13,7 @@ export default function FriendsCards(props) {
   const [photo, setPhoto] = useState();
   //useEffect à la connexion de l'utilisateur qui récupère les données des amis (username et photo)
   useEffect(() => {
-    fetch(`http://172.20.10.3:3000/users/profile/${props.friend}`)
+    fetch(`http://172.16.190.30:3000/users/profile/${props.friend}`)
       .then((res) => res.json())
       .then((data) => {
         // console.log("DATAAAAA", data);

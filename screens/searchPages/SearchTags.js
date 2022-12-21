@@ -21,7 +21,7 @@ export default function SearchTags() {
   const [searchResults, setSearchResults] = useState([]);
 
   const handleSearch = () => {
-    fetch(`http://172.20.10.3:3000/search/tags/${searchQuery}`)
+    fetch(`http://192.168.1.117:3000/search/tags/${searchQuery}`)
       .then((response) => response.json())
       .then((data) => {
         setSearchResults(

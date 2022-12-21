@@ -18,10 +18,11 @@ export default function ChatsList({ navigation }) {
   const [chatBoxes, setChatBoxes] = useState([]);
 
   useEffect(() => {
-    fetch("http://172.20.10.3:3000/users/allUsers")
+    fetch("http://172.16.190.30:3000/users/allUsers")
       .then((response) => response.json())
       .then((data) => {
-        setAllUsers(data.usersList)});
+        setAllUsers(data.usersList);
+      });
   }, []);
 
   useEffect(() => {
@@ -98,7 +99,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingLeft: "2%",
     marginBottom: "3%",
-    borderColor: 'black',
+    borderColor: "black",
     borderWidth: 2,
     borderRadius: 5,
   },
@@ -120,7 +121,7 @@ const styles = StyleSheet.create({
     margin: Dimensions.get("screen").width * 0.01,
     borderRadius: 5,
     borderWidth: 2,
-    borderColor: 'black',
+    borderColor: "black",
   },
   chatlink: {
     flexDirection: "row",
