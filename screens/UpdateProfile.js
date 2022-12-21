@@ -14,6 +14,7 @@ import Slider from "@react-native-community/slider";
 import { Select } from "native-base";
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "../reducers/user"
+import IPAdress  from "../IPAdress"
 
 export default function UpdateProfile({ navigation }) {
 
@@ -100,7 +101,7 @@ export default function UpdateProfile({ navigation }) {
   // ROUTE POST DES DONNEES DU FORM EN DB
   const handleFormSubmit = () => {
     // console.log(user.firstname);
-    fetch("http:///172.16.190.27:3000/users/updateProfile", {
+    fetch(`http://${IPAdress}:3000/users/updateProfile`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -114,7 +115,7 @@ export default function UpdateProfile({ navigation }) {
       .then((response) => response.json())
       .then((data) => {
         dispatch(login({ username: data.username}))
-      // fetch(`http://172.16.190.27:3000/users/profile/${user.username}`)
+      // fetch(`http://${IPAdress}:3000/users/profile/${user.username}`)
       // .then((res) => res.json())
       // .then((data) => {
       //   if (data.result) {

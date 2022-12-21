@@ -11,9 +11,10 @@ import {
 } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Pusher from "pusher-js/react-native";
+import IPAdress from "../IPAdress";
 
 const pusher = new Pusher('295cd63eb30452706332', { cluster: 'eu' });
-const BACKEND_ADDRESS = 'http:///172.16.190.27:3000';
+
 
 export default function ChatScreen({ navigation, route: { params } }) {
   const [messages, setMessages] = useState([]);
@@ -22,7 +23,7 @@ export default function ChatScreen({ navigation, route: { params } }) {
   useEffect(() => {
     (() => {
       // console.log(messages);
-      fetch(`${BACKEND_ADDRESS}/chats/${params.username}`, { method: "PUT" });
+      fetch(`http://${IPAdress}:3000/chats/${params.username}`, { method: "PUT" });
 
       const subscription = pusher.subscribe("chat");
       subscription.bind("pusher:subscription_succeeded", () => {
@@ -31,7 +32,7 @@ export default function ChatScreen({ navigation, route: { params } }) {
     })();
 
     return () =>
-      fetch(`${BACKEND_ADDRESS}/chats/${params.username}`, {
+      fetch(`http://${IPAdress}:3000/chats/${params.username}`, {
         method: "DELETE",
       });
   }, [params.username]);
@@ -52,7 +53,7 @@ export default function ChatScreen({ navigation, route: { params } }) {
       id: Math.floor(Math.random() * 100000),
     };
 
-    fetch(`${BACKEND_ADDRESS}/chats/message`, {
+    fetch(`http://${IPAdress}:3000/chats/message`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),

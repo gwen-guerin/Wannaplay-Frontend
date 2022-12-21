@@ -2,6 +2,7 @@ import { Image, View, StyleSheet, Text } from 'react-native';
 import { useState, useEffect } from 'react';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useSelector } from 'react-redux';
+import IPAdress from '../IPAdress';
 
 //comment on fait pour concrètrement pour faire une demande d'amis ?? et pusher en BD ?
 export default function FriendsCards(props) {
@@ -14,7 +15,7 @@ export default function FriendsCards(props) {
 
   //useEffect à la connexion de l'utilisateur qui récupère les données des amis (username et photo)
   useEffect(() => {
-    fetch(`http://172.16.190.27:3000/users/profile/${props.friend}`)
+    fetch(`http://${IPAdress}:3000/users/profile/${props.friend}`)
       .then((res) => res.json())
       .then((data) => {
         console.log("userusername", data.user.username);

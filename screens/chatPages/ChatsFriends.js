@@ -13,7 +13,8 @@ import {
 import { BlurView } from "expo-blur";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addFriend, setFriends } from "../../reducers/user";
+import { setFriends } from "../../reducers/user";
+import IPAdress from "../../IPAdress";
 
 export default function ChatsFriends({ navigation }) {
   const [chatBoxes, setChatBoxes] = useState([]);
@@ -21,7 +22,7 @@ export default function ChatsFriends({ navigation }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    fetch(`http://172.16.190.27:3000/users/friends/getFriends/${user.username}`)
+    fetch(`http://${IPAdress}:3000/users/friends/getFriends/${user.username}`)
       .then((response) => response.json())
       .then((data) => {
         dispatch(setFriends({friends: data.friends}));

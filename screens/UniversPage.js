@@ -15,6 +15,7 @@ import { ImageBackground } from "react-native";
 import { BlurView } from "expo-blur";
 import * as Location from "expo-location";
 import { useState, useEffect } from "react";
+import IPAdress from "../IPAdress";
 
 const API_KEY = "AIzaSyANG7Yh1Az3Q0okg4x2yfgmVupwYQkRdDo";
 
@@ -42,7 +43,7 @@ export default function UniversPage() {
           )
             .then((response) => response.json())
             .then((data) => {
-              fetch("http://172.16.190.27:3000/users/geoloc", {
+              fetch(`http://${IPAdress}:3000/users/geoloc`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({

@@ -10,6 +10,7 @@ import { useState, useEffect } from "react";
 import { addToFriends, removeFromFriends, logout } from "../reducers/user";
 import { FontAwesome, FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
+import IPAdress from "../IPAdress";
 
 // construction de  la page profile
 export default function FriendProfile({ navigation, route: { params } }) {
@@ -31,7 +32,7 @@ export default function FriendProfile({ navigation, route: { params } }) {
 
   //useEffect utilisé pour charger la page profile de l'utilisateur au  moment de sa connection/signin
   useEffect(() => {
-    fetch(`http://172.16.190.27:3000/users/profile/${params.username}`)
+    fetch(`http://${IPAdress}:3000/users/profile/${params.username}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
@@ -74,7 +75,7 @@ export default function FriendProfile({ navigation, route: { params } }) {
   };
 
   const addFriend = () => {
-    fetch("http://172.17.188.35:3000/friends/addFriend", {
+    fetch(`http://${IPAdress}:3000/friends/addFriend`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -90,7 +91,7 @@ export default function FriendProfile({ navigation, route: { params } }) {
   };
 
   const removeFriend = () => {
-    fetch("http://172.16.190.27:3000/friends/removeFriend", {
+    fetch(`http://${IPAdress}:3000/friends/removeFriend`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

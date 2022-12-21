@@ -13,13 +13,14 @@ import { logout } from '../reducers/user';
 import { FontAwesome } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { useIsFocused } from '@react-navigation/native';
+import IPAdress from '../IPAdress';
 
 // construction de  la page profile
 export default function ProfileScreen({ navigation }) {
   const dispatch = useDispatch();
   const userRed = useSelector((state) => state.user.value);
   const isFocused = useIsFocused()
-  
+
   const [user, setUser] = useState({
     firstname: null,
     tags: [],
@@ -33,7 +34,7 @@ export default function ProfileScreen({ navigation }) {
 
   //useEffect utilisé pour charger la page profile de l'utilisateur au  moment de sa connection/signin
   useEffect(() => {
-    fetch(`http://172.16.190.27:3000/users/profile/${userRed.username}`)
+    fetch(`http://${IPAdress}:3000/users/profile/${userRed.username}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
@@ -100,7 +101,7 @@ export default function ProfileScreen({ navigation }) {
   });
 
   const handleLogout = () => {
-    fetch("http://172.16.190.27:3000/users/isOffline", {
+    fetch(`http://${IPAdress}:3000/users/isOffline`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

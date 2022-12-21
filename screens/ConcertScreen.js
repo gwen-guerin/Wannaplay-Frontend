@@ -1,5 +1,6 @@
 import { StyleSheet, View, Text } from 'react-native';
 import { useEffect, useState } from 'react';
+import IPAdress from '../IPAdress';
 
 export default function ConcertScreen({ navigation }) {
   const [concert, setConcert] = useState({
@@ -10,7 +11,7 @@ export default function ConcertScreen({ navigation }) {
   });
 
   useEffect(() => {
-    fetch(`http://172.16.190.27:3000/concerts`)
+    fetch(`http://${IPAdress}:3000/concerts`)
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
