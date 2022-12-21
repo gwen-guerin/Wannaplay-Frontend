@@ -11,7 +11,6 @@ import { addToFriends, removeFromFriends, logout } from "../reducers/user";
 import { FontAwesome, FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
 
-
 // construction de  la page profile
 export default function FriendProfile({ navigation, route: { params } }) {
   const userRed = useSelector((state) => state.user.value);
@@ -119,9 +118,10 @@ export default function FriendProfile({ navigation, route: { params } }) {
     const color = randomColor();
     return (
       <Text style={[styles.textUser1, { backgroundColor: color }]} key={i}>
-        #{teacher}
-      </Text>
-    );
+
+    #{teacher}
+  </Text>
+);
   });
 
   //on map sur l'état tags pour faire ressortir les tags/les instruments pratiqué par l'utilisateur
@@ -137,9 +137,10 @@ export default function FriendProfile({ navigation, route: { params } }) {
     const color = randomColor();
     return (
       <Text style={[styles.textUser1, { backgroundColor: color }]} key={i}>
-        #{tag}
-      </Text>
-    );
+
+    #{tag}
+  </Text>
+);
   });
 
   //on map sur l'état friends pour faire ressortir les amis de l'utilisateur
@@ -175,13 +176,13 @@ export default function FriendProfile({ navigation, route: { params } }) {
         <View style={styles.nameAndTags}>
           <View style={styles.nameAndStatus}>
             <Text style={styles.textUsername}>#{user.username}</Text>
-            {/* <View style={styleOnline}></View> */}
-            {/* <SimpleLineIcons
+            {/* <View style={styleOnline}></View> /}
+            {/ <SimpleLineIcons
               style={styles.logoLogout}
               name="logout"
               size={20}
-              color="black" */}
-              {/* // onPress={() => handleLogout()}
+              color="black" /}
+              {/ // onPress={() => handleLogout()}
             /> */}
           </View>
           <View style={styles.tagandteach}>
@@ -381,3 +382,4 @@ alignItems: "center",
     backgroundColor: '#ffffffaa'
   }
 });
+

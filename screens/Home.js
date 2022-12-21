@@ -56,6 +56,7 @@ export default function Home({ navigation }) {
       .then((data) => {
         console.log('DATAUSER',data)
         if (data.result) {
+          // console.log(data.result);
           dispatch(
             login({
               username: data.user,
@@ -126,6 +127,16 @@ export default function Home({ navigation }) {
           console.log("STATUS", data);
         })
       });
+      fetch("http://172.16.190.27:3000/users/isOnline", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: usernameSignIn,
+        }),
+      }).then(res => res.json())
+      .then(data => {
+        console.log("STATUS", data);
+      })
   };
 
   return (

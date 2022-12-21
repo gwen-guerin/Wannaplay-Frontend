@@ -98,6 +98,7 @@ export default function Questions({ navigation }) {
         profilePicture: "../assets/jimi.jpg"
       }),
     });
+    
     navigation.navigate("TabNavigator");
   };
 

@@ -3,23 +3,24 @@ import {
   StyleSheet,
   Text,
   ScrollView,
-  ImageBackground,
-} from "react-native";
-import { useState, useEffect } from "react";
-import FriendsCards from "../components/FriendsCards";
-import UploadImage from "../components/UploadImage";
-import { SimpleLineIcons } from "@expo/vector-icons";
-import { logout } from "../reducers/user";
-import { FontAwesome } from "@expo/vector-icons";
-import { useDispatch, useSelector } from "react-redux";
-import { useIsFocused } from "@react-navigation/native";
+  ImageBackground
+} from 'react-native';
+import { useState, useEffect } from 'react';
+import FriendsCards from '../components/FriendsCards';
+import UploadImage from '../components/UploadImage';
+import { SimpleLineIcons } from '@expo/vector-icons';
+import { logout } from '../reducers/user';
+import { FontAwesome } from '@expo/vector-icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { useIsFocused } from '@react-navigation/native';
 
 // construction de  la page profile
 export default function ProfileScreen({ navigation }) {
   const isFocused = useIsFocused();
   const dispatch = useDispatch();
   const userRed = useSelector((state) => state.user.value);
-
+  
+  
   const [user, setUser] = useState({
     firstname: null,
     tags: [],
@@ -106,11 +107,9 @@ export default function ProfileScreen({ navigation }) {
       body: JSON.stringify({
         username: userRed.username,
       }),
+    }).then(res => res.json())
+    .then(data => {
     })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("STATUS", data);
-      });
     dispatch(logout());
     navigation.navigate("Home");
   };
@@ -252,12 +251,14 @@ const styles = StyleSheet.create({
     color: "#CE2174",
   },
   online: {
+    backgroundColor: "green",
     height: 20,
     width: 20,
     borderRadius: 40,
     backgroundColor: "red",
   },
   online1: {
+    backgroundColor: "green",
     height: 20,
     width: 20,
     borderRadius: 40,

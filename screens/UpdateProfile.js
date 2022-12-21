@@ -12,9 +12,12 @@ import { Entypo } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
 import Slider from "@react-native-community/slider";
 import { Select } from "native-base";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { login } from "../reducers/user"
 
 export default function UpdateProfile({ navigation }) {
+
+  const dispatch = useDispatch()
   const user = useSelector((state) => state.user.value);
 
   const [age, setAge] = useState(0);
@@ -24,6 +27,16 @@ export default function UpdateProfile({ navigation }) {
   const [instruments, setInstruments] = useState([]);
   const [instruTaught, setInstruTaught] = useState([]);
   const [status, setStatus] = useState(true);
+  // const [user2, setUser] = useState({
+  //   firstname: null,
+  //   tags: [],
+  //   friends: [],
+  //   city: null,
+  //   age: null,
+  //   teacher: [],
+  //   description: null,
+  //   profilePicture: null,
+  // });
 
   //FONCTIONS POUR DELETE INSTRU/TEACHING
   const handleDeleteInstru = (instru) => {
@@ -92,7 +105,7 @@ export default function UpdateProfile({ navigation }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         username: user.username,
-        age: age,
+        age,
         teacher: instruTaught,
         tags: instruments,
         description,
@@ -100,29 +113,23 @@ export default function UpdateProfile({ navigation }) {
     })
       .then((response) => response.json())
       .then((data) => {
-        // console.log('DATA', data);
-        // if (data.result) {
-        //   // dispatch(
-        //   //   login({
-        //   //     username: data.user.username,
-        //   //     token: data.user.token,
-        //   //     firstname: data.user.firstname,
-        //   //     lastname: data.user.lastname,
-        //   //     email: data.user.email,
-        //   //     password: data.user.password,
-        //   //   })
-        //   // );
-        //   setAge(25);
-        //   setCity('');
-        //   setDepartment('');
-        //   setTeacher('');
-        //   setInstruTaught('');
-        //   setSinger(false);
-        //   setTags([]);
-        // } else {
-        //   // setError(!error);
-        //   alert('username already existing !');
-        // }
+        dispatch(login({ username: data.username}))
+      // fetch(`http://172.16.190.27:3000/users/profile/${user.username}`)
+      // .then((res) => res.json())
+      // .then((data) => {
+      //   if (data.result) {
+      //     console.log('ERREUR', data);
+      //     setUser({
+      //       age: data.user.age,
+      //       tags: data.user.tags,
+      //       friends: data.user.friends,
+      //       city: data.user.city,
+      //       teacher: data.user.teacher,
+      //       firstname: data.user.firstname,
+      //       description: data.user.description,
+      //       profilePicture: data.user.profilePicture,
+      //     });
+      //   }
       });
     navigation.navigate("TabNavigator");
   };

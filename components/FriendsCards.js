@@ -1,25 +1,28 @@
-import { Image, View, StyleSheet, Text } from "react-native";
-import { useState, useEffect } from "react";
-import { FontAwesome5 } from "@expo/vector-icons";
+import { Image, View, StyleSheet, Text } from 'react-native';
+import { useState, useEffect } from 'react';
+import { FontAwesome5 } from '@expo/vector-icons';
+import { useSelector } from 'react-redux';
 
 //comment on fait pour concrètrement pour faire une demande d'amis ?? et pusher en BD ?
 export default function FriendsCards(props) {
-  console.log("object", userRed);
+  const userRed = useSelector((state) => state.user.value);
+  // console.log("object", userRed);
   const [friends, setFriends] = useState([]);
   const [isFriendOnline, setIsFriendOnline] = useState(false);
   const [photo, setPhoto] = useState();
 
+
   //useEffect à la connexion de l'utilisateur qui récupère les données des amis (username et photo)
   useEffect(() => {
-    console.log("effect in friends card");
     fetch(`http://172.17.188.35:3000/users/profile/${props.friend}`)
       .then((res) => res.json())
       .then((data) => {
+        console.log("userusername", data.user.username);
         setFriends(data.user.username);
         setIsFriendOnline(data.user.status);
         setPhoto(data.user.profilePicture);
       });
-  }, []);
+  }, [props.friend]);
 
   //style conditionnel pour le statut online ou pas
   let styleOnline = styles.online;

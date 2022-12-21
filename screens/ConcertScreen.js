@@ -14,7 +14,7 @@ export default function ConcertScreen({ navigation }) {
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
-          console.log('NTM', data.concert);
+          // console.log(data.concert);
           setConcert({
             eventName: data.concert.eventName,
             date: data.concert.date,

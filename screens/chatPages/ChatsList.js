@@ -6,7 +6,6 @@ import {
   Text,
   TouchableOpacity,
   Image,
-  useWindowDimensions,
   TextInput,
   Dimensions,
 } from "react-native";

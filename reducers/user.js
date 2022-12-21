@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   value: {
@@ -10,7 +10,7 @@ const initialState = {
 };
 
 export const userSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState,
   reducers: {
     login: (state, action) => {
@@ -26,7 +26,9 @@ export const userSlice = createSlice({
       state.value.friends.push(action.payload.friend);
     },
     removeFromFriends: (state, action) => {
-      state.value.friends = state.value.friends.filter((e) => e !== action.payload.friend);
+      state.value.friends = state.value.friends.filter(
+        (e) => e !== action.payload.friend
+      );
     },
     addPhoto: (state, action) => {
       state.value.photo = action.payload;
