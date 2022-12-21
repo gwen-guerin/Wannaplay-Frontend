@@ -16,6 +16,10 @@ import Questions from "./screens/Questions";
 import UpdateProfile from "./screens/UpdateProfile"
 import ConcertScreen from "./screens/ConcertScreen";
 import FriendProfile from "./screens/FriendProfile";
+import { LogBox } from 'react-native'
+
+
+LogBox.ignoreAllLogs()
 
 const store = configureStore({
   reducer: { user },

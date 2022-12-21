@@ -10,7 +10,7 @@ export default function ConcertScreen({ navigation }) {
   });
 
   useEffect(() => {
-    fetch("http://192.168.1.15:3000/concerts")
+    fetch(`http://172.17.188.35:3000/concerts`)
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {

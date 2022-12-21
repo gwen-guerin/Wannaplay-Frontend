@@ -29,13 +29,13 @@ export default function SearchUser({ navigation }) {
   }, [searchQuery]);
 
   const addChat = (friendUsername) => {
-    fetch("http://192.168.1.118:3000/users/");
+    fetch("http://172.17.188.35:3000/users/");
   };
 
   const handleSearch = () => {
     if (searchQuery.length > 0) {
       console.log(searchQuery.length)
-      fetch(`http://192.168.1.15:3000/search/${searchQuery}`)
+      fetch(`http://172.17.188.35:3000/search/${searchQuery}`)
         .then((response) => response.json())
         .then((data) => {
           setSearchResults(

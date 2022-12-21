@@ -2,19 +2,15 @@ import {
   View,
   StyleSheet,
   Text,
-  ScrollView,
   TouchableOpacity,
   Image,
   ImageBackground
 } from "react-native";
 import { useState, useEffect } from "react";
-import FriendsCards from "../components/FriendsCards";
-import UploadImage from "../components/UploadImage";
-import { SimpleLineIcons } from "@expo/vector-icons";
 import { addToFriends, removeFromFriends, logout } from "../reducers/user";
 import { FontAwesome, FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
-import { setStatusBarNetworkActivityIndicatorVisible } from "expo-status-bar";
+
 
 // construction de  la page profile
 export default function FriendProfile({ navigation, route: { params } }) {
@@ -26,7 +22,7 @@ export default function FriendProfile({ navigation, route: { params } }) {
     firstname: null,
     tags: [],
     friends: [],
-    // status: false,
+    status: false,
     city: null,
     age: null,
     teacher: [],
@@ -36,11 +32,10 @@ export default function FriendProfile({ navigation, route: { params } }) {
 
   //useEffect utilisé pour charger la page profile de l'utilisateur au  moment de sa connection/signin
   useEffect(() => {
-    fetch(`http:///192.168.1.15:3000/users/profile/${params.username}`)
+    fetch(`http://172.17.188.35:3000/users/profile/${params.username}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
-          console.log("BIIIIITE", data);
           setUser({
             username: data.user.username,
             firstname: data.user.firstname,
@@ -52,16 +47,17 @@ export default function FriendProfile({ navigation, route: { params } }) {
             firstname: data.user.firstname,
             description: data.user.description,
             profilePicture: data.user.profilePicture,
+            status: data.user.status,
           });
         }
       });
   }, []);
 
-  const isFriend = () => {
-    for (let i = 0; i < userRed.friends.length; i++) {
-      if (userRed.friends[i] === params.username) setFriend(true);
-    }
-  };
+  // const isFriend = () => {
+  //   for (let i = 0; i < userRed.friends.length; i++) {
+  //     if (userRed.friends[i] === params.username) setFriend(true);
+  //   }
+  // };
 
   const addOrDelete = () => {
     if (friend) {
@@ -79,7 +75,7 @@ export default function FriendProfile({ navigation, route: { params } }) {
   };
 
   const addFriend = () => {
-    fetch("http://192.168.1.118:3000/friends/addFriend", {
+    fetch("http://172.17.188.35:3000/friends/addFriend", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -95,7 +91,7 @@ export default function FriendProfile({ navigation, route: { params } }) {
   };
 
   const removeFriend = () => {
-    fetch("http://192.168.1.118:3000/friends/removeFriend", {
+    fetch("http://192.168.1.15:3000/friends/removeFriend", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

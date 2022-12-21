@@ -3,7 +3,7 @@ import {
   StyleSheet,
   Text,
   ScrollView,
-  ImageBackground
+  ImageBackground,
 } from "react-native";
 import { useState, useEffect } from "react";
 import FriendsCards from "../components/FriendsCards";
@@ -12,10 +12,11 @@ import { SimpleLineIcons } from "@expo/vector-icons";
 import { logout } from "../reducers/user";
 import { FontAwesome } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
+import { useIsFocused } from "@react-navigation/native";
 
 // construction de  la page profile
 export default function ProfileScreen({ navigation }) {
-  
+  const isFocused = useIsFocused();
   const dispatch = useDispatch();
   const userRed = useSelector((state) => state.user.value);
 
@@ -32,11 +33,11 @@ export default function ProfileScreen({ navigation }) {
 
   //useEffect utilisé pour charger la page profile de l'utilisateur au  moment de sa connection/signin
   useEffect(() => {
-    fetch(`http://192.168.1.15:3000/users/profile/${userRed.username}`)
+    console.log("effect in profile screen");
+    fetch(`http://172.17.188.35:3000/users/profile/${userRed.username}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
-          console.log('ERREUR', data);
           setUser({
             age: data.user.age,
             tags: data.user.tags,
@@ -49,7 +50,7 @@ export default function ProfileScreen({ navigation }) {
           });
         }
       });
-  }, []);
+  }, [isFocused]);
 
   //style conditionnel pour le statut online ou pas
   let styleOnline = styles.online;
@@ -99,8 +100,18 @@ export default function ProfileScreen({ navigation }) {
   });
 
   const handleLogout = () => {
+    fetch("http://172.17.188.35:3000/users/isOffline", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: userRed.username,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("STATUS", data);
+      });
     dispatch(logout());
-
     navigation.navigate("Home");
   };
 
@@ -113,35 +124,35 @@ export default function ProfileScreen({ navigation }) {
       imageStyle={{ opacity: 0.4 }}
       style={styles.imgBack}
     >
-    <View style={styles.container}>
-      <View style={styles.headerProfile}>
-        <UploadImage />
-        <View style={styles.nameAndTags}>
-          <View style={styles.nameAndStatus}>
-            <Text style={styles.textUsername}>#{userRed.username}</Text>
-            <View style={styleOnline}></View>
-            <SimpleLineIcons
-              style={styles.logoLogout}
-              name="logout"
-              size={15}
-              color="black"
-              onPress={() => handleLogout()}
-            />
-          </View>
-          <View style={styles.tagandteach}>
-            <View style={styles.tagsList}>{tagsList}</View>
-            <View style={styles.tagsList}>
-              <Text style={styles.textUser}>Wanna teach : </Text>
-              {teacherTag}
+      <View style={styles.container}>
+        <View style={styles.headerProfile}>
+          <UploadImage />
+          <View style={styles.nameAndTags}>
+            <View style={styles.nameAndStatus}>
+              <Text style={styles.textUsername}>#{userRed.username}</Text>
+              <View style={styleOnline}></View>
+              <SimpleLineIcons
+                style={styles.logoLogout}
+                name="logout"
+                size={15}
+                color="black"
+                onPress={() => handleLogout()}
+              />
+            </View>
+            <View style={styles.tagandteach}>
+              <View style={styles.tagsList}>{tagsList}</View>
+              <View style={styles.tagsList}>
+                <Text style={styles.textUser}>Wanna teach : </Text>
+                {teacherTag}
+              </View>
             </View>
           </View>
         </View>
-      </View>
         <View style={styles.description}>
           <View style={styles.infoContainer}>
             <Text style={styles.textUser}>About me : </Text>
             <Text style={styles.textUser}>{user.firstname}</Text>
-            <Text style={styles.textUser}>{user.age}ans</Text>
+            <Text style={styles.textUser}>{user.age} years old</Text>
             <Text style={styles.textUser}>{user.city}</Text>
           </View>
           <Text style={styles.textDecription}>{user.description}</Text>
@@ -151,14 +162,14 @@ export default function ProfileScreen({ navigation }) {
               name="pencil-square-o"
               size={16}
               color="#A3A3A3"
-              />
+            />
           </View>
         </View>
-       
-        <ScrollView style={styles.friendsCardsContainer} horizontal={true}>{friendsList}
 
-      </ScrollView>
-    </View> 
+        <ScrollView style={styles.friendsCardsContainer} horizontal={true}>
+          {friendsList}
+        </ScrollView>
+      </View>
     </ImageBackground>
   );
 }
@@ -251,7 +262,6 @@ const styles = StyleSheet.create({
     width: 20,
     borderRadius: 40,
     backgroundColor: "green",
-
   },
   friendsView: {
     marginTop: 30,

@@ -6,7 +6,6 @@ const initialState = {
     friends: [],
     status: null,
     photos: null,
-    status: false,
   },
 };
 

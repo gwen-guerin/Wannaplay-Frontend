@@ -22,7 +22,7 @@ export default function Questions({ navigation }) {
   const [teacher, setTeacher] = useState(false);
   const [instruments, setInstruments] = useState([]);
   const [instruTaught, setInstruTaught] = useState([]);
-  const [description, setDescription] = useState([]);
+  const [description, setDescription] = useState("");
 
   //FONCTIONS POUR DELETE INSTRU/TEACHING
   const handleDeleteInstru = (instru) => {
@@ -86,7 +86,7 @@ export default function Questions({ navigation }) {
   // ROUTE POST DES DONNEES DU FORM EN DB
   const handleFormSubmit = () => {
     // console.log(user.firstname);
-    fetch('http://192.168.1.15:3000/users/signupForm', {
+    fetch('http://172.17.188.35:3000/users/signupForm', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
