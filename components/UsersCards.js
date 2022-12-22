@@ -7,7 +7,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 export default function UsersCards(props) {
   //useEffect pour récupérer tous les utilisateurs
   useEffect(() => {
-    fetch(`http://172.20.10.3:3000/users/allUsers`)
+    fetch(`http://172.16.190.142:3000/users/allUsers`)
       .then((res) => res.json())
       .then((data) => {
         setFriends(data.user);

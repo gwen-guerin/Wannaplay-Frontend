@@ -36,7 +36,7 @@ export default function FriendProfile({ navigation, route: { params } }) {
   //useEffect utilisé pour charger la page profile de l'utilisateur au  moment de sa connection/signin
   useEffect(() => {
     isFriend()
-    fetch(`http://192.168.1.118:3000/users/profile/${params.username}`)
+    fetch(`http://172.16.190.142:3000/users/profile/${params.username}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
@@ -112,6 +112,19 @@ export default function FriendProfile({ navigation, route: { params } }) {
         setFriend(false)
       });
   };
+
+  const handleChat = () => {
+    fetch("http://172.16.190.142:3000/chats/createChat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: userRed.username,
+        secondUser: user.username
+      }),
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+  }
 
   //on map sur l'état teacher pour faire ressortir les tags/les instruments que l'utilisateur veut enseigner
   const teacherTag = user.teacher.map((teacher, i) => {
@@ -215,7 +228,7 @@ export default function FriendProfile({ navigation, route: { params } }) {
           </View>
         </View>
         <View style={styles.iconContainer}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => handleChat()}>
             <FontAwesome5 name="rocketchat" size={30} color="#CE2174" />
           </TouchableOpacity>
           {addOrDelete()}

@@ -11,32 +11,58 @@ import {
 } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Pusher from "pusher-js/react-native";
+import { useSelector } from "react-redux";
+import { useIsFocused } from "@react-navigation/native";
 
-const pusher = new Pusher('295cd63eb30452706332', { cluster: 'eu' });
-const BACKEND_ADDRESS = 'http://192.168.1.118:3000';
+const pusher = new Pusher("2ea678f34e1d48f32f22", { cluster: "eu" });
+const BACKEND_ADDRESS = "http://192.168.1.118:3000";
 
 export default function ChatScreen({ navigation, route: { params } }) {
   const [messages, setMessages] = useState([]);
   const [messageText, setMessageText] = useState("");
+  const user = useSelector((state) => state.user.value);
 
+  // const isFocused = useIsFocused
+  let subscription;
   useEffect(() => {
     (() => {
-      // console.log(messages);
-      fetch(`${BACKEND_ADDRESS}/chats/${params.username}`, { method: "PUT" });
-
-      const subscription = pusher.subscribe("chat");
+      fetch(`${BACKEND_ADDRESS}/chats/joinChat`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chatName: params.chatData.chatName,
+          username: user.username,
+        }),
+      });
+      fetch(`${BACKEND_ADDRESS}/chats/allMessages/${params.chatData.chatName}`)
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.result)
+            setMessages(data.messages)
+        });
+      subscription = pusher.subscribe(params.chatData.chatName);
       subscription.bind("pusher:subscription_succeeded", () => {
+        console.log("binded");
         subscription.bind("message", handleReceiveMessage);
       });
     })();
 
-    return () =>
-      fetch(`${BACKEND_ADDRESS}/chats/${params.username}`, {
-        method: "DELETE",
+    return () => {
+      subscription.unsubscribe(params.chatData.chatName);
+      fetch(`${BACKEND_ADDRESS}/chats/leaveChat`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chatName: params.chatData.chatName,
+          username: user.username,
+        }),
       });
-  }, [params.username]);
+    };
+  }, []);
 
   const handleReceiveMessage = (data) => {
+    console.log("yes", data);
+    // setMessages([data])
     setMessages((messages) => [...messages, data]);
   };
 
@@ -47,7 +73,7 @@ export default function ChatScreen({ navigation, route: { params } }) {
 
     const payload = {
       text: messageText,
-      username: params.username,
+      username: user.username,
       createdAt: new Date(),
       id: Math.floor(Math.random() * 100000),
     };
@@ -55,7 +81,10 @@ export default function ChatScreen({ navigation, route: { params } }) {
     fetch(`${BACKEND_ADDRESS}/chats/message`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
+      body: JSON.stringify({
+        chatName: params.chatData.chatName,
+        payload: payload,
+      }),
     });
 
     setMessageText("");
@@ -73,7 +102,7 @@ export default function ChatScreen({ navigation, route: { params } }) {
           size={24}
           onPress={() => navigation.goBack()}
         />
-        <Text style={styles.greetingText}> {params.friend} 👋</Text>
+        <Text style={styles.greetingText}> {params.chatData.friend} 👋</Text>
       </View>
 
       <View style={styles.inset}>
@@ -84,7 +113,7 @@ export default function ChatScreen({ navigation, route: { params } }) {
               style={[
                 styles.messageWrapper,
                 {
-                  ...(message.username === params.username
+                  ...(message.username === params.chatData.friend
                     ? styles.messageSent
                     : styles.messageRecieved),
                 },
@@ -94,7 +123,7 @@ export default function ChatScreen({ navigation, route: { params } }) {
                 style={[
                   styles.message,
                   {
-                    ...(message.username === params.username
+                    ...(message.username === user.username
                       ? styles.messageSentBg
                       : styles.messageRecievedBg),
                   },
@@ -120,9 +149,6 @@ export default function ChatScreen({ navigation, route: { params } }) {
             style={styles.input}
             autoFocus
           />
-          {/* <TouchableOpacity style={styles.recordButton}>
-            <MaterialIcons name="mic" color="#ffffff" size={24} />
-          </TouchableOpacity> */}
           <TouchableOpacity
             onPress={() => handleSendMessage()}
             style={styles.sendButton}
@@ -144,24 +170,24 @@ const styles = StyleSheet.create({
   },
   inset: {
     flex: 1,
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
+    borderTopLeftRadius: 50,
+    borderTopRightRadius: 50,
     backgroundColor: "#ffffff",
     width: "100%",
     paddingTop: 20,
     position: "relative",
-    borderTopColor: "#A8F9DE",
-    borderLeftColor: "#A8F9DE",
-    borderRightColor: "#A8F9DE",
+    borderTopColor: "#ffe099",
+    borderLeftColor: "#ffe099",
+    borderRightColor: "#ffe099",
     borderTopWidth: 4,
     borderRightWidth: 0.1,
     borderLeftWidth: 0.1,
   },
   banner: {
     width: "100%",
-    height: "12%",
-    paddingTop: 10,
-    paddingLeft: 10,
+    height: "15%",
+    paddingTop: 20,
+    paddingLeft: 20,
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "center",
@@ -232,7 +258,7 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: "#f0f0f0",
-    width: "80%",
+    width: "60%",
     padding: 14,
     borderRadius: 30,
     shadowColor: "#000",
@@ -263,7 +289,7 @@ const styles = StyleSheet.create({
   sendButton: {
     borderRadius: 50,
     padding: 16,
-    backgroundColor: "#A8F9DE",
+    backgroundColor: "#ffe099",
     marginLeft: 12,
     alignItems: "center",
     justifyContent: "center",
