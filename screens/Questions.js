@@ -96,6 +96,7 @@ export default function Questions({ navigation }) {
         teacher: instruTaught,
         tags: instruments,
         description: description,
+        city: city,
       }),
     });
     navigation.navigate("TabNavigator");
