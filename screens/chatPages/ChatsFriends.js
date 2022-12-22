@@ -67,7 +67,7 @@ export default function ChatsFriends({ navigation }) {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require("../../assets/esquise02.jpg")}
+        source={require("../../assets/illu_02.jpg")}
         style={styles.inset}
         blurRadius={0.3}
       >

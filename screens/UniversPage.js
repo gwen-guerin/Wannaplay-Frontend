@@ -15,6 +15,7 @@ import IPAdress from "../IPAdress";
 const API_KEY = "AIzaSyANG7Yh1Az3Q0okg4x2yfgmVupwYQkRdDo";
 
 export default function UniversPage() {
+  
   const [currentPosition, setCurrentPosition] = useState([]);
   const dispatch = useDispatch();
 
@@ -49,8 +50,7 @@ export default function UniversPage() {
                     longitude: longitude,
                   },
                 }),
-              })
-                .then((response) => response.json())
+              }).then((response) => response.json());
             });
         });
       }

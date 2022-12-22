@@ -4,22 +4,24 @@ import {
   Text,
   ScrollView,
   ImageBackground,
-} from "react-native";
-import { useState, useEffect } from "react";
-import FriendsCards from "../components/FriendsCards";
-import UploadImage from "../components/UploadImage";
-import { SimpleLineIcons } from "@expo/vector-icons";
-import { logout } from "../reducers/user";
-import { FontAwesome } from "@expo/vector-icons";
-import { useDispatch, useSelector } from "react-redux";
-import { useIsFocused } from "@react-navigation/native";
-import IPAdress from "../IPAdress";
+} from 'react-native';
+import { useState, useEffect } from 'react';
+import FriendsCards from '../components/FriendsCards';
+import UploadImage from '../components/UploadImage';
+import { SimpleLineIcons } from '@expo/vector-icons';
+import { logout, setFriends } from '../reducers/user';
+import { FontAwesome } from '@expo/vector-icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { useIsFocused } from '@react-navigation/native';
+import IPAdress from '../IPAdress';
+import { Row } from 'native-base';
 
 // construction de  la page profile
 export default function ProfileScreen({ navigation }) {
+  const isFocused = useIsFocused();
   const dispatch = useDispatch();
   const userRed = useSelector((state) => state.user.value);
-  const isFocused = useIsFocused();
+  const [teaching, setTeaching] = useState(false)
 
   const [user, setUser] = useState({
     firstname: null,
@@ -38,7 +40,6 @@ export default function ProfileScreen({ navigation }) {
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
-          console.log("ERREUR", data);
           setUser({
             age: data.user.age,
             tags: data.user.tags,
@@ -49,6 +50,8 @@ export default function ProfileScreen({ navigation }) {
             description: data.user.description,
             profilePicture: data.user.profilePicture,
           });
+          console.log(data.user.friends);
+          dispatch(setFriends({ friends: data.user.friends }));
         }
       });
   }, [isFocused]);
@@ -62,16 +65,16 @@ export default function ProfileScreen({ navigation }) {
   //on map sur l'état teacher pour faire ressortir les tags/les instruments que l'utilisateur veut enseigner
   const teacherTag = user.teacher.map((teacher, i) => {
     function randomColor() {
-      const letters = "0123456789ABCDEF";
-      let color = "#";
+      const letters = '0123456789ABCDEF';
+      let color = '#';
       for (let i = 0; i < 6; i++) {
         color += letters[Math.floor(Math.random() * 16)];
       }
-      return color + "aa";
+      return color + 'aa';
     }
     const color = randomColor();
     return (
-      <Text style={[styles.textUser1, { backgroundColor: color }]} key={i}>
+      <Text style={[styles.textUser1, { borderColor: color }]} key={i}>
         #{teacher}
       </Text>
     );
@@ -80,16 +83,16 @@ export default function ProfileScreen({ navigation }) {
   //on map sur l'état tags pour faire ressortir les tags/les instruments pratiqué par l'utilisateur
   const tagsList = user.tags.map((tag, i) => {
     function randomColor() {
-      const letters = "0123456789ABCDEF";
-      let color = "#";
+      const letters = '0123456789ABCDEF';
+      let color = '#';
       for (let i = 0; i < 6; i++) {
         color += letters[Math.floor(Math.random() * 16)];
       }
-      return color + "aa";
+      return color + 'aa';
     }
     const color = randomColor();
     return (
-      <Text style={[styles.textUser1, { backgroundColor: color }]} key={i}>
+      <Text style={[styles.textUser1, { borderColor: color }]} key={i}>
         #{tag}
       </Text>
     );
@@ -102,26 +105,24 @@ export default function ProfileScreen({ navigation }) {
 
   const handleLogout = () => {
     fetch(`http://${IPAdress}:3000/users/isOffline`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         username: userRed.username,
       }),
     })
       .then((res) => res.json())
-      .then((data) => {
-        console.log("STATUS", data);
-      });
+      .then((data) => {});
     dispatch(logout());
-    navigation.navigate("Home");
+    navigation.navigate('Home');
   };
 
   const handleModify = () => {
-    navigation.navigate("UpdateProfile");
+    navigation.navigate('UpdateProfile');
   };
   return (
     <ImageBackground
-      source={require("../assets/illu_02.jpg")}
+      source={require('../assets/illu_02.jpg')}
       imageStyle={{ opacity: 0.4 }}
       style={styles.imgBack}
     >
@@ -142,10 +143,12 @@ export default function ProfileScreen({ navigation }) {
             </View>
             <View style={styles.tagandteach}>
               <View style={styles.tagsList}>{tagsList}</View>
-              <View style={styles.tagsList}>
-                <Text style={styles.textUser}>Wanna teach : </Text>
-                {teacherTag}
-              </View>
+              {user.teacher.length > 0 && (
+                <View style={styles.tagsList}>
+                  <Text style={styles.textUser}>Wanna teach : </Text>
+                  {teacherTag}
+                </View>
+              )}
             </View>
           </View>
         </View>
@@ -153,7 +156,7 @@ export default function ProfileScreen({ navigation }) {
           <View style={styles.infoContainer}>
             <Text style={styles.textUser}>About me : </Text>
             <Text style={styles.textUser}>{user.firstname}</Text>
-            <Text style={styles.textUser}>{user.age}ans</Text>
+            <Text style={styles.textUser}>{user.age} years old</Text>
             <Text style={styles.textUser}>{user.city}</Text>
           </View>
           <Text style={styles.textDecription}>{user.description}</Text>
@@ -177,16 +180,16 @@ export default function ProfileScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "space-between",
-    width: "100%",
-    height: "100%",
+    justifyContent: 'space-between',
+    width: '100%',
+    height: '100%',
     paddingTop: 50,
     padding: 10,
     // backgroundColor: "#A8F9DE",
   },
   imgBack: {
-    width: "100%",
-    height: "100%",
+    width: '100%',
+    height: '100%',
   },
   userPicture: {
     borderRadius: 60,
@@ -194,12 +197,12 @@ const styles = StyleSheet.create({
     height: 80,
   },
   friendsTab: {
-    backgroundColor: "white",
+    backgroundColor: 'white',
     opacity: 0.9,
     borderRadius: 40,
     height: 140,
-    display: "flex",
-    flexDirection: "row",
+    display: 'flex',
+    flexDirection: 'row',
     padding: 10,
     opacity: 0.6,
   },
@@ -211,116 +214,119 @@ const styles = StyleSheet.create({
   textUser: {
     fontSize: 15,
     margin: 2,
-    color: "#CE2174",
-    alignItems: "center",
-    fontWeight: "700",
+    alignItems: 'center',
+    fontWeight: '700',
   },
   textDecription: {
     fontSize: 17,
-    color: "#CE2174",
-    alignItems: "center",
+    color: '#615B5Aaa',
+    alignItems: 'center',
     padding: 5,
-    fontWeight: "700",
+    fontWeight: '700',
   },
   textUser1: {
     fontSize: 14,
-    fontWeight: "800",
-    color: "black",
+    fontWeight: '800',
+    color: 'black',
     borderRadius: 20,
     paddingVertical: 3,
     paddingHorizontal: 8,
     margin: 5,
+    borderWidth: 3,
+    backgroundColor: 'white',
   },
   textUsername: {
-    fontWeight: "bold",
+    fontWeight: 'bold',
     fontSize: 20,
-    alignItems: "center",
-    color: "#CE2174",
+    alignItems: 'center',
+    color: '#CE2174',
   },
   nameAndStatus: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
     width: 150,
-    justifyContent: "space-around",
-    alignItems: "center",
+    justifyContent: 'space-around',
+    alignItems: 'center',
   },
   friends: {
-    fontWeight: "bold",
+    fontWeight: 'bold',
     fontSize: 20,
     marginLeft: 5,
-    color: "#CE2174",
+    color: '#CE2174',
   },
   online: {
-    backgroundColor: "green",
+    backgroundColor: 'green',
     height: 20,
     width: 20,
     borderRadius: 40,
+    backgroundColor: 'red',
   },
   online1: {
-    backgroundColor: "green",
+    backgroundColor: 'green',
     height: 20,
     width: 20,
     borderRadius: 40,
+    backgroundColor: 'green',
   },
   friendsView: {
     marginTop: 30,
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
     marginBottom: 8,
   },
   tagsList: {
-    display: "flex",
-    flexDirection: "row",
-    flexWrap: "wrap",
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     borderRadius: 20,
   },
   tagandteach: {
-    display: "flex",
+    display: 'flex',
     marginTop: 20,
     marginBottom: 20,
   },
   headerProfile: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   nameAndTags: {
     marginLeft: 20,
     width: 150,
   },
   description: {
-    backgroundColor: "#ffffffaa",
-    display: "flex",
-    alignItems: "stretch",
+    backgroundColor: '#ffffffaa',
+    display: 'flex',
+    alignItems: 'stretch',
     borderRadius: 5,
-    width: "100%",
+    width: '100%',
     padding: 5,
     marginTop: 25,
   },
   infoContainer: {
-    backgroundColor: "#E5EAE9",
+    backgroundColor: '#E5EAE9',
     padding: 5,
     borderRadius: 5,
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   modifyIcon: {
-    display: "flex",
-    alignItems: "flex-end",
+    display: 'flex',
+    alignItems: 'flex-end',
     marginTop: -15,
   },
   iconContainer: {
     marginTop: 60,
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-around",
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
   },
   friendsCardsContainer: {
-    display: "flex",
-    flexDirection: "row",
-    width: "100%",
+    display: 'flex',
+    flexDirection: 'row',
+    width: '100%',
     marginTop: 25,
   },
 });

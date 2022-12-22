@@ -23,7 +23,7 @@ export default function Questions({ navigation }) {
   const [teacher, setTeacher] = useState(false);
   const [instruments, setInstruments] = useState([]);
   const [instruTaught, setInstruTaught] = useState([]);
-  const [description, setDescription] = useState([]);
+  const [description, setDescription] = useState("");
 
   //FONCTIONS POUR DELETE INSTRU/TEACHING
   const handleDeleteInstru = (instru) => {

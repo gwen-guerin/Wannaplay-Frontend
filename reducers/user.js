@@ -2,19 +2,10 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   value: {
-    firstname: null,
-    lastname: null,
     username: null,
-    email: null,
-    age: null,
-    tags: [],
-    location: [],
     friends: [],
     status: null,
-    city: null,
-    photo: null,
-    description: null,
-    teacher: [],
+    photos: null,
   },
 };
 
@@ -28,6 +19,7 @@ export const userSlice = createSlice({
     },
     logout: (state) => {
       state.value.username = null;
+      state.value.status =false
     },
 
     addToFriends: (state, action) => {
@@ -50,6 +42,7 @@ export const userSlice = createSlice({
       console.log('payload',action.payload.friends)
       state.value.friends = action.payload.friends;
     },
+
   },
 });
 

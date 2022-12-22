@@ -2,15 +2,20 @@ import {
   View,
   StyleSheet,
   Text,
+  ScrollView,
   TouchableOpacity,
   Image,
   ImageBackground,
-} from 'react-native';
-import { useState, useEffect } from 'react';
-import { addToFriends, removeFromFriends, logout } from '../reducers/user';
-import { FontAwesome, FontAwesome5, Ionicons } from '@expo/vector-icons';
-import { useSelector, useDispatch } from 'react-redux';
-import IPAdress from '../IPAdress';
+} from "react-native";
+import { useState, useEffect } from "react";
+import FriendsCards from "../components/FriendsCards";
+import UploadImage from "../components/UploadImage";
+import { SimpleLineIcons } from "@expo/vector-icons";
+import { addToFriends, removeFromFriends, logout } from "../reducers/user";
+import { FontAwesome, FontAwesome5, Ionicons } from "@expo/vector-icons";
+import { useSelector, useDispatch } from "react-redux";
+import { setStatusBarNetworkActivityIndicatorVisible } from "expo-status-bar";
+import IPAdress from "../IPAdress";
 
 // construction de  la page profile
 export default function FriendProfile({ navigation, route: { params } }) {
@@ -35,7 +40,8 @@ export default function FriendProfile({ navigation, route: { params } }) {
   //useEffect utilisé pour charger la page profile de l'utilisateur au  moment de sa connection/signin
   useEffect(() => {
     isFriend();
-    fetch(`http://${IPAdress}:3000/users/profile/${params.userId}`)
+    console.log("friends", user.friends);
+    fetch(`http://${IPAdress}:3000/users/profile/${params.username}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
@@ -50,14 +56,15 @@ export default function FriendProfile({ navigation, route: { params } }) {
             firstname: data.user.firstname,
             description: data.user.description,
             profilePicture: data.user.profilePicture,
-            status: data.user.status,
           });
         }
       });
   }, []);
 
   const isFriend = () => {
+    // console.log(params.username);
     for (let i = 0; i < userRed.friends.length; i++) {
+      console.log("friend", userRed.friends[i]);
       if (userRed.friends[i] === params.username) setFriend(true);
     }
   };
@@ -74,7 +81,7 @@ export default function FriendProfile({ navigation, route: { params } }) {
       );
     } else
       return (
-        <TouchableOpacity style={styles.ionIcons} onPress={() => addFriend()}>
+        <TouchableOpacity onPress={() => addFriend()}>
           <Ionicons name="person-add" size={30} color="#CE2174" />
         </TouchableOpacity>
       );
@@ -110,6 +117,19 @@ export default function FriendProfile({ navigation, route: { params } }) {
         dispatch(removeFromFriends({ friend: params.username }));
         setFriend(false);
       });
+  };
+
+  const handleChat = () => {
+    fetch(`http://${IPAdress}:3000/chats/createChat`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: userRed.username,
+        secondUser: user.username,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data));
   };
 
   //on map sur l'état teacher pour faire ressortir les tags/les instruments que l'utilisateur veut enseigner
@@ -207,8 +227,8 @@ const styles = StyleSheet.create({
   },
   profilePicture: {
     borderRadius: 60,
-    width: 120,
-    height: 120,
+    width: 80,
+    height: 80,
   },
   friendsTab: {
     backgroundColor: 'white',
@@ -312,15 +332,15 @@ const styles = StyleSheet.create({
     width: 150,
   },
   description: {
-    backgroundColor: '#ffffffaa',
-    alignItems: 'stretch',
+    backgroundColor: "#C5C5C5",
+    alignItems: "stretch",
     borderRadius: 5,
     width: '100%',
     padding: 5,
-    marginTop: -170,
+    marginTop: 25,
   },
   infoContainer: {
-    backgroundColor: '#E5EAE9',
+    backgroundColor: "#A3A3A3aa",
     padding: 5,
     borderRadius: 5,
     flexDirection: 'row',
@@ -341,9 +361,9 @@ const styles = StyleSheet.create({
 
   ionIcons: {
     borderRadius: 40,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
     padding: 20,
     backgroundColor: '#ffffffaa',
   },

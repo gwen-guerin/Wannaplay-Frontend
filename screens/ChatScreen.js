@@ -15,7 +15,7 @@ import { useSelector } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
 import IPAdress from "../IPAdress";
 
-const pusher = new Pusher("2ea678f34e1d48f32f22", { cluster: "eu" });
+const pusher = new Pusher('2ea678f34e1d48f32f22', { cluster: 'eu' });
 
 export default function ChatScreen({ navigation, route: { params } }) {
   const [messages, setMessages] = useState([]);
