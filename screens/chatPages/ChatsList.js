@@ -13,24 +13,28 @@ import { useSelector } from "react-redux";
 import { BlurView } from "expo-blur";
 import { useEffect, useState } from "react";
 import IPAdress from "../../IPAdress";
+import { useIsFocused } from "@react-navigation/native";
 
 export default function ChatsList({ navigation }) {
   const [allChats, setAllChats] = useState([]);
   const [chatBoxes, setChatBoxes] = useState([]);
   const user = useSelector((state) => state.user.value);
 
+  const isfocused = useIsFocused();
+
   useEffect(() => {
     fetch(`http://${IPAdress}:3000/chats/allChats/${user.username}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
+        console.log(data);
         setAllChats(data.allChats);
       });
-  }, []);
+  }, [isfocused]);
 
   useEffect(() => {
     setChatBoxes(
       allChats.map((data, i) => {
+        console.log(data);
         return (
           <BlurView
             key={i}

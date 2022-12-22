@@ -14,7 +14,11 @@ import {
 } from "react-native";
 import { BlurView } from "expo-blur";
 import { useSelector, useDispatch } from "react-redux";
+<<<<<<< HEAD
 import IPAdress from "../../IPAdress";
+=======
+
+>>>>>>> 11576a4e616b6a556de9e0ae33e2bc689cd163e3
 export default function SearchUser({ navigation }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [results, setResults] = useState([]);
@@ -24,6 +28,10 @@ export default function SearchUser({ navigation }) {
   const username = useSelector((state) => state.user.value.username);
 
   useEffect(() => {
+<<<<<<< HEAD
+=======
+    console.log(searchQuery);
+>>>>>>> 11576a4e616b6a556de9e0ae33e2bc689cd163e3
     handleSearch();
   }, [searchQuery]);
 

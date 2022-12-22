@@ -62,7 +62,7 @@ export default function FriendProfile({ navigation, route: { params } }) {
   }, []);
 
   const isFriend = () => {
-    // console.log(params.username);
+    console.log("friend", params.username);
     for (let i = 0; i < userRed.friends.length; i++) {
       console.log("friend", userRed.friends[i]);
       if (userRed.friends[i] === params.username) setFriend(true);
@@ -93,7 +93,7 @@ export default function FriendProfile({ navigation, route: { params } }) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         username: userRed.username,
-        friend: user.username,
+        friend: params.username,
       }),
     })
       .then((response) => response.json())
@@ -101,6 +101,7 @@ export default function FriendProfile({ navigation, route: { params } }) {
         dispatch(addToFriends({ friend: params.username }));
         setFriend(true);
       });
+    handleChat();
   };
 
   const removeFriend = () => {
@@ -186,12 +187,12 @@ export default function FriendProfile({ navigation, route: { params } }) {
             </View>
             <View style={styles.tagandteach}>
               <View style={styles.tagsList}>{tagsList}</View>
-              <View style={styles.tagsList}>
-                {user.teacher && (
+              {user.teacher.length > 0 && (
+                <View style={styles.tagsList}>
                   <Text style={styles.textUser}>Wanna teach : </Text>
-                )}
-                {teacherTag}
-              </View>
+                  {teacherTag}
+                </View>
+              )}
             </View>
           </View>
         </View>
@@ -206,7 +207,10 @@ export default function FriendProfile({ navigation, route: { params } }) {
           <View style={styles.modifyIcon}></View>
         </View>
         <View style={styles.iconContainer}>
-          <TouchableOpacity style={styles.ionIcons}>
+          <TouchableOpacity
+            style={styles.ionIcons}
+            onPress={() => handleChat()}
+          >
             <FontAwesome5 name="rocketchat" size={30} color="#CE2174" />
           </TouchableOpacity>
           {addOrDelete()}

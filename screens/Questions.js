@@ -7,19 +7,19 @@ import {
   ScrollView,
   ImageBackground,
   TouchableOpacity,
-} from 'react-native';
-import { Picker } from '@react-native-picker/picker';
-import Slider from '@react-native-community/slider';
-import { useSelector } from 'react-redux';
-import { Select } from 'native-base';
-import { Entypo } from '@expo/vector-icons';
+} from "react-native";
+import { Picker } from "@react-native-picker/picker";
+import Slider from "@react-native-community/slider";
+import { useSelector } from "react-redux";
+import { Select } from "native-base";
+import { Entypo } from "@expo/vector-icons";
 import IPAdress from "../IPAdress";
 
 export default function Questions({ navigation }) {
   const user = useSelector((state) => state.user.value);
 
   const [age, setAge] = useState(0);
-  const [city, setCity] = useState('');
+  const [city, setCity] = useState("");
   const [teacher, setTeacher] = useState(false);
   const [instruments, setInstruments] = useState([]);
   const [instruTaught, setInstruTaught] = useState([]);
@@ -88,8 +88,8 @@ export default function Questions({ navigation }) {
   const handleFormSubmit = () => {
     // console.log(user.firstname);
     fetch(`http://${IPAdress}:3000/users/signupForm`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         username: user.username,
         age: age,
@@ -97,8 +97,8 @@ export default function Questions({ navigation }) {
         tags: instruments,
         description: description,
       }),
-    })
-    navigation.navigate('TabNavigator');
+    });
+    navigation.navigate("TabNavigator");
   };
 
   return (
@@ -215,7 +215,7 @@ export default function Questions({ navigation }) {
           <TextInput
             style={styles.inputText}
             placeholder="Describe yourself in a few words ..."
-            placeholderTextColor={'#ffffff'}
+            placeholderTextColor={"#ffffff"}
             multiline={true}
             numberOfLines={4}
             onChangeText={(text) => setDescription(text)}
@@ -263,18 +263,18 @@ const styles = StyleSheet.create({
     padding: 6,
   },
   instruCard: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
     borderRadius: 20,
-    backgroundColor: '#C5C5C5aa',
+    backgroundColor: "#C5C5C5aa",
     padding: 5,
   },
   instruContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-around",
     marginTop: 5,
   },
   instruText: {
