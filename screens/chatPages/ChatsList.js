@@ -59,7 +59,7 @@ export default function ChatsList({ navigation }) {
   }, [allChats]);
 
   const handleNavigation = (data) => {
-    navigation.navigate("Chat", { username: "username", chatData: data });
+    navigation.navigate("Chat", { chatData: data });
   };
 
   return (

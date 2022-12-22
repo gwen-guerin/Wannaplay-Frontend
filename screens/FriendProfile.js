@@ -130,7 +130,9 @@ export default function FriendProfile({ navigation, route: { params } }) {
       }),
     })
       .then((response) => response.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        navigation.navigate("Chat", {chatData: {chatName : data.chatName, friend: data.friend}})
+      });
   };
 
   //on map sur l'état teacher pour faire ressortir les tags/les instruments que l'utilisateur veut enseigner
