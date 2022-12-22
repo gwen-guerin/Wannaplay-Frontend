@@ -1,3 +1,3 @@
-const IPAdress = "172.16.190.27"
+const IPAdress = "172.16.190.9";
 
-export default IPAdress
+export default IPAdress;
