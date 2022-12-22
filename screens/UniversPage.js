@@ -1,16 +1,11 @@
 import {
-  SafeAreaView,
-  ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
   Image,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
-import { LinearGradient } from "expo-linear-gradient";
 import { ImageBackground } from "react-native";
 import { BlurView } from "expo-blur";
 import * as Location from "expo-location";
@@ -20,6 +15,7 @@ import IPAdress from "../IPAdress";
 const API_KEY = "AIzaSyANG7Yh1Az3Q0okg4x2yfgmVupwYQkRdDo";
 
 export default function UniversPage() {
+  
   const [currentPosition, setCurrentPosition] = useState([]);
   const dispatch = useDispatch();
 
@@ -54,8 +50,7 @@ export default function UniversPage() {
                     longitude: longitude,
                   },
                 }),
-              })
-                .then((response) => response.json())
+              }).then((response) => response.json());
             });
         });
       }
