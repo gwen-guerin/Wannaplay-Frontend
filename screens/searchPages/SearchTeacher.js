@@ -39,15 +39,17 @@ export default function SearchTeacher({navigation}) {
                 <TouchableOpacity
                   style={styles.searchedButton}
                   onPress={() =>
-                    navigation.navigate("FriendProfile", { username: user })
+                    navigation.navigate("FriendProfile", {
+                      username: user.username,
+                    })
                   }
                 >
                   <Image
-                    source={require("../../assets/mia-khalifa.jpg")}
+                    source={{ uri: user.profilePicture }}
                     style={styles.avatar}
                   />
                   <View style={styles.userInfo}>
-                    <Text>{user}</Text>
+                    <Text>{user.username}</Text>
                   </View>
                 </TouchableOpacity>
               </BlurView>

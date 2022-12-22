@@ -231,16 +231,11 @@ export default function UpdateProfile({ navigation }) {
               </View>
               <View style={styles.instruContainer}>{mapInstru}</View>
             </View>
-            {/* <TextInput
-              style={styles.inputText}
-              placeholderTextColor={'#ffffff'}
-            /> */}
             <TextInput
               style={styles.inputText}
               placeholder="Describe yourself in a few words ..."
               placeholderTextColor={"#ffffff"}
               multiline={true}
-              // numberOfLines={4}
               onChangeText={(text) => setDescription(text)}
               value={description}
               maxLength={300}

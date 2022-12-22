@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import IPAdress from "../../IPAdress";
 
 import {
-  SafeAreaView,
   Text,
   StyleSheet,
   View,
@@ -16,7 +14,7 @@ import {
 } from "react-native";
 import { BlurView } from "expo-blur";
 import { useSelector, useDispatch } from "react-redux";
-
+import IPAdress from "../../IPAdress";
 export default function SearchUser({ navigation }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [results, setResults] = useState([]);
@@ -35,11 +33,13 @@ export default function SearchUser({ navigation }) {
 
   const handleSearch = () => {
     if (searchQuery.length > 0) {
+      // console.log(searchQuery.length)
       fetch(`http://${IPAdress}:3000/search/${searchQuery}`)
         .then((response) => response.json())
         .then((data) => {
           setSearchResults(
             data.users.map((user, i) => {
+              console.log(user);
               return (
                 <BlurView
                   key={i}
@@ -50,15 +50,17 @@ export default function SearchUser({ navigation }) {
                   <TouchableOpacity
                     style={styles.searchedButton}
                     onPress={() =>
-                      navigation.navigate("FriendProfile", { username: user })
+                      navigation.navigate("FriendProfile", {
+                        username: user.username,
+                      })
                     }
                   >
                     <Image
-                      source={require("../../assets/mia-khalifa.jpg")}
+                      source={{ uri: user.profilePicture }}
                       style={styles.avatar}
                     />
                     <View style={styles.userInfo}>
-                      <Text>{user}</Text>
+                      <Text>{user.username}</Text>
                     </View>
                   </TouchableOpacity>
                 </BlurView>

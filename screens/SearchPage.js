@@ -5,7 +5,7 @@ import SearchTags from "./searchPages/SearchTags";
 import SearchUser from "./searchPages/SearchUser";
 import SearchTeacher from "./searchPages/SearchTeacher";
 
-import { StyleSheet, Dimensions, TextInput, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import IPAdress from "../IPAdress";
 
 const Stack = createNativeStackNavigator();
