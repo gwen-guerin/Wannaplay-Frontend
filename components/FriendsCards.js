@@ -30,14 +30,11 @@ export default function FriendsCards(props) {
     styleOnline = styles.online1;
   }
 
-  
   const handleProfile = () => {
-    navigation.navigate("FriendProfile", { userId: props.friend });
+    navigation.navigate("FriendProfile", { username: props.friend });
   };
 
-  const handleChat = () => {
-    navigation.navigate("Chat", { userId: props.friend });
-  }
+ 
   //il faudra remplacer l'image par l'uri/l de la photo des amis
   return (
     <View style={styles.container}>
@@ -51,10 +48,7 @@ export default function FriendsCards(props) {
       </View>
       <View style={styles.iconfriend}>
         <Text style={styleOnline}></Text>
-        <TouchableOpacity  onPress={() => handleChat()}>
-
-        <FontAwesome5 name="rocketchat" size={20} color="#CE2174" />
-        </TouchableOpacity>
+      
       </View>
     </View>
   );

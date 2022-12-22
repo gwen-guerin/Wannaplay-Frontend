@@ -66,17 +66,13 @@ export default function App() {
           <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="TabNavigator" component={TabNavigator} />
-            <Stack.Screen
-              name="Chat"
-              component={ChatScreen}
-              getId={({ params }) => params.userId}
-            />
+            <Stack.Screen name="Chat" component={ChatScreen} />
             <Stack.Screen name="Questions" component={Questions} />
             <Stack.Screen name="UpdateProfile" component={UpdateProfile} />
             <Stack.Screen
               name="FriendProfile"
               component={FriendProfile}
-              getId={({ params }) => params.userId}
+              getId={({ params }) => params.username}
             />
           </Stack.Navigator>
         </NavigationContainer>

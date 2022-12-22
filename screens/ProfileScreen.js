@@ -9,11 +9,12 @@ import { useState, useEffect } from "react";
 import FriendsCards from "../components/FriendsCards";
 import UploadImage from "../components/UploadImage";
 import { SimpleLineIcons } from "@expo/vector-icons";
-import { logout } from "../reducers/user";
+import { logout, setFriends } from "../reducers/user";
 import { FontAwesome } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
 import IPAdress from "../IPAdress";
+import { Row } from "native-base";
 
 // construction de  la page profile
 export default function ProfileScreen({ navigation }) {
@@ -48,6 +49,8 @@ export default function ProfileScreen({ navigation }) {
             description: data.user.description,
             profilePicture: data.user.profilePicture,
           });
+          console.log(data.user.friends);
+          dispatch(setFriends({ friends: data.user.friends }));
         }
       });
   }, [isFocused]);
@@ -208,7 +211,6 @@ const styles = StyleSheet.create({
   textUser: {
     fontSize: 15,
     margin: 2,
-    // color: "gray",
     alignItems: "center",
     fontWeight: "700",
   },
@@ -228,6 +230,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     margin: 5,
     borderWidth: 3,
+    backgroundColor: "white",
   },
   textUsername: {
     fontWeight: "bold",

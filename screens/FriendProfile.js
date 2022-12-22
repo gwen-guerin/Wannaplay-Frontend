@@ -20,7 +20,7 @@ import IPAdress from "../IPAdress";
 // construction de  la page profile
 export default function FriendProfile({ navigation, route: { params } }) {
   // console.log(route)
-  console.log("PARAMS", params);
+  // console.log("PARAMS", params);
   const userRed = useSelector((state) => state.user.value);
   const dispatch = useDispatch();
   const [friend, setFriend] = useState(false);
@@ -29,7 +29,7 @@ export default function FriendProfile({ navigation, route: { params } }) {
     firstname: null,
     tags: [],
     friends: [],
-    // status: false,
+    status: false,
     city: null,
     age: null,
     teacher: [],
@@ -39,7 +39,9 @@ export default function FriendProfile({ navigation, route: { params } }) {
 
   //useEffect utilisé pour charger la page profile de l'utilisateur au  moment de sa connection/signin
   useEffect(() => {
-    fetch(`http://${IPAdress}:3000/users/profile/${params.userId}`)
+    isFriend();
+    console.log("friends", user.friends);
+    fetch(`http://${IPAdress}:3000/users/profile/${params.username}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
@@ -60,7 +62,9 @@ export default function FriendProfile({ navigation, route: { params } }) {
   }, []);
 
   const isFriend = () => {
+    console.log(params.username);
     for (let i = 0; i < userRed.friends.length; i++) {
+      console.log("friend", userRed.friends[i]);
       if (userRed.friends[i] === params.username) setFriend(true);
     }
   };
@@ -77,10 +81,8 @@ export default function FriendProfile({ navigation, route: { params } }) {
       );
     } else
       return (
-        <TouchableOpacity
-          onPress={() => addFriend()}
-        >
-          <Ionicons name='person-add' size={30} color="#CE2174"/>
+        <TouchableOpacity onPress={() => addFriend()}>
+          <Ionicons name="person-add" size={30} color="#CE2174" />
         </TouchableOpacity>
       );
   };
@@ -97,7 +99,7 @@ export default function FriendProfile({ navigation, route: { params } }) {
       .then((response) => response.json())
       .then((data) => {
         dispatch(addToFriends({ friend: params.username }));
-        setFriend(true)
+        setFriend(true);
       });
   };
 
@@ -113,7 +115,7 @@ export default function FriendProfile({ navigation, route: { params } }) {
       .then((response) => response.json())
       .then((data) => {
         dispatch(removeFromFriends({ friend: params.username }));
-        setFriend(false)
+        setFriend(false);
       });
   };
 
@@ -123,12 +125,12 @@ export default function FriendProfile({ navigation, route: { params } }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         username: userRed.username,
-        secondUser: user.username
+        secondUser: user.username,
       }),
     })
-    .then(response => response.json())
-    .then(data => console.log(data))
-  }
+      .then((response) => response.json())
+      .then((data) => console.log(data));
+  };
 
   //on map sur l'état teacher pour faire ressortir les tags/les instruments que l'utilisateur veut enseigner
   const teacherTag = user.teacher.map((teacher, i) => {
