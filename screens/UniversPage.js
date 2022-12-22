@@ -1,16 +1,11 @@
 import {
-  SafeAreaView,
-  ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
   Image,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
-import { LinearGradient } from "expo-linear-gradient";
 import { ImageBackground } from "react-native";
 import { BlurView } from "expo-blur";
 import * as Location from "expo-location";

@@ -4,7 +4,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Home from "./screens/Home";
 import ProfileScreen from "./screens/ProfileScreen";
-import UniversPage from "./screens/UniversPage";
 import user from "./reducers/user";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
@@ -16,6 +15,7 @@ import Questions from "./screens/Questions";
 import UpdateProfile from "./screens/UpdateProfile";
 import FriendProfile from "./screens/FriendProfile";
 import ConcertScreen from "./screens/ConcertScreen";
+
 const store = configureStore({
   reducer: { user },
 });

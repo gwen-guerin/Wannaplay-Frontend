@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { useState, useEffect } from "react";
 import { addToFriends, removeFromFriends, logout } from "../reducers/user";
-import { FontAwesome, FontAwesome5, Ionicons } from "@expo/vector-icons";
+import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
 import IPAdress from "../IPAdress";
 
@@ -154,14 +154,7 @@ export default function FriendProfile({ navigation, route: { params } }) {
   //   });
   // }
 
-  const handleLogout = () => {
-    dispatch(logout());
-    navigation.navigate("Home");
-  };
 
-  const handleModify = () => {
-    navigation.navigate("UpdateProfile");
-  }; 
   return (
     <ImageBackground
     source={require("../assets/illu_02.jpg")}
@@ -177,14 +170,6 @@ export default function FriendProfile({ navigation, route: { params } }) {
         <View style={styles.nameAndTags}>
           <View style={styles.nameAndStatus}>
             <Text style={styles.textUsername}>#{user.username}</Text>
-            {/* <View style={styleOnline}></View> /}
-            {/ <SimpleLineIcons
-              style={styles.logoLogout}
-              name="logout"
-              size={20}
-              color="black" /}
-              {/ // onPress={() => handleLogout()}
-            /> */}
           </View>
           <View style={styles.tagandteach}>
             <View style={styles.tagsList}>{tagsList}</View>
@@ -205,14 +190,6 @@ export default function FriendProfile({ navigation, route: { params } }) {
           <Text style={styles.textUser}>{user.city}</Text>
         </View>
         <Text style={styles.textDecription}>{user.description}</Text>
-        <View style={styles.modifyIcon}>
-          <FontAwesome
-            onPress={() => handleModify()}
-            name="pencil-square-o"
-            size={16}
-            color="#A3A3A3"
-          />
-        </View>
       </View>
       <View style={styles.iconContainer}>
         <TouchableOpacity style={styles.ionIcons} >

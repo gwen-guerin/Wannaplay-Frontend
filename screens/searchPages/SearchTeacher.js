@@ -15,6 +15,7 @@ import {
 } from "react-native";
 
 import { BlurView } from "expo-blur";
+import IPAdress from "../../IPAdress";
 
 export default function SearchTeacher() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -24,7 +25,7 @@ export default function SearchTeacher() {
 
   const handleSearch = () => {
     console.log(searchQuery)
-    fetch(`http://172.16.190.27:3000/search/teacher/${searchQuery}`)
+    fetch(`http://${IPAdress}:3000/search/teacher/${searchQuery}`)
       .then((response) => response.json())
       .then((data) => {
         setSearchResults(

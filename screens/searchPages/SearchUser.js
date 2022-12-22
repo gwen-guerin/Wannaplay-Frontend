@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 import {
-  SafeAreaView,
   Text,
   StyleSheet,
   View,
@@ -15,6 +14,7 @@ import {
 } from "react-native";
 import { BlurView } from "expo-blur";
 import { useSelector, useDispatch } from "react-redux";
+import IPAdress from "../../IPAdress";
 
 export default function SearchUser({ navigation }) {
   const [searchQuery, setSearchQuery] = useState("");
@@ -29,13 +29,13 @@ export default function SearchUser({ navigation }) {
   }, [searchQuery]);
 
   const addChat = (friendUsername) => {
-    fetch("http://172.16.190.27:3000/users/");
+    fetch(`http://${IPAdress}:3000/users/`);
   };
 
   const handleSearch = () => {
     if (searchQuery.length > 0) {
       // console.log(searchQuery.length)
-      fetch(`http://172.16.190.27:3000/search/${searchQuery}`)
+      fetch(`http://${IPAdress}:3000/search/${searchQuery}`)
         .then((response) => response.json())
         .then((data) => {
           setSearchResults(
