@@ -1,22 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { Image, View, TouchableOpacity, StyleSheet, PermissionsAndroid  } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
-import * as ImagePicker from 'expo-image-picker';
-import { useSelector } from 'react-redux';
+import React, { useState, useEffect } from "react";
+import {
+  Image,
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  PermissionsAndroid,
+} from "react-native";
+import { AntDesign } from "@expo/vector-icons";
+import * as ImagePicker from "expo-image-picker";
+import { useSelector } from "react-redux";
+import IPAdress from "../IPAdress";
 
 export default function UploadImage() {
   const [image, setImage] = useState(null);
   const user = useSelector((state) => state.user.value);
-   
 
   useEffect(() => {
-    fetch(`http://172.16.190.142:3000/users/profile/${user.username}`)
+    fetch(`http://${IPAdress}:3000/users/profile/${user.username}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
           setImage(data.user.profilePicture);
         }
-        // console.log("datauserprofile", data.user.profilePicture);
       });
   }, []);
 
@@ -27,17 +32,17 @@ export default function UploadImage() {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
         {
-          title: 'My App Gallery Permission',
-          message: 'My App needs access to your gallery',
-          buttonNeutral: 'Ask Me Later',
-          buttonNegative: 'Cancel',
-          buttonPositive: 'OK',
+          title: "My App Gallery Permission",
+          message: "My App needs access to your gallery",
+          buttonNeutral: "Ask Me Later",
+          buttonNegative: "Cancel",
+          buttonPositive: "OK",
         }
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        console.log('You can access the gallery');
+        console.log("You can access the gallery");
       } else {
-        console.log('Gallery permission denied');
+        console.log("Gallery permission denied");
       }
     } catch (err) {
       console.warn(err);
@@ -52,9 +57,9 @@ export default function UploadImage() {
         PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE
       );
       if (granted) {
-        console.log('You already have permission to access the gallery');
+        console.log("You already have permission to access the gallery");
       } else {
-        console.log('You do not have permission to access the gallery');
+        console.log("You do not have permission to access the gallery");
         requestGalleryPermission();
         return;
       }
@@ -68,22 +73,22 @@ export default function UploadImage() {
 
       if (!_image.canceled) {
         const formData = new FormData();
-        formData.append('photoFromFront', {
+        formData.append("photoFromFront", {
           uri: _image.assets[0].uri,
-          name: 'photo.jpg',
-          type: 'image/jpeg',
+          name: "photo.jpg",
+          type: "image/jpeg",
         });
         // console.log("POUETTT", image);
-        fetch('http://192.168.1.118:3000/upload', {
-          method: 'POST',
+        fetch(`http://${IPAdress}:3000/upload`, {
+          method: "POST",
           body: formData,
         })
           .then((res) => res.json())
           .then((data) => {
             console.log("IMAAAAGE", data);
-            fetch('http://192.168.0.118:3000/users/photo', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
+            fetch(`http://${IPAdress}:3000/users/photo`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
                 username: user.username,
                 profilePicture: data.url,
@@ -127,23 +132,23 @@ const imageUploaderStyles = StyleSheet.create({
     elevation: 2,
     height: 150,
     width: 150,
-    backgroundColor: '#efefef',
-    position: 'relative',
+    backgroundColor: "#efefef",
+    position: "relative",
     borderRadius: 999,
-    overflow: 'hidden',
+    overflow: "hidden",
   },
   uploadBtnContainer: {
     opacity: 0.7,
-    position: 'absolute',
+    position: "absolute",
     right: 0,
     bottom: 0,
-    backgroundColor: 'lightgrey',
-    width: '100%',
-    height: '15%',
+    backgroundColor: "lightgrey",
+    width: "100%",
+    height: "15%",
   },
   uploadBtn: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

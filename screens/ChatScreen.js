@@ -13,9 +13,9 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Pusher from "pusher-js/react-native";
 import { useSelector } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
+import IPAdress from "../IPAdress";
 
 const pusher = new Pusher("2ea678f34e1d48f32f22", { cluster: "eu" });
-const BACKEND_ADDRESS = "http://192.168.1.118:3000";
 
 export default function ChatScreen({ navigation, route: { params } }) {
   const [messages, setMessages] = useState([]);
@@ -26,7 +26,7 @@ export default function ChatScreen({ navigation, route: { params } }) {
   let subscription;
   useEffect(() => {
     (() => {
-      fetch(`${BACKEND_ADDRESS}/chats/joinChat`, {
+      fetch(`http://${IPAdress}:3000/chats/joinChat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -34,7 +34,7 @@ export default function ChatScreen({ navigation, route: { params } }) {
           username: user.username,
         }),
       });
-      fetch(`${BACKEND_ADDRESS}/chats/allMessages/${params.chatData.chatName}`)
+      fetch(`http://${IPAdress}:3000/chats/allMessages/${params.chatData.chatName}`)
         .then((response) => response.json())
         .then((data) => {
           if (data.result)
@@ -49,7 +49,7 @@ export default function ChatScreen({ navigation, route: { params } }) {
 
     return () => {
       subscription.unsubscribe(params.chatData.chatName);
-      fetch(`${BACKEND_ADDRESS}/chats/leaveChat`, {
+      fetch(`http://${IPAdress}:3000/chats/leaveChat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -78,7 +78,7 @@ export default function ChatScreen({ navigation, route: { params } }) {
       id: Math.floor(Math.random() * 100000),
     };
 
-    fetch(`${BACKEND_ADDRESS}/chats/message`, {
+    fetch(`http://${IPAdress}:3000/chats/message`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

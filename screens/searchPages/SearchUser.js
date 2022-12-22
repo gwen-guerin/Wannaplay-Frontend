@@ -15,6 +15,7 @@ import {
 } from "react-native";
 import { BlurView } from "expo-blur";
 import { useSelector, useDispatch } from "react-redux";
+import IPAdress from "../../IPAdress";
 
 export default function SearchUser({ navigation }) {
   const [searchQuery, setSearchQuery] = useState("");
@@ -25,16 +26,18 @@ export default function SearchUser({ navigation }) {
   const username = useSelector((state) => state.user.value.username);
 
   useEffect(() => {
+    console.log(searchQuery)
     handleSearch();
   }, [searchQuery]);
 
   const addChat = (friendUsername) => {
-    fetch("http://192.168.1.118:3000/users/");
+    fetch(`http://${IPAdress}:3000/users/`);
   };
 
   const handleSearch = () => {
     if (searchQuery.length > 0) {
-      fetch(`http://192.168.1.118:3000/search/${searchQuery}`)
+      console.log(searchQuery.length);
+      fetch(`http://${IPAdress}:3000/search/${searchQuery}`)
         .then((response) => response.json())
         .then((data) => {
           setSearchResults(
@@ -48,7 +51,9 @@ export default function SearchUser({ navigation }) {
                 >
                   <TouchableOpacity
                     style={styles.searchedButton}
-                    onPress={() => navigation.navigate("FriendProfile", {username: user})}
+                    onPress={() =>
+                      navigation.navigate("FriendProfile", { username: user })
+                    }
                   >
                     <Image
                       source={require("../../assets/mia-khalifa.jpg")}
@@ -69,7 +74,7 @@ export default function SearchUser({ navigation }) {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require("../../assets/esquise02.jpg")}
+        source={require("../../assets/illu_02.jpg")}
         style={styles.background}
       >
         <View style={styles.searchContainer}>

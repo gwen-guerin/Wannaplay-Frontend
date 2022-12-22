@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import {
   SafeAreaView,
@@ -13,6 +13,7 @@ import {
   ImageBackground,
 } from "react-native";
 import { BlurView } from "expo-blur";
+import IPAdress from "../../IPAdress";
 
 export default function SearchTags() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -21,7 +22,8 @@ export default function SearchTags() {
   const [searchResults, setSearchResults] = useState([]);
 
   const handleSearch = () => {
-    fetch(`http://192.168.1.118:3000/search/tags/${searchQuery}`)
+    console.log('IP', IPAdress)
+    fetch(`http://${IPAdress}:3000/search/tags/${searchQuery}`)
       .then((response) => response.json())
       .then((data) => {
         setSearchResults(
@@ -51,7 +53,10 @@ export default function SearchTags() {
 
   return (
     <View style={styles.container}>
-      <ImageBackground source={require("../../assets/esquise02.jpg")} style={styles.background}>
+      <ImageBackground
+        source={require("../../assets/illu_02.jpg")}
+        style={styles.background}
+      >
         <View style={styles.searchContainer}>
           <TextInput
             multiline={true}
@@ -90,9 +95,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#F7EBEC",
   },
   background: {
-    width: '100%',
-    height: '100%',
-    alignItems: 'center',
+    width: "100%",
+    height: "100%",
+    alignItems: "center",
   },
   searchContainer: {
     flexDirection: "row",
@@ -133,7 +138,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-around",
-    flexWrap: 'wrap'
+    flexWrap: "wrap",
   },
   searchedButton: {
     flexDirection: "column",

@@ -6,13 +6,13 @@ import {
   Text,
   TouchableOpacity,
   Image,
-  useWindowDimensions,
   TextInput,
   Dimensions,
 } from "react-native";
 import { useSelector } from "react-redux";
 import { BlurView } from "expo-blur";
 import { useEffect, useState } from "react";
+import IPAdress from "../../IPAdress";
 
 export default function ChatsList({ navigation }) {
   const [allChats, setAllChats] = useState([]);
@@ -20,7 +20,7 @@ export default function ChatsList({ navigation }) {
   const user = useSelector((state) => state.user.value);
 
   useEffect(() => {
-    fetch(`http://192.168.1.118:3000/chats/allChats/${user.username}`)
+    fetch(`http://${IPAdress}:3000/chats/allChats/${user.username}`)
       .then((response) => response.json())
       .then((data) => {
         console.log(data)

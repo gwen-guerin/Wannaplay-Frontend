@@ -15,6 +15,7 @@ import {
 } from "react-native";
 
 import { BlurView } from "expo-blur";
+import IPAdress from "../../IPAdress";
 
 export default function SearchTeacher() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -23,8 +24,8 @@ export default function SearchTeacher() {
   const [searchResults, setSearchResults] = useState([]);
 
   const handleSearch = () => {
-    console.log(searchQuery)
-    fetch(`http://192.168.1.118:3000/search/teacher/${searchQuery}`)
+    console.log(searchQuery);
+    fetch(`http://${IPAdress}:3000/search/teacher/${searchQuery}`)
       .then((response) => response.json())
       .then((data) => {
         setSearchResults(
@@ -54,7 +55,10 @@ export default function SearchTeacher() {
 
   return (
     <View style={styles.container}>
-      <ImageBackground source={require("../../assets/esquise02.jpg")} style={styles.background}>
+      <ImageBackground
+        source={require("../../assets/esquise02.jpg")}
+        style={styles.background}
+      >
         <View style={styles.searchContainer}>
           <TextInput
             multiline={true}
@@ -93,9 +97,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#F7EBEC",
   },
   background: {
-    width: '100%',
-    height: '100%',
-    alignItems: 'center',
+    width: "100%",
+    height: "100%",
+    alignItems: "center",
   },
   searchContainer: {
     flexDirection: "row",
@@ -135,7 +139,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-around",
-    flexWrap: 'wrap',
+    flexWrap: "wrap",
   },
   searchedButton: {
     flexDirection: "column",
