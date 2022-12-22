@@ -1,48 +1,131 @@
-import { StyleSheet, View, Text } from "react-native";
-import { useEffect, useState } from "react";
-import IPAdress from "../IPAdress";
+import { StyleSheet, View, Text, ImageBackground } from 'react-native';
+import { useEffect, useState } from 'react';
+import IPAdress from '../IPAdress';
+import { useIsFocused } from '@react-navigation/native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function ConcertScreen({ navigation }) {
-  const [concert, setConcert] = useState({
-    eventName: null,
-    date: null,
-    style: null,
-    place: null,
-  });
+  // const [eventName, setEventName] = useState("")
+  // const [style, setStyle] = useState("")
+  // const [date, setDate] = useState("")
+  // const [place, setPlace] = useState("")
 
+  const isFocused = useIsFocused();
   useEffect(() => {
     fetch(`http://${IPAdress}:3000/concerts`)
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
-          // console.log(data.concert);
-          setConcert({
-            eventName: data.concert.eventName,
-            date: data.concert.date,
-            style: data.concert.style,
-            place: data.concert.place,
-          });
+          setConcertsList(data.concerts);
         }
       });
-  }, []);
+  }, [isFocused]);
 
+  const [concertsList, setConcertsList] = useState([]);
+  console.log('concertlist', concertsList);
+
+  // const handleAddEvent = () => {
+  //   fetch(`http://${IPAdress}:3000/concerts/createConcert`, {
+  //     method: 'POST',
+  //     headers: { 'Content-Type': 'application/json' },
+  //     body: JSON.stringify({
+  //       eventName,
+  //       style,
+  //       date,
+  //       place,
+  //     }),
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => console.log(data));
+  // };
+
+  const concert = concertsList.map((event, i) => {
+    return (
+      <View style={styles.description} key={i}>
+        <View style={styles.infoContainer}>
+          <Text style={styles.textUser}>{event.eventName}</Text>
+          <Text style={styles.textUser}>{event.style}</Text>
+          <Text style={styles.textUser}>{event.place}</Text>
+          <Text style={styles.textUser}>{event.date}</Text>
+        </View>
+        {/* <Text style={styles.textDecription}>{concert.description}</Text> */}
+      </View>
+    );
+  });
   return (
-    <View styles={styles.container}>
-      <Text>{concert.eventName}</Text>
-      <Text>{concert.type}</Text>
-    </View>
+    <ImageBackground
+      source={require('../assets/illu_02.jpg')}
+      imageStyle={{ opacity: 0.4 }}
+      style={styles.imgBack}
+    >
+      <View style={styles.titleConcert}>
+        <Text style={styles.titleText}>🎸NEXT EVENTS🎸</Text>
+        {concert}
+      </View>
+      <TouchableOpacity style={styles.btnAdd} onpress={() => handleAddEvent()}>
+        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Add Event</Text>
+      </TouchableOpacity>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    fontSize: 50,
-    color: "black",
-    backgroundColor: "red",
-    width: "100%",
-    height: "100%",
+  titleConcert: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    // backgroundColor: '#C5C5C5aa',
+    padding: 10,
+    borderRadius: 30,
+  },
+  titleText: {
+    fontSize: 40,
+  },
+  imgBack: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    width: '100%',
+    height: '100%',
+  },
+  concertList: {
+    height: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  description: {
+    // backgroundColor: '#C5C5C5aa',
+    alignItems: 'stretch',
+    borderRadius: 5,
+    width: '90%',
+    padding: 5,
+    marginTop: 25,
+  },
+  infoContainer: {
+    backgroundColor: '#ffffffaa',
+    padding: 5,
+    borderRadius: 10,
+    flexDirection: 'row',
+  },
+  textUser: {
+    fontSize: 18,
+    margin: 2,
+    color: 'grey',
+    alignItems: 'center',
+    fontWeight: '700',
+  },
+  textDecription: {
+    fontSize: 17,
+    color: '#CE2174',
+    alignItems: 'center',
+    padding: 5,
+    fontWeight: '700',
+  },
+  btnAdd: {
+    backgroundColor: 'grey',
+    paddingHorizontal: 30,
+    paddingVertical: 10,
+    borderRadius: 25,
   },
 });
