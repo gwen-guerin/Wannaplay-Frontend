@@ -24,7 +24,7 @@ export default function SearchTeacher() {
   const [searchResults, setSearchResults] = useState([]);
 
   const handleSearch = () => {
-    console.log(searchQuery)
+    console.log(searchQuery);
     fetch(`http://${IPAdress}:3000/search/teacher/${searchQuery}`)
       .then((response) => response.json())
       .then((data) => {

@@ -1,8 +1,8 @@
-import { Image, View, StyleSheet, Text } from 'react-native';
-import { useState, useEffect } from 'react';
-import { FontAwesome5 } from '@expo/vector-icons';
-import { useSelector } from 'react-redux';
-import IPAdress from '../IPAdress';
+import { Image, View, StyleSheet, Text } from "react-native";
+import { useState, useEffect } from "react";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { useSelector } from "react-redux";
+import IPAdress from "../IPAdress";
 
 //comment on fait pour concrètrement pour faire une demande d'amis ?? et pusher en BD ?
 export default function FriendsCards(props) {
@@ -11,7 +11,6 @@ export default function FriendsCards(props) {
   const [friends, setFriends] = useState([]);
   const [isFriendOnline, setIsFriendOnline] = useState(false);
   const [photo, setPhoto] = useState();
-
 
   //useEffect à la connexion de l'utilisateur qui récupère les données des amis (username et photo)
   useEffect(() => {
@@ -35,8 +34,7 @@ export default function FriendsCards(props) {
   return (
     <View style={styles.container}>
       <View>
-      <Image source={{ uri: photo }} style={styles.photoFriend} />
-
+        <Image source={{ uri: photo }} style={styles.photoFriend} />
       </View>
       <View style={styles.friendonline}>
         <Text style={styles.textUser}>{friends}</Text>
@@ -62,7 +60,7 @@ const styles = StyleSheet.create({
     height: "60%",
   },
   textUser: {
-    color: '#CE2174',
+    color: "#CE2174",
     fontSize: 18,
     width: 180,
     textAlign: "center",
@@ -71,7 +69,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     height: 15,
     width: 15,
-    backgroundColor: 'red',
+    backgroundColor: "red",
     borderRadius: 40,
     marginBottom: 8,
   },
@@ -79,7 +77,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     height: 15,
     width: 15,
-    backgroundColor: 'green',
+    backgroundColor: "green",
     borderRadius: 40,
     marginBottom: 8,
   },

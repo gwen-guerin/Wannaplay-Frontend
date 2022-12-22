@@ -80,15 +80,15 @@ export default function UploadImage() {
         });
         // console.log("POUETTT", image);
         fetch(`http://${IPAdress}:3000/upload`, {
-          method: 'POST',
+          method: "POST",
           body: formData,
         })
           .then((res) => res.json())
           .then((data) => {
             console.log("IMAAAAGE", data);
             fetch(`http://${IPAdress}:3000/users/photo`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
                 username: user.username,
                 profilePicture: data.url,

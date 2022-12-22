@@ -25,6 +25,7 @@ export default function SearchUser({ navigation }) {
   const username = useSelector((state) => state.user.value.username);
 
   useEffect(() => {
+    console.log(searchQuery)
     handleSearch();
   }, [searchQuery]);
 
@@ -34,7 +35,7 @@ export default function SearchUser({ navigation }) {
 
   const handleSearch = () => {
     if (searchQuery.length > 0) {
-      // console.log(searchQuery.length)
+      // console.log(searchQuery.length);
       fetch(`http://${IPAdress}:3000/search/${searchQuery}`)
         .then((response) => response.json())
         .then((data) => {

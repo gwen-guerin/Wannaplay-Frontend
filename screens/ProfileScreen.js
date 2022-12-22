@@ -3,23 +3,23 @@ import {
   StyleSheet,
   Text,
   ScrollView,
-  ImageBackground
-} from 'react-native';
-import { useState, useEffect } from 'react';
-import FriendsCards from '../components/FriendsCards';
-import UploadImage from '../components/UploadImage';
-import { SimpleLineIcons } from '@expo/vector-icons';
-import { logout } from '../reducers/user';
-import { FontAwesome } from '@expo/vector-icons';
-import { useDispatch, useSelector } from 'react-redux';
-import { useIsFocused } from '@react-navigation/native';
-import IPAdress from '../IPAdress';
+  ImageBackground,
+} from "react-native";
+import { useState, useEffect } from "react";
+import FriendsCards from "../components/FriendsCards";
+import UploadImage from "../components/UploadImage";
+import { SimpleLineIcons } from "@expo/vector-icons";
+import { logout } from "../reducers/user";
+import { FontAwesome } from "@expo/vector-icons";
+import { useDispatch, useSelector } from "react-redux";
+import { useIsFocused } from "@react-navigation/native";
+import IPAdress from "../IPAdress";
 
 // construction de  la page profile
 export default function ProfileScreen({ navigation }) {
   const dispatch = useDispatch();
   const userRed = useSelector((state) => state.user.value);
-  const isFocused = useIsFocused()
+  const isFocused = useIsFocused();
 
   const [user, setUser] = useState({
     firstname: null,
@@ -38,7 +38,7 @@ export default function ProfileScreen({ navigation }) {
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
-          console.log('ERREUR', data);
+          console.log("ERREUR", data);
           setUser({
             age: data.user.age,
             tags: data.user.tags,
@@ -107,10 +107,11 @@ export default function ProfileScreen({ navigation }) {
       body: JSON.stringify({
         username: userRed.username,
       }),
-    }).then(res => res.json())
-    .then(data => {
-      console.log("STATUS", data);
     })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("STATUS", data);
+      });
     dispatch(logout());
     navigation.navigate("Home");
   };
@@ -124,30 +125,30 @@ export default function ProfileScreen({ navigation }) {
       imageStyle={{ opacity: 0.4 }}
       style={styles.imgBack}
     >
-    <View style={styles.container}>
-      <View style={styles.headerProfile}>
-        <UploadImage />
-        <View style={styles.nameAndTags}>
-          <View style={styles.nameAndStatus}>
-            <Text style={styles.textUsername}>#{userRed.username}</Text>
-            <View style={styleOnline}></View>
-            <SimpleLineIcons
-              style={styles.logoLogout}
-              name="logout"
-              size={15}
-              color="black"
-              onPress={() => handleLogout()}
-            />
-          </View>
-          <View style={styles.tagandteach}>
-            <View style={styles.tagsList}>{tagsList}</View>
-            <View style={styles.tagsList}>
-              <Text style={styles.textUser}>Wanna teach : </Text>
-              {teacherTag}
+      <View style={styles.container}>
+        <View style={styles.headerProfile}>
+          <UploadImage />
+          <View style={styles.nameAndTags}>
+            <View style={styles.nameAndStatus}>
+              <Text style={styles.textUsername}>#{userRed.username}</Text>
+              <View style={styleOnline}></View>
+              <SimpleLineIcons
+                style={styles.logoLogout}
+                name="logout"
+                size={15}
+                color="black"
+                onPress={() => handleLogout()}
+              />
+            </View>
+            <View style={styles.tagandteach}>
+              <View style={styles.tagsList}>{tagsList}</View>
+              <View style={styles.tagsList}>
+                <Text style={styles.textUser}>Wanna teach : </Text>
+                {teacherTag}
+              </View>
             </View>
           </View>
         </View>
-      </View>
         <View style={styles.description}>
           <View style={styles.infoContainer}>
             <Text style={styles.textUser}>About me : </Text>
@@ -162,13 +163,13 @@ export default function ProfileScreen({ navigation }) {
               name="pencil-square-o"
               size={16}
               color="#A3A3A3"
-              />
+            />
           </View>
         </View>
-        <ScrollView style={styles.friendsCardsContainer} horizontal={true}>{friendsList}
-
-      </ScrollView>
-    </View> 
+        <ScrollView style={styles.friendsCardsContainer} horizontal={true}>
+          {friendsList}
+        </ScrollView>
+      </View>
     </ImageBackground>
   );
 }
