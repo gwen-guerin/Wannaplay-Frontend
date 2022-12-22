@@ -27,16 +27,7 @@ export default function UpdateProfile({ navigation }) {
   const [instruments, setInstruments] = useState([]);
   const [instruTaught, setInstruTaught] = useState([]);
   const [status, setStatus] = useState(true);
-  // const [user2, setUser] = useState({
-  //   firstname: null,
-  //   tags: [],
-  //   friends: [],
-  //   city: null,
-  //   age: null,
-  //   teacher: [],
-  //   description: null,
-  //   profilePicture: null,
-  // });
+
 
   //FONCTIONS POUR DELETE INSTRU/TEACHING
   const handleDeleteInstru = (instru) => {
@@ -109,6 +100,7 @@ export default function UpdateProfile({ navigation }) {
         teacher: instruTaught,
         tags: instruments,
         description,
+        status: true,
       }),
     })
       .then((response) => response.json())

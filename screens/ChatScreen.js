@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -15,17 +15,20 @@ import { useSelector } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
 import IPAdress from "../IPAdress";
 
-const pusher = new Pusher('295cd63eb30452706332', { cluster: 'eu' });
+const pusher = new Pusher("2ea678f34e1d48f32f22", { cluster: "eu" });
 
 export default function ChatScreen({ navigation, route: { params } }) {
   const [messages, setMessages] = useState([]);
   const [messageText, setMessageText] = useState("");
   const user = useSelector((state) => state.user.value);
 
-  // const isFocused = useIsFocused
+  const scrollViewRef = useRef();
+
+  const isFocused = useIsFocused;
   let subscription;
   useEffect(() => {
     (() => {
+      console.log(params);
       fetch(`http://${IPAdress}:3000/chats/joinChat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -34,11 +37,12 @@ export default function ChatScreen({ navigation, route: { params } }) {
           username: user.username,
         }),
       });
-      fetch(`http://${IPAdress}:3000/chats/allMessages/${params.chatData.chatName}`)
+      fetch(
+        `http://${IPAdress}:3000/chats/allMessages/${params.chatData.chatName}`
+      )
         .then((response) => response.json())
         .then((data) => {
-          if (data.result)
-            setMessages(data.messages)
+          if (data.result) setMessages(data.messages);
         });
       subscription = pusher.subscribe(params.chatData.chatName);
       subscription.bind("pusher:subscription_succeeded", () => {
@@ -58,7 +62,7 @@ export default function ChatScreen({ navigation, route: { params } }) {
         }),
       });
     };
-  }, []);
+  }, [isFocused]);
 
   const handleReceiveMessage = (data) => {
     console.log("yes", data);
@@ -106,7 +110,13 @@ export default function ChatScreen({ navigation, route: { params } }) {
       </View>
 
       <View style={styles.inset}>
-        <ScrollView style={styles.scroller}>
+        <ScrollView
+          style={styles.scroller}
+          ref={scrollViewRef}
+          onContentSizeChange={() =>
+            scrollViewRef.current.scrollToEnd({ animated: true })
+          }
+        >
           {messages.map((message, i) => (
             <View
               key={i}

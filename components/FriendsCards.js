@@ -15,6 +15,7 @@ export default function FriendsCards(props) {
 
   //useEffect à la connexion de l'utilisateur qui récupère les données des amis (username et photo)
   useEffect(() => {
+    console.log("PROPSFRIEND", props.friend);
     fetch(`http://${IPAdress}:3000/users/profile/${props.friend}`)
       .then((res) => res.json())
       .then((data) => {
@@ -34,7 +35,6 @@ export default function FriendsCards(props) {
     navigation.navigate("FriendProfile", { username: props.friend });
   };
 
- 
   //il faudra remplacer l'image par l'uri/l de la photo des amis
   return (
     <View style={styles.container}>
@@ -48,7 +48,6 @@ export default function FriendsCards(props) {
       </View>
       <View style={styles.iconfriend}>
         <Text style={styleOnline}></Text>
-      
       </View>
     </View>
   );
