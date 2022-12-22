@@ -1,13 +1,14 @@
-import { Image, View, StyleSheet, Text } from "react-native";
+import { Image, View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { useState, useEffect } from "react";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
 import IPAdress from "../IPAdress";
+import { useNavigation } from "@react-navigation/native";
 
 //comment on fait pour concrètrement pour faire une demande d'amis ?? et pusher en BD ?
 export default function FriendsCards(props) {
+  const navigation = useNavigation();
   const userRed = useSelector((state) => state.user.value);
-  // console.log("object", userRed);
   const [friends, setFriends] = useState([]);
   const [isFriendOnline, setIsFriendOnline] = useState(false);
   const [photo, setPhoto] = useState();
@@ -17,12 +18,11 @@ export default function FriendsCards(props) {
     fetch(`http://${IPAdress}:3000/users/profile/${props.friend}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log("userusername", data.user.username);
         setFriends(data.user.username);
         setIsFriendOnline(data.user.status);
         setPhoto(data.user.profilePicture);
       });
-  }, [props.friend]);
+  }, []);
 
   //style conditionnel pour le statut online ou pas
   let styleOnline = styles.online;
@@ -30,18 +30,25 @@ export default function FriendsCards(props) {
     styleOnline = styles.online1;
   }
 
+  const handleProfile = () => {
+    navigation.navigate("FriendProfile", { username: props.friend });
+  };
+
+ 
   //il faudra remplacer l'image par l'uri/l de la photo des amis
   return (
     <View style={styles.container}>
       <View>
-        <Image source={{ uri: photo }} style={styles.photoFriend} />
+        <TouchableOpacity onPress={() => handleProfile()}>
+          <Image source={{ uri: photo }} style={styles.photoFriend} />
+        </TouchableOpacity>
       </View>
       <View style={styles.friendonline}>
         <Text style={styles.textUser}>{friends}</Text>
       </View>
       <View style={styles.iconfriend}>
         <Text style={styleOnline}></Text>
-        <FontAwesome5 name="rocketchat" size={20} color="#CE2174" />
+      
       </View>
     </View>
   );

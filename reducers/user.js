@@ -2,19 +2,10 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   value: {
-    firstname: null,
-    lastname: null,
     username: null,
-    email: null,
-    age: null,
-    tags: [],
-    location: [],
     friends: [],
     status: null,
-    city: null,
-    photo: null,
-    description: null,
-    teacher: [],
+    photos: null,
   },
 };
 
@@ -24,21 +15,11 @@ export const userSlice = createSlice({
   reducers: {
     login: (state, action) => {
       state.value.username = action.payload.username;
-      state.value.age = action.payload.age;
-      state.value.firstname = action.payload.firstname;
-      state.value.lastname = action.payload.lastname;
-      state.value.email = action.payload.email;
-      state.value.tags = action.payload.tags;
-      state.value.location = action.payload.location;
-      state.value.friends = action.payload.friends;
       state.value.status = action.payload.status;
-      state.value.city = action.payload.city;
-      state.value.teacher = action.payload.teacher;
-      state.value.photo = action.payload.photo;
-      state.value.description = action.payload.description;
     },
     logout: (state) => {
       state.value.username = null;
+      state.value.status =false
     },
 
     addToFriends: (state, action) => {
@@ -58,8 +39,10 @@ export const userSlice = createSlice({
       );
     },
     setFriends: (state, action) => {
+      console.log('payload',action.payload.friends)
       state.value.friends = action.payload.friends;
     },
+
   },
 });
 

@@ -1,13 +1,14 @@
 import { Image, View, StyleSheet, Text } from "react-native";
 import { useState, useEffect } from "react";
 import { FontAwesome5 } from "@expo/vector-icons";
+import IPAdress from "../IPAdress";
 
 //composant pour afficher les profils de tous les utilisateurs
 
 export default function UsersCards(props) {
   //useEffect pour récupérer tous les utilisateurs
   useEffect(() => {
-    fetch(`http://172.16.190.30:3000/users/allUsers`)
+    fetch(`http://${IPAdress}:3000/users/allUsers`)
       .then((res) => res.json())
       .then((data) => {
         setFriends(data.user);

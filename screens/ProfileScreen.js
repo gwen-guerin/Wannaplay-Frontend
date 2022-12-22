@@ -9,17 +9,18 @@ import { useState, useEffect } from "react";
 import FriendsCards from "../components/FriendsCards";
 import UploadImage from "../components/UploadImage";
 import { SimpleLineIcons } from "@expo/vector-icons";
-import { logout } from "../reducers/user";
+import { logout, setFriends } from "../reducers/user";
 import { FontAwesome } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
 import IPAdress from "../IPAdress";
+import { Row } from "native-base";
 
 // construction de  la page profile
 export default function ProfileScreen({ navigation }) {
+  const isFocused = useIsFocused();
   const dispatch = useDispatch();
   const userRed = useSelector((state) => state.user.value);
-  const isFocused = useIsFocused();
 
   const [user, setUser] = useState({
     firstname: null,
@@ -38,7 +39,6 @@ export default function ProfileScreen({ navigation }) {
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
-          console.log("ERREUR", data);
           setUser({
             age: data.user.age,
             tags: data.user.tags,
@@ -49,6 +49,8 @@ export default function ProfileScreen({ navigation }) {
             description: data.user.description,
             profilePicture: data.user.profilePicture,
           });
+          console.log(data.user.friends);
+          dispatch(setFriends({ friends: data.user.friends }));
         }
       });
   }, [isFocused]);
@@ -71,7 +73,7 @@ export default function ProfileScreen({ navigation }) {
     }
     const color = randomColor();
     return (
-      <Text style={[styles.textUser1, { backgroundColor: color }]} key={i}>
+      <Text style={[styles.textUser1, { borderColor: color }]} key={i}>
         #{teacher}
       </Text>
     );
@@ -89,7 +91,7 @@ export default function ProfileScreen({ navigation }) {
     }
     const color = randomColor();
     return (
-      <Text style={[styles.textUser1, { backgroundColor: color }]} key={i}>
+      <Text style={[styles.textUser1, { borderColor: color }]} key={i}>
         #{tag}
       </Text>
     );
@@ -109,9 +111,7 @@ export default function ProfileScreen({ navigation }) {
       }),
     })
       .then((res) => res.json())
-      .then((data) => {
-        console.log("STATUS", data);
-      });
+      .then((data) => {});
     dispatch(logout());
     navigation.navigate("Home");
   };
@@ -153,7 +153,7 @@ export default function ProfileScreen({ navigation }) {
           <View style={styles.infoContainer}>
             <Text style={styles.textUser}>About me : </Text>
             <Text style={styles.textUser}>{user.firstname}</Text>
-            <Text style={styles.textUser}>{user.age}ans</Text>
+            <Text style={styles.textUser}>{user.age} years old</Text>
             <Text style={styles.textUser}>{user.city}</Text>
           </View>
           <Text style={styles.textDecription}>{user.description}</Text>
@@ -211,13 +211,12 @@ const styles = StyleSheet.create({
   textUser: {
     fontSize: 15,
     margin: 2,
-    color: "#CE2174",
     alignItems: "center",
     fontWeight: "700",
   },
   textDecription: {
     fontSize: 17,
-    color: "#CE2174",
+    color: "#615B5Aaa",
     alignItems: "center",
     padding: 5,
     fontWeight: "700",
@@ -230,6 +229,8 @@ const styles = StyleSheet.create({
     paddingVertical: 3,
     paddingHorizontal: 8,
     margin: 5,
+    borderWidth: 3,
+    backgroundColor: "white",
   },
   textUsername: {
     fontWeight: "bold",
@@ -256,12 +257,14 @@ const styles = StyleSheet.create({
     height: 20,
     width: 20,
     borderRadius: 40,
+    backgroundColor: "red",
   },
   online1: {
     backgroundColor: "green",
     height: 20,
     width: 20,
     borderRadius: 40,
+    backgroundColor: "green",
   },
   friendsView: {
     marginTop: 30,

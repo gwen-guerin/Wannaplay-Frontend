@@ -55,6 +55,7 @@ export default function Home({ navigation }) {
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log('DATAUSER',data)
         if (data.result) {
           // console.log(data.result);
           dispatch(
@@ -116,6 +117,16 @@ export default function Home({ navigation }) {
           setModalSignInVisible(true);
           setErrorSignin(true);
         }
+        fetch("http://172.17.188.35:3000/users/isOnline", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            username: usernameSignIn,
+          }),
+        }).then(res => res.json())
+        .then(data => {
+          console.log("STATUS", data);
+        })
       });
     fetch(`http://${IPAdress}:3000/users/isOnline`, {
       method: "POST",

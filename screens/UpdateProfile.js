@@ -113,23 +113,7 @@ export default function UpdateProfile({ navigation }) {
     })
       .then((response) => response.json())
       .then((data) => {
-        dispatch(login({ username: data.username }));
-        // fetch(`http://${IPAdress}:3000/users/profile/${user.username}`)
-        // .then((res) => res.json())
-        // .then((data) => {
-        //   if (data.result) {
-        //     console.log('ERREUR', data);
-        //     setUser({
-        //       age: data.user.age,
-        //       tags: data.user.tags,
-        //       friends: data.user.friends,
-        //       city: data.user.city,
-        //       teacher: data.user.teacher,
-        //       firstname: data.user.firstname,
-        //       description: data.user.description,
-        //       profilePicture: data.user.profilePicture,
-        //     });
-        //   }
+        dispatch(login({ username: data.username}))
       });
     navigation.navigate("TabNavigator");
   };

@@ -23,7 +23,7 @@ export default function Questions({ navigation }) {
   const [teacher, setTeacher] = useState(false);
   const [instruments, setInstruments] = useState([]);
   const [instruTaught, setInstruTaught] = useState([]);
-  const [description, setDescription] = useState();
+  const [description, setDescription] = useState("");
 
   //FONCTIONS POUR DELETE INSTRU/TEACHING
   const handleDeleteInstru = (instru) => {
@@ -96,10 +96,8 @@ export default function Questions({ navigation }) {
         teacher: instruTaught,
         tags: instruments,
         description: description,
-        profilePicture: "../assets/jimi.jpg",
       }),
     });
-
     navigation.navigate("TabNavigator");
   };
 

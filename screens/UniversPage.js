@@ -54,7 +54,8 @@ export default function UniversPage() {
                     longitude: longitude,
                   },
                 }),
-              }).then((response) => response.json());
+              })
+                .then((response) => response.json())
             });
         });
       }

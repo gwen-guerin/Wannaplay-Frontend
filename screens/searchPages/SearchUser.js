@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import IPAdress from "../../IPAdress";
 
 import {
   SafeAreaView,
@@ -16,6 +17,7 @@ import {
 import { BlurView } from "expo-blur";
 import { useSelector, useDispatch } from "react-redux";
 
+
 export default function SearchUser({ navigation }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [results, setResults] = useState([]);
@@ -25,26 +27,17 @@ export default function SearchUser({ navigation }) {
   const username = useSelector((state) => state.user.value.username);
 
   useEffect(() => {
+    console.log(searchQuery)
     handleSearch();
   }, [searchQuery]);
 
   const addChat = (friendUsername) => {
-<<<<<<< HEAD
-    fetch("http://192.168.1.117:3000/users/");
-=======
-    fetch("http://172.16.190.27:3000/users/");
->>>>>>> 52c9800e493853141baea8a490cda72e9f58168e
+    fetch(`http://${IPAdress}:3000/users/`);
   };
 
   const handleSearch = () => {
     if (searchQuery.length > 0) {
-<<<<<<< HEAD
-      console.log(searchQuery.length);
-      fetch(`http://192.168.1.117:3000/search/${searchQuery}`)
-=======
-      // console.log(searchQuery.length)
-      fetch(`http://172.16.190.27:3000/search/${searchQuery}`)
->>>>>>> 52c9800e493853141baea8a490cda72e9f58168e
+      fetch(`http://${IPAdress}:3000/search/${searchQuery}`)
         .then((response) => response.json())
         .then((data) => {
           setSearchResults(
@@ -59,7 +52,7 @@ export default function SearchUser({ navigation }) {
                   <TouchableOpacity
                     style={styles.searchedButton}
                     onPress={() =>
-                      navigation.navigate("FriendProfile", { username: user })
+                      navigation.navigate("FriendProfile", { userId: user })
                     }
                   >
                     <Image

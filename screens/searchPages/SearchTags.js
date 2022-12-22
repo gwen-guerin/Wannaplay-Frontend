@@ -13,6 +13,7 @@ import {
   ImageBackground,
 } from "react-native";
 import { BlurView } from "expo-blur";
+import IPAdress from "../../IPAdress";
 
 export default function SearchTags() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -21,11 +22,7 @@ export default function SearchTags() {
   const [searchResults, setSearchResults] = useState([]);
 
   const handleSearch = () => {
-<<<<<<< HEAD
-    fetch(`http://192.168.1.117:3000/search/tags/${searchQuery}`)
-=======
-    fetch(`http://172.16.190.27:3000/search/tags/${searchQuery}`)
->>>>>>> 52c9800e493853141baea8a490cda72e9f58168e
+    fetch(`http://${IPAdress}:3000/search/tags/${searchQuery}`)
       .then((response) => response.json())
       .then((data) => {
         setSearchResults(

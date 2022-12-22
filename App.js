@@ -4,7 +4,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Home from "./screens/Home";
 import ProfileScreen from "./screens/ProfileScreen";
-import UniversPage from "./screens/UniversPage";
 import user from "./reducers/user";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
@@ -14,8 +13,12 @@ import ChatScreen from "./screens/ChatScreen";
 import SearchPage from "./screens/SearchPage";
 import Questions from "./screens/Questions";
 import UpdateProfile from "./screens/UpdateProfile";
-import FriendProfile from "./screens/FriendProfile";
 import ConcertScreen from "./screens/ConcertScreen";
+import FriendProfile from "./screens/FriendProfile";
+import { LogBox } from "react-native";
+
+LogBox.ignoreAllLogs();
+
 const store = configureStore({
   reducer: { user },
 });
@@ -29,7 +32,6 @@ const TabNavigator = () => {
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => {
           let iconName = "";
-
           if (route.name === "Profil") {
             iconName = "user";
           } else if (route.name === "Concert") {
@@ -67,7 +69,11 @@ export default function App() {
             <Stack.Screen name="Chat" component={ChatScreen} />
             <Stack.Screen name="Questions" component={Questions} />
             <Stack.Screen name="UpdateProfile" component={UpdateProfile} />
-            <Stack.Screen name="FriendProfile" component={FriendProfile} />
+            <Stack.Screen
+              name="FriendProfile"
+              component={FriendProfile}
+              getId={({ params }) => params.username}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>
