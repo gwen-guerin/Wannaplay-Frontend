@@ -11,7 +11,7 @@ import {
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { login } from "../reducers/user";
-import IPAdress  from "../IPAdress"
+import IPAdress from "../IPAdress";
 
 const EMAIL_REGEX =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -128,16 +128,17 @@ export default function Home({ navigation }) {
           console.log("STATUS", data);
         })
       });
-      fetch(`http://${IPAdress}:3000/users/isOnline`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          username: usernameSignIn,
-        }),
-      }).then(res => res.json())
-      .then(data => {
+    fetch(`http://${IPAdress}:3000/users/isOnline`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: usernameSignIn,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
         console.log("STATUS", data);
-      })
+      });
   };
 
   return (

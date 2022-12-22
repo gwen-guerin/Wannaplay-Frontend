@@ -163,7 +163,6 @@ export default function ProfileScreen({ navigation }) {
             />
           </View>
         </View>
-
         <ScrollView style={styles.friendsCardsContainer} horizontal={true}>
           {friendsList}
         </ScrollView>

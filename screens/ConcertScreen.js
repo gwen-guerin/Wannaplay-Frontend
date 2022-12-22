@@ -1,13 +1,13 @@
-import { StyleSheet, View, Text } from 'react-native';
-import { useEffect, useState } from 'react';
-import IPAdress from '../IPAdress';
+import { StyleSheet, View, Text } from "react-native";
+import { useEffect, useState } from "react";
+import IPAdress from "../IPAdress";
 
 export default function ConcertScreen({ navigation }) {
   const [concert, setConcert] = useState({
     eventName: null,
     date: null,
     style: null,
-    place: null
+    place: null,
   });
 
   useEffect(() => {
@@ -20,8 +20,8 @@ export default function ConcertScreen({ navigation }) {
             eventName: data.concert.eventName,
             date: data.concert.date,
             style: data.concert.style,
-            place: data.concert.place
-          })
+            place: data.concert.place,
+          });
         }
       });
   }, []);
@@ -37,13 +37,12 @@ export default function ConcertScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     fontSize: 50,
-    color: 'black',
-    backgroundColor: 'red',
-    width: '100%',
-    height: '100%',
+    color: "black",
+    backgroundColor: "red",
+    width: "100%",
+    height: "100%",
   },
 });
-

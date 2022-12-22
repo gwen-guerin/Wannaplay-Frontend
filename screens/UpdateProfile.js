@@ -13,12 +13,11 @@ import { Picker } from "@react-native-picker/picker";
 import Slider from "@react-native-community/slider";
 import { Select } from "native-base";
 import { useSelector, useDispatch } from "react-redux";
-import { login } from "../reducers/user"
-import IPAdress  from "../IPAdress"
+import { login } from "../reducers/user";
+import IPAdress from "../IPAdress";
 
 export default function UpdateProfile({ navigation }) {
-
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user.value);
 
   const [age, setAge] = useState(0);

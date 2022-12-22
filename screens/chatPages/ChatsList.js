@@ -9,24 +9,28 @@ import {
   TextInput,
   Dimensions,
 } from "react-native";
+import { useSelector } from "react-redux";
 import { BlurView } from "expo-blur";
 import { useEffect, useState } from "react";
 import IPAdress from "../../IPAdress";
 
 export default function ChatsList({ navigation }) {
-  const [allUsers, setAllUsers] = useState([]);
+  const [allChats, setAllChats] = useState([]);
   const [chatBoxes, setChatBoxes] = useState([]);
+  const user = useSelector((state) => state.user.value);
 
   useEffect(() => {
-    fetch(`http://${IPAdress}:3000/users/allUsers`)
+    fetch(`http://${IPAdress}:3000/chats/allChats/${user.username}`)
       .then((response) => response.json())
       .then((data) => {
-        setAllUsers(data.usersList)});
+        console.log(data)
+        setAllChats(data.allChats);
+      });
   }, []);
 
   useEffect(() => {
     setChatBoxes(
-      allUsers.map((data, i) => {
+      allChats.map((data, i) => {
         return (
           <BlurView
             key={i}
@@ -42,16 +46,16 @@ export default function ChatsList({ navigation }) {
                 source={require("../../assets/mia-khalifa.jpg")}
                 style={styles.avatar}
               />
-              <Text style={{ color: "black" }}> {data.username} </Text>
+              <Text style={{ color: "black" }}> {data.friend} </Text>
             </TouchableOpacity>
           </BlurView>
         );
       })
     );
-  }, [allUsers]);
+  }, [allChats]);
 
-  const handleNavigation = (user) => {
-    navigation.navigate("Chat", { username: "username", friend: user });
+  const handleNavigation = (data) => {
+    navigation.navigate("Chat", { username: "username", chatData: data });
   };
 
   return (
@@ -98,7 +102,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingLeft: "2%",
     marginBottom: "3%",
-    borderColor: 'black',
+    borderColor: "black",
     borderWidth: 2,
     borderRadius: 5,
   },
@@ -120,7 +124,7 @@ const styles = StyleSheet.create({
     margin: Dimensions.get("screen").width * 0.01,
     borderRadius: 5,
     borderWidth: 2,
-    borderColor: 'black',
+    borderColor: "black",
   },
   chatlink: {
     flexDirection: "row",

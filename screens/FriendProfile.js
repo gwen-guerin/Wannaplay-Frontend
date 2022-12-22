@@ -2,14 +2,19 @@ import {
   View,
   StyleSheet,
   Text,
+  ScrollView,
   TouchableOpacity,
   Image,
   ImageBackground,
 } from "react-native";
 import { useState, useEffect } from "react";
+import FriendsCards from "../components/FriendsCards";
+import UploadImage from "../components/UploadImage";
+import { SimpleLineIcons } from "@expo/vector-icons";
 import { addToFriends, removeFromFriends, logout } from "../reducers/user";
 import { FontAwesome, FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
+import { setStatusBarNetworkActivityIndicatorVisible } from "expo-status-bar";
 import IPAdress from "../IPAdress";
 
 // construction de  la page profile
@@ -24,7 +29,7 @@ export default function FriendProfile({ navigation, route: { params } }) {
     firstname: null,
     tags: [],
     friends: [],
-    status: false,
+    // status: false,
     city: null,
     age: null,
     teacher: [],
@@ -49,17 +54,16 @@ export default function FriendProfile({ navigation, route: { params } }) {
             firstname: data.user.firstname,
             description: data.user.description,
             profilePicture: data.user.profilePicture,
-            status: data.user.status,
           });
         }
       });
   }, []);
 
-  // const isFriend = () => {
-  //   for (let i = 0; i < userRed.friends.length; i++) {
-  //     if (userRed.friends[i] === params.username) setFriend(true);
-  //   }
-  // };
+  const isFriend = () => {
+    for (let i = 0; i < userRed.friends.length; i++) {
+      if (userRed.friends[i] === params.username) setFriend(true);
+    }
+  };
 
   const addOrDelete = () => {
     if (friend) {
@@ -73,8 +77,10 @@ export default function FriendProfile({ navigation, route: { params } }) {
       );
     } else
       return (
-        <TouchableOpacity style={styles.ionIcons} onPress={() => addFriend()}>
-          <Ionicons name="person-add" size={30} color="#CE2174" />
+        <TouchableOpacity
+          onPress={() => addFriend()}
+        >
+          <Ionicons name='person-add' size={30} color="#CE2174"/>
         </TouchableOpacity>
       );
   };
@@ -91,7 +97,7 @@ export default function FriendProfile({ navigation, route: { params } }) {
       .then((response) => response.json())
       .then((data) => {
         dispatch(addToFriends({ friend: params.username }));
-        setFriend(true);
+        setFriend(true)
       });
   };
 
@@ -107,9 +113,22 @@ export default function FriendProfile({ navigation, route: { params } }) {
       .then((response) => response.json())
       .then((data) => {
         dispatch(removeFromFriends({ friend: params.username }));
-        setFriend(false);
+        setFriend(false)
       });
   };
+
+  const handleChat = () => {
+    fetch(`http://${IPAdress}:3000/chats/createChat`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: userRed.username,
+        secondUser: user.username
+      }),
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+  }
 
   //on map sur l'état teacher pour faire ressortir les tags/les instruments que l'utilisateur veut enseigner
   const teacherTag = user.teacher.map((teacher, i) => {
@@ -206,8 +225,8 @@ const styles = StyleSheet.create({
   },
   profilePicture: {
     borderRadius: 60,
-    width: 120,
-    height: 120,
+    width: 80,
+    height: 80,
   },
   friendsTab: {
     backgroundColor: "white",
@@ -311,15 +330,15 @@ const styles = StyleSheet.create({
     width: 150,
   },
   description: {
-    backgroundColor: "#ffffffaa",
+    backgroundColor: "#C5C5C5",
     alignItems: "stretch",
     borderRadius: 5,
     width: "100%",
     padding: 5,
-    marginTop: -170,
+    marginTop: 25,
   },
   infoContainer: {
-    backgroundColor: "#E5EAE9",
+    backgroundColor: "#A3A3A3aa",
     padding: 5,
     borderRadius: 5,
     flexDirection: "row",

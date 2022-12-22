@@ -22,14 +22,16 @@ export default function ChatsFriends({ navigation }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    fetch(`http://${IPAdress}:3000/users/friends/getFriends/${user.username}`)
+    fetch(`http://${IPAdress}:3000/friends/getFriends/${user.username}`)
       .then((response) => response.json())
       .then((data) => {
-        dispatch(setFriends({friends: data.friends}));
+        console.log('datafriends',data.friends)
+        dispatch(setFriends({ friends: data.friends }));
       });
   }, []);
 
   useEffect(() => {
+    console.log('user friends', user)
     setChatBoxes(
       user.friends.map((data, i) => {
         return (
@@ -58,7 +60,7 @@ export default function ChatsFriends({ navigation }) {
   const handleNavigation = (user) => {
     navigation.navigate("Chat", {
       username: "username",
-      friend: user,   
+      friend: user,
     });
   };
 
@@ -116,7 +118,6 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
   },
   scrollList: {
-  
     alignItems: "center",
   },
   chatlinkContainer: {
