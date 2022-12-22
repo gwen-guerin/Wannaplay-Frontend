@@ -93,7 +93,6 @@ export default function FriendProfile({ navigation, route: { params } }) {
         dispatch(addToFriends({ friend: params.username }));
         setFriend(true);
       });
-    handleChat();
   };
 
   const removeFriend = () => {
