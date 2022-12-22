@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   },
   iconfriend: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "center",
     alignItems: "center",
     margin: 5,
     width: 50,

@@ -30,7 +30,6 @@ export default function Home({ navigation }) {
   const [errorSignin, setErrorSignin] = useState(false);
   const [errorSignup, setErrorSignup] = useState(false);
 
-  const [currentPosition, setCurrentPosition] = useState();
 
   const inputsObj = {
     firstname,
@@ -57,7 +56,6 @@ export default function Home({ navigation }) {
       .then((data) => {
         console.log('DATAUSER',data)
         if (data.result) {
-          // console.log(data.result);
           dispatch(
             login({
               username: data.user,
@@ -98,7 +96,6 @@ export default function Home({ navigation }) {
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
-          // console.log("DATAAA", data.user.firstname);
           dispatch(
             login({
               username: usernameSignIn,

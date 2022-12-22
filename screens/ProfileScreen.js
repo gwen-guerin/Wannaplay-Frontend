@@ -182,7 +182,6 @@ const styles = StyleSheet.create({
     height: "100%",
     paddingTop: 50,
     padding: 10,
-    // backgroundColor: "#A8F9DE",
   },
   imgBack: {
     width: "100%",
