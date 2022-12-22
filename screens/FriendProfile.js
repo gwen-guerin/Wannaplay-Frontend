@@ -8,19 +8,14 @@ import {
   ImageBackground,
 } from "react-native";
 import { useState, useEffect } from "react";
-import FriendsCards from "../components/FriendsCards";
-import UploadImage from "../components/UploadImage";
-import { SimpleLineIcons } from "@expo/vector-icons";
 import { addToFriends, removeFromFriends, logout } from "../reducers/user";
 import { FontAwesome, FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
-import { setStatusBarNetworkActivityIndicatorVisible } from "expo-status-bar";
 import IPAdress from "../IPAdress";
 
 // construction de  la page profile
 export default function FriendProfile({ navigation, route: { params } }) {
-  // console.log(route)
-  console.log('PARAMS', params);
+
   const userRed = useSelector((state) => state.user.value);
   const dispatch = useDispatch();
   const [friend, setFriend] = useState(false);
@@ -40,7 +35,6 @@ export default function FriendProfile({ navigation, route: { params } }) {
   //useEffect utilisé pour charger la page profile de l'utilisateur au  moment de sa connection/signin
   useEffect(() => {
     isFriend();
-    console.log("friends", user.friends);
     fetch(`http://${IPAdress}:3000/users/profile/${params.username}`)
       .then((res) => res.json())
       .then((data) => {
@@ -62,9 +56,7 @@ export default function FriendProfile({ navigation, route: { params } }) {
   }, []);
 
   const isFriend = () => {
-    console.log("friend", params.username);
     for (let i = 0; i < userRed.friends.length; i++) {
-      console.log("friend", userRed.friends[i]);
       if (userRed.friends[i] === params.username) setFriend(true);
     }
   };
@@ -130,7 +122,9 @@ export default function FriendProfile({ navigation, route: { params } }) {
       }),
     })
       .then((response) => response.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        navigation.navigate("Chat", {chatData: {chatName : data.chatName, friend: data.friend}})
+      });
   };
 
   //on map sur l'état teacher pour faire ressortir les tags/les instruments que l'utilisateur veut enseigner

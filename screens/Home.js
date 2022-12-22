@@ -30,7 +30,6 @@ export default function Home({ navigation }) {
   const [errorSignin, setErrorSignin] = useState(false);
   const [errorSignup, setErrorSignup] = useState(false);
 
-  const [currentPosition, setCurrentPosition] = useState();
 
   const inputsObj = {
     firstname,
@@ -55,9 +54,7 @@ export default function Home({ navigation }) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('DATAUSER',data)
         if (data.result) {
-          // console.log(data.result);
           dispatch(
             login({
               username: data.user,
@@ -124,7 +121,6 @@ export default function Home({ navigation }) {
           }),
         }).then(res => res.json())
         .then(data => {
-          console.log("STATUS", data);
         })
       });
     fetch(`http://${IPAdress}:3000/users/isOnline`, {
@@ -136,7 +132,6 @@ export default function Home({ navigation }) {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("STATUS", data);
       });
   };
 

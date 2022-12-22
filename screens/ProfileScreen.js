@@ -4,17 +4,16 @@ import {
   Text,
   ScrollView,
   ImageBackground,
-} from 'react-native';
-import { useState, useEffect } from 'react';
-import FriendsCards from '../components/FriendsCards';
-import UploadImage from '../components/UploadImage';
-import { SimpleLineIcons } from '@expo/vector-icons';
-import { logout, setFriends } from '../reducers/user';
-import { FontAwesome } from '@expo/vector-icons';
-import { useDispatch, useSelector } from 'react-redux';
-import { useIsFocused } from '@react-navigation/native';
-import IPAdress from '../IPAdress';
-import { Row } from 'native-base';
+} from "react-native";
+import { useState, useEffect } from "react";
+import FriendsCards from "../components/FriendsCards";
+import UploadImage from "../components/UploadImage";
+import { SimpleLineIcons } from "@expo/vector-icons";
+import { logout, setFriends } from "../reducers/user";
+import { FontAwesome } from "@expo/vector-icons";
+import { useDispatch, useSelector } from "react-redux";
+import { useIsFocused } from "@react-navigation/native";
+import IPAdress from "../IPAdress";
 
 // construction de  la page profile
 export default function ProfileScreen({ navigation }) {
@@ -50,7 +49,6 @@ export default function ProfileScreen({ navigation }) {
             description: data.user.description,
             profilePicture: data.user.profilePicture,
           });
-          console.log(data.user.friends);
           dispatch(setFriends({ friends: data.user.friends }));
         }
       });
@@ -185,7 +183,6 @@ const styles = StyleSheet.create({
     height: '100%',
     paddingTop: 50,
     padding: 10,
-    // backgroundColor: "#A8F9DE",
   },
   imgBack: {
     width: '100%',

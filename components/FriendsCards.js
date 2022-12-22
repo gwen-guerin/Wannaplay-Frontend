@@ -15,7 +15,7 @@ export default function FriendsCards(props) {
 
   //useEffect à la connexion de l'utilisateur qui récupère les données des amis (username et photo)
   useEffect(() => {
-    console.log("PROPSFRIEND", props.friend);
+    console.log("in", props.friend);
     fetch(`http://${IPAdress}:3000/users/profile/${props.friend}`)
       .then((res) => res.json())
       .then((data) => {
@@ -24,7 +24,6 @@ export default function FriendsCards(props) {
         setPhoto(data.user.profilePicture);
       });
   }, []);
-
   //style conditionnel pour le statut online ou pas
   let styleOnline = styles.online;
   if (isFriendOnline) {
@@ -44,7 +43,7 @@ export default function FriendsCards(props) {
         </TouchableOpacity>
       </View>
       <View style={styles.friendonline}>
-        <Text style={styles.textUser}>{friends}</Text>
+        <Text style={styles.textUser}>{props.friend}</Text>
       </View>
       <View style={styles.iconfriend}>
         <Text style={styleOnline}></Text>
@@ -101,7 +100,7 @@ const styles = StyleSheet.create({
   },
   iconfriend: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "center",
     alignItems: "center",
     margin: 5,
     width: 50,
