@@ -11,13 +11,14 @@ import {
 } from "react-native";
 import { BlurView } from "expo-blur";
 import { useEffect, useState } from "react";
+import IPAdress from "../../IPAdress";
 
 export default function ChatsList({ navigation }) {
   const [allUsers, setAllUsers] = useState([]);
   const [chatBoxes, setChatBoxes] = useState([]);
 
   useEffect(() => {
-    fetch("http://172.17.188.35:3000/users/allUsers")
+    fetch(`http://${IPAdress}:3000/users/allUsers`)
       .then((response) => response.json())
       .then((data) => {
         setAllUsers(data.usersList)});

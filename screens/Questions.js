@@ -13,6 +13,7 @@ import Slider from "@react-native-community/slider";
 import { useSelector } from "react-redux";
 import { Select } from "native-base";
 import { Entypo } from "@expo/vector-icons";
+import IPAdress from "../IPAdress";
 
 export default function Questions({ navigation }) {
   const user = useSelector((state) => state.user.value);
@@ -85,8 +86,7 @@ export default function Questions({ navigation }) {
 
   // ROUTE POST DES DONNEES DU FORM EN DB
   const handleFormSubmit = () => {
-    // console.log(user.firstname);
-    fetch('http://172.17.188.35:3000/users/signupForm', {
+    fetch(`http://${IPAdress}:3000/users/signupForm`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

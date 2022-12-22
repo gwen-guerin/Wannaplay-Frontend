@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import IPAdress from "../../IPAdress";
 
 import {
   SafeAreaView,
@@ -29,13 +30,13 @@ export default function SearchUser({ navigation }) {
   }, [searchQuery]);
 
   const addChat = (friendUsername) => {
-    fetch("http://172.17.188.35:3000/users/");
+    fetch(`http://${IPAdress}:3000/users/`);
   };
 
   const handleSearch = () => {
     if (searchQuery.length > 0) {
       console.log(searchQuery.length)
-      fetch(`http://172.17.188.35:3000/search/${searchQuery}`)
+      fetch(`http://${IPAdress}:3000/search/${searchQuery}`)
         .then((response) => response.json())
         .then((data) => {
           setSearchResults(
@@ -50,7 +51,7 @@ export default function SearchUser({ navigation }) {
                   <TouchableOpacity
                     style={styles.searchedButton}
                     onPress={() =>
-                      navigation.navigate("FriendProfile", { username: user })
+                      navigation.navigate("FriendProfile", { userId: user })
                     }
                   >
                     <Image

@@ -4,15 +4,18 @@ import {
   Text,
   TouchableOpacity,
   Image,
-  ImageBackground
+  ImageBackground,
 } from "react-native";
 import { useState, useEffect } from "react";
 import { addToFriends, removeFromFriends, logout } from "../reducers/user";
 import { FontAwesome, FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
+import IPAdress from "../IPAdress";
 
 // construction de  la page profile
 export default function FriendProfile({ navigation, route: { params } }) {
+  // console.log(route)
+  console.log("PARAMS", params);
   const userRed = useSelector((state) => state.user.value);
   const dispatch = useDispatch();
   const [friend, setFriend] = useState(false);
@@ -31,7 +34,7 @@ export default function FriendProfile({ navigation, route: { params } }) {
 
   //useEffect utilisé pour charger la page profile de l'utilisateur au  moment de sa connection/signin
   useEffect(() => {
-    fetch(`http://172.17.188.35:3000/users/profile/${params.username}`)
+    fetch(`http://${IPAdress}:3000/users/profile/${params.userId}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
@@ -61,7 +64,10 @@ export default function FriendProfile({ navigation, route: { params } }) {
   const addOrDelete = () => {
     if (friend) {
       return (
-        <TouchableOpacity style={styles.ionIcons} onPress={() => removeFriend()}>
+        <TouchableOpacity
+          style={styles.ionIcons}
+          onPress={() => removeFriend()}
+        >
           <Ionicons name="person-remove" size={30} color="#CE2174" />
         </TouchableOpacity>
       );
@@ -74,7 +80,7 @@ export default function FriendProfile({ navigation, route: { params } }) {
   };
 
   const addFriend = () => {
-    fetch("http://172.17.188.35:3000/friends/addFriend", {
+    fetch(`http://${IPAdress}:3000/friends/addFriend`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -90,7 +96,7 @@ export default function FriendProfile({ navigation, route: { params } }) {
   };
 
   const removeFriend = () => {
-    fetch("http://192.168.1.15:3000/friends/removeFriend", {
+    fetch(`http://${IPAdress}:3000/friends/removeFriend`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -118,10 +124,9 @@ export default function FriendProfile({ navigation, route: { params } }) {
     const color = randomColor();
     return (
       <Text style={[styles.textUser1, { backgroundColor: color }]} key={i}>
-
-    #{teacher}
-  </Text>
-);
+        #{teacher}
+      </Text>
+    );
   });
 
   //on map sur l'état tags pour faire ressortir les tags/les instruments pratiqué par l'utilisateur
@@ -137,91 +142,56 @@ export default function FriendProfile({ navigation, route: { params } }) {
     const color = randomColor();
     return (
       <Text style={[styles.textUser1, { backgroundColor: color }]} key={i}>
-
-    #{tag}
-  </Text>
-);
+        #{tag}
+      </Text>
+    );
   });
 
-  //on map sur l'état friends pour faire ressortir les amis de l'utilisateur
-  // if (friends.length > 0) {
-  //   setError(false);
-  // } else {
-  //   setError(true)
-  //   const friendsList = friends.map((friend, i) => {
-  //     return <FriendsCards key={i} friend={friend} />;
-  //   });
-  // }
-
-  const handleLogout = () => {
-    dispatch(logout());
-    navigation.navigate("Home");
-  };
-
-  const handleModify = () => {
-    navigation.navigate("UpdateProfile");
-  }; 
   return (
     <ImageBackground
-    source={require("../assets/illu_02.jpg")}
-    imageStyle={{ opacity: 0.4 }}
-    style={styles.imgBack}
-  >
-    <View style={styles.container}>
-      <View style={styles.headerProfile}>
-        <Image
-          source={{ uri: user.profilePicture }}
-          style={styles.profilePicture}
-        />
-        <View style={styles.nameAndTags}>
-          <View style={styles.nameAndStatus}>
-            <Text style={styles.textUsername}>#{user.username}</Text>
-            {/* <View style={styleOnline}></View> /}
-            {/ <SimpleLineIcons
-              style={styles.logoLogout}
-              name="logout"
-              size={20}
-              color="black" /}
-              {/ // onPress={() => handleLogout()}
-            /> */}
-          </View>
-          <View style={styles.tagandteach}>
-            <View style={styles.tagsList}>{tagsList}</View>
-            <View style={styles.tagsList}>
-              {user.teacher && (
-                <Text style={styles.textUser}>Wanna teach : </Text>
-              )}
-              {teacherTag}
+      source={require("../assets/illu_02.jpg")}
+      imageStyle={{ opacity: 0.4 }}
+      style={styles.imgBack}
+    >
+      <View style={styles.container}>
+        <View style={styles.headerProfile}>
+          <Image
+            source={{ uri: user.profilePicture }}
+            style={styles.profilePicture}
+          />
+          <View style={styles.nameAndTags}>
+            <View style={styles.nameAndStatus}>
+              <Text style={styles.textUsername}>#{user.username}</Text>
+            </View>
+            <View style={styles.tagandteach}>
+              <View style={styles.tagsList}>{tagsList}</View>
+              <View style={styles.tagsList}>
+                {user.teacher && (
+                  <Text style={styles.textUser}>Wanna teach : </Text>
+                )}
+                {teacherTag}
+              </View>
             </View>
           </View>
         </View>
-      </View>
-      <View style={styles.description}>
-        <View style={styles.infoContainer}>
-          <Text style={styles.textUser}>About me : </Text>
-          <Text style={styles.textUser}>{user.firstname}</Text>
-          <Text style={styles.textUser}>{user.age}ans</Text>
-          <Text style={styles.textUser}>{user.city}</Text>
+        <View style={styles.description}>
+          <View style={styles.infoContainer}>
+            <Text style={styles.textUser}>About me : </Text>
+            <Text style={styles.textUser}>{user.firstname}</Text>
+            <Text style={styles.textUser}>{user.age} years old</Text>
+            <Text style={styles.textUser}>{user.city}</Text>
+          </View>
+          <Text style={styles.textDecription}>{user.description}</Text>
+          <View style={styles.modifyIcon}></View>
         </View>
-        <Text style={styles.textDecription}>{user.description}</Text>
-        <View style={styles.modifyIcon}>
-          <FontAwesome
-            onPress={() => handleModify()}
-            name="pencil-square-o"
-            size={16}
-            color="#A3A3A3"
-          />
+        <View style={styles.iconContainer}>
+          <TouchableOpacity style={styles.ionIcons}>
+            <FontAwesome5 name="rocketchat" size={30} color="#CE2174" />
+          </TouchableOpacity>
+          {addOrDelete()}
         </View>
       </View>
-      <View style={styles.iconContainer}>
-        <TouchableOpacity style={styles.ionIcons} >
-          <FontAwesome5 name="rocketchat" size={30} color="#CE2174" />
-        </TouchableOpacity>
-        {addOrDelete()}
-      </View>
-    </View>
     </ImageBackground>
-
   );
 }
 
@@ -233,7 +203,6 @@ const styles = StyleSheet.create({
     height: "100%",
     paddingTop: 50,
     padding: 10,
-    // backgroundColor: "#A8F9DE",
   },
   profilePicture: {
     borderRadius: 60,
@@ -305,13 +274,11 @@ const styles = StyleSheet.create({
   online: {
     height: 20,
     width: 20,
-    // backgroundColor: 'red',
     borderRadius: 40,
   },
   online1: {
     height: 20,
     width: 20,
-    // backgroundColor: 'green',
     borderRadius: 40,
   },
   friendsView: {
@@ -372,14 +339,11 @@ const styles = StyleSheet.create({
   },
 
   ionIcons: {
-borderRadius: 40,
-display: "flex",
-justifyContent: "center",
-alignItems: "center",
-    // width: 100,
-    // height: 100,
+    borderRadius: 40,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
     padding: 20,
-    backgroundColor: '#ffffffaa'
-  }
+    backgroundColor: "#ffffffaa",
+  },
 });
-

@@ -3,24 +3,24 @@ import {
   StyleSheet,
   Text,
   ScrollView,
-  ImageBackground
-} from 'react-native';
-import { useState, useEffect } from 'react';
-import FriendsCards from '../components/FriendsCards';
-import UploadImage from '../components/UploadImage';
-import { SimpleLineIcons } from '@expo/vector-icons';
-import { logout } from '../reducers/user';
-import { FontAwesome } from '@expo/vector-icons';
-import { useDispatch, useSelector } from 'react-redux';
-import { useIsFocused } from '@react-navigation/native';
+  ImageBackground,
+} from "react-native";
+import { useState, useEffect } from "react";
+import FriendsCards from "../components/FriendsCards";
+import UploadImage from "../components/UploadImage";
+import { SimpleLineIcons } from "@expo/vector-icons";
+import { logout } from "../reducers/user";
+import { FontAwesome } from "@expo/vector-icons";
+import { useDispatch, useSelector } from "react-redux";
+import { useIsFocused } from "@react-navigation/native";
+import IPAdress from "../IPAdress";
 
 // construction de  la page profile
 export default function ProfileScreen({ navigation }) {
   const isFocused = useIsFocused();
   const dispatch = useDispatch();
   const userRed = useSelector((state) => state.user.value);
-  
-  
+
   const [user, setUser] = useState({
     firstname: null,
     tags: [],
@@ -34,8 +34,7 @@ export default function ProfileScreen({ navigation }) {
 
   //useEffect utilisé pour charger la page profile de l'utilisateur au  moment de sa connection/signin
   useEffect(() => {
-    console.log("effect in profile screen");
-    fetch(`http://172.17.188.35:3000/users/profile/${userRed.username}`)
+    fetch(`http://${IPAdress}:3000/users/profile/${userRed.username}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
@@ -71,7 +70,7 @@ export default function ProfileScreen({ navigation }) {
     }
     const color = randomColor();
     return (
-      <Text style={[styles.textUser1, { backgroundColor: color }]} key={i}>
+      <Text style={[styles.textUser1, { borderColor: color }]} key={i}>
         #{teacher}
       </Text>
     );
@@ -89,7 +88,7 @@ export default function ProfileScreen({ navigation }) {
     }
     const color = randomColor();
     return (
-      <Text style={[styles.textUser1, { backgroundColor: color }]} key={i}>
+      <Text style={[styles.textUser1, { borderColor: color }]} key={i}>
         #{tag}
       </Text>
     );
@@ -101,15 +100,15 @@ export default function ProfileScreen({ navigation }) {
   });
 
   const handleLogout = () => {
-    fetch("http://172.17.188.35:3000/users/isOffline", {
+    fetch(`http://${IPAdress}:3000/users/isOffline`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         username: userRed.username,
       }),
-    }).then(res => res.json())
-    .then(data => {
     })
+      .then((res) => res.json())
+      .then((data) => {});
     dispatch(logout());
     navigation.navigate("Home");
   };
@@ -210,13 +209,13 @@ const styles = StyleSheet.create({
   textUser: {
     fontSize: 15,
     margin: 2,
-    color: "#CE2174",
+    // color: "gray",
     alignItems: "center",
     fontWeight: "700",
   },
   textDecription: {
     fontSize: 17,
-    color: "#CE2174",
+    color: "#615B5Aaa",
     alignItems: "center",
     padding: 5,
     fontWeight: "700",
@@ -229,6 +228,7 @@ const styles = StyleSheet.create({
     paddingVertical: 3,
     paddingHorizontal: 8,
     margin: 5,
+    borderWidth: 3,
   },
   textUsername: {
     fontWeight: "bold",

@@ -1,4 +1,3 @@
-import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
@@ -7,14 +6,14 @@ import SearchUser from "./searchPages/SearchUser";
 import SearchTeacher from "./searchPages/SearchTeacher";
 
 import { StyleSheet, Dimensions, TextInput, View } from "react-native";
+import IPAdress from "../IPAdress";
+
 const Stack = createNativeStackNavigator();
-
-
 const Tab = createMaterialTopTabNavigator();
 
 const handleSearch = () => {
   if (searchQuery.length > 0) {
-    fetch(`http://172.17.188.35:3000/search/${searchQuery}`)
+    fetch(`http://${IPAdress}:3000/search/${searchQuery}`)
       .then((response) => response.json())
       .then((data) => {
         setSearchResults(

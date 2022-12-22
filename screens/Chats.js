@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
 
-import { StyleSheet, Dimensions, TextInput, View } from "react-native";
+import { StyleSheet } from "react-native";
 
 import ChatsFriends from "./chatPages/ChatsFriends";
 import ChatsList from "./chatPages/ChatsList";
