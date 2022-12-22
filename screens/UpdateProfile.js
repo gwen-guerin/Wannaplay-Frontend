@@ -90,7 +90,6 @@ export default function UpdateProfile({ navigation }) {
 
   // ROUTE POST DES DONNEES DU FORM EN DB
   const handleFormSubmit = () => {
-    // console.log(user.firstname);
     fetch(`http://${IPAdress}:3000/users/updateProfile`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },

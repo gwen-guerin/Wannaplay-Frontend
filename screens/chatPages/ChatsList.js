@@ -26,7 +26,6 @@ export default function ChatsList({ navigation }) {
     fetch(`http://${IPAdress}:3000/chats/allChats/${user.username}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setAllChats(data.allChats);
       });
   }, [isfocused]);
@@ -34,7 +33,6 @@ export default function ChatsList({ navigation }) {
   useEffect(() => {
     setChatBoxes(
       allChats.map((data, i) => {
-        console.log(data);
         return (
           <BlurView
             key={i}

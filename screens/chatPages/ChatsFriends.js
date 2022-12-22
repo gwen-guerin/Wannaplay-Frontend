@@ -25,13 +25,11 @@ export default function ChatsFriends({ navigation }) {
     fetch(`http://${IPAdress}:3000/friends/getFriends/${user.username}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log('datafriends',data.friends)
         dispatch(setFriends({ friends: data.friends }));
       });
   }, []);
 
   useEffect(() => {
-    console.log('user friends', user)
     setChatBoxes(
       user.friends.map((data, i) => {
         return (

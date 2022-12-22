@@ -14,7 +14,6 @@ import { FontAwesome } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
 import IPAdress from "../IPAdress";
-import { Row } from "native-base";
 
 // construction de  la page profile
 export default function ProfileScreen({ navigation }) {
@@ -49,7 +48,6 @@ export default function ProfileScreen({ navigation }) {
             description: data.user.description,
             profilePicture: data.user.profilePicture,
           });
-          console.log(data.user.friends);
           dispatch(setFriends({ friends: data.user.friends }));
         }
       });

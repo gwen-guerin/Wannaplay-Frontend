@@ -26,7 +26,6 @@ export default function SearchUser({ navigation }) {
   const username = useSelector((state) => state.user.value.username);
 
   useEffect(() => {
-    console.log(searchQuery);
     handleSearch();
   }, [searchQuery]);
 

@@ -28,7 +28,6 @@ export default function ChatScreen({ navigation, route: { params } }) {
   let subscription;
   useEffect(() => {
     (() => {
-      console.log(params);
       fetch(`http://${IPAdress}:3000/chats/joinChat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -46,7 +45,6 @@ export default function ChatScreen({ navigation, route: { params } }) {
         });
       subscription = pusher.subscribe(params.chatData.chatName);
       subscription.bind("pusher:subscription_succeeded", () => {
-        console.log("binded");
         subscription.bind("message", handleReceiveMessage);
       });
     })();
@@ -65,8 +63,6 @@ export default function ChatScreen({ navigation, route: { params } }) {
   }, [isFocused]);
 
   const handleReceiveMessage = (data) => {
-    console.log("yes", data);
-    // setMessages([data])
     setMessages((messages) => [...messages, data]);
   };
 

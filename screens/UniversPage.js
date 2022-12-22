@@ -24,7 +24,6 @@ export default function UniversPage() {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.user.value);
-  // console.log('chcek',user);
 
   useEffect(() => {
     (async () => {
@@ -34,7 +33,6 @@ export default function UniversPage() {
       let url = "";
 
       if (status === "granted") {
-        // console.log(status);
         Location.watchPositionAsync({ distanceInterval: 10 }, (location) => {
           latitude = location.coords.latitude;
           longitude = location.coords.longitude;
