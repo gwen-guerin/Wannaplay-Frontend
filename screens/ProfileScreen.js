@@ -14,6 +14,8 @@ import { FontAwesome } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
 import IPAdress from "../IPAdress";
+import * as Location from "expo-location";
+
 
 // construction de  la page profile
 export default function ProfileScreen({ navigation }) {
@@ -35,6 +37,37 @@ export default function ProfileScreen({ navigation }) {
 
   //useEffect utilisé pour charger la page profile de l'utilisateur au  moment de sa connection/signin
   useEffect(() => {
+    (async () => {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      let latitude = 0;
+      let longitude = 0;
+      let url = "";
+
+      if (status === "granted") {
+        Location.watchPositionAsync({ distanceInterval: 10 }, (location) => {
+          latitude = location.coords.latitude;
+          longitude = location.coords.longitude;
+          fetch(
+            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+          )
+            .then((response) => response.json())
+            .then((data) => {
+              fetch(`http://${IPAdress}:3000/users/geoloc`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  username: userRed.username,
+                  location: {
+                    city: data.address.city,
+                    latitude: latitude,
+                    longitude: longitude,
+                  },
+                }),
+              }).then((response) => response.json());
+            });
+        });
+      }
+    })();
     fetch(`http://${IPAdress}:3000/users/profile/${userRed.username}`)
       .then((res) => res.json())
       .then((data) => {
