@@ -38,6 +38,27 @@ export default function ProfileScreen({ navigation }) {
 
   //useEffect utilisé pour charger la page profile de l'utilisateur au  moment de sa connection/signin
   useEffect(() => {
+    fetch(`http://${IPAdress}:3000/users/profile/${userRed.username}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.result) {
+          console.log(data.user);
+          setUser({
+            age: data.user.age,
+            tags: data.user.tags,
+            friends: data.user.friends,
+            teacher: data.user.teacher,
+            firstname: data.user.firstname,
+            description: data.user.description,
+            profilePicture: data.user.profilePicture,
+            city: data.user.city
+          });
+          dispatch(setFriends({ friends: data.user.friends }));
+        }
+      });
+  }, [isFocused]);
+
+  useEffect(() => {
     (async () => {
       const { status } = await Location.requestForegroundPermissionsAsync();
       let latitude = 0;
@@ -69,27 +90,7 @@ export default function ProfileScreen({ navigation }) {
         });
       }
     })();
-    fetch(`http://${IPAdress}:3000/users/profile/${userRed.username}`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.result) {
-          console.log(data.user);
-          setUser({
-            age: data.user.age,
-            tags: data.user.tags,
-            friends: data.user.friends,
-            city: data.user.city,
-            teacher: data.user.teacher,
-            firstname: data.user.firstname,
-            description: data.user.description,
-            profilePicture: data.user.profilePicture,
-            city: data.user.city
-          });
-          dispatch(setFriends({ friends: data.user.friends }));
-        }
-      });
-  }, [isFocused]);
-
+  })
   //style conditionnel pour le statut online ou pas
   let styleOnline = styles.online;
   if (userRed.status) {
