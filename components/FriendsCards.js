@@ -8,20 +8,23 @@ import { useNavigation } from "@react-navigation/native";
 //comment on fait pour concrètrement pour faire une demande d'amis ?? et pusher en BD ?
 export default function FriendsCards(props) {
   const navigation = useNavigation();
-  const userRed = useSelector((state) => state.user.value);
   const [isFriendOnline, setIsFriendOnline] = useState(false);
   const [photo, setPhoto] = useState();
 
+  
   //useEffect à la connexion de l'utilisateur qui récupère les données des amis (username et photo)
   useEffect(() => {
-    console.log("in", props.friend);
+
     fetch(`http://${IPAdress}:3000/users/profile/${props.friend}`)
       .then((res) => res.json())
       .then((data) => {
         setPhoto(data.user.profilePicture);
         setIsFriendOnline(data.user.status);
+        
       });
+    
   }, []);
+
   //style conditionnel pour le statut online ou pas
   let styleOnline = styles.online;
   if (isFriendOnline) {

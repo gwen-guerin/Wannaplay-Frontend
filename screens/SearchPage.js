@@ -16,7 +16,7 @@ const SearchNavigator = () => {
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarHideOnKeyboard: true,
-        tabBarActiveTintColor: "#ec6e5b",
+        tabBarActiveTintColor: "#CE2174",
         tabBarInactiveTintColor: "#335561",
         headerShown: false,
       })}
