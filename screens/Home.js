@@ -262,6 +262,7 @@ const styles = StyleSheet.create({
     color: 'white',
     textShadowColor: '#CE2174',
     textShadowRadius: 10,
+    fontFamily: "Atma-Regular",
   },
   home: {
     fontSize: 200,
@@ -281,7 +282,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   singText: {
-    color: '#CE2174'
+    color: '#CE2174',
+    fontFamily: "Atma-Regular",
   },
   signBtn: {
     display: "flex",

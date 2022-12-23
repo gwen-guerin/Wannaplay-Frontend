@@ -17,6 +17,13 @@ import ConcertScreen from "./screens/ConcertScreen";
 import FriendProfile from "./screens/FriendProfile";
 import { LogBox } from "react-native";
 
+//import fontfamily Atma
+import AppLoading from "expo-app-loading";
+import {useState} from "react";
+import useFonts from "./hooks/useFonts";
+//fin import font
+
+
 LogBox.ignoreAllLogs();
 
 const store = configureStore({
@@ -59,6 +66,25 @@ const TabNavigator = () => {
 };
 
 export default function App() {
+  //fontfamily
+  const [IsReady, SetIsReady] = useState(false);
+
+  const LoadFonts = async () => {
+    await useFonts();
+  };
+
+  if (!IsReady) {
+    return (
+      <AppLoading
+        startAsync={LoadFonts}
+        onFinish={() => SetIsReady(true)}
+        onError={() => {}}
+      />
+    );
+  }
+
+
+
   return (
     <NativeBaseProvider>
       <Provider store={store}>

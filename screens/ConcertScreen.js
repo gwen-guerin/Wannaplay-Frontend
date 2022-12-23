@@ -189,6 +189,7 @@ const styles = StyleSheet.create({
     color: 'grey',
     alignItems: 'center',
     fontWeight: '700',
+    
   },
   textDecription: {
     fontSize: 17,
