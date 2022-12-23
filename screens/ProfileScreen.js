@@ -183,7 +183,6 @@ const styles = StyleSheet.create({
     height: "100%",
     paddingTop: 50,
     padding: 10,
-    fontFamily: "Regular-Atma",
   },
   imgBack: {
     width: "100%",

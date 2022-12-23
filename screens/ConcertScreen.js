@@ -1,8 +1,8 @@
-import { StyleSheet, View, Text, ImageBackground } from 'react-native';
+import { ScrollView,StyleSheet, View, Text, ImageBackground, TouchableOpacity} from 'react-native';
 import { useEffect, useState } from 'react';
 import IPAdress from '../IPAdress';
 import { useIsFocused } from '@react-navigation/native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+
 
 export default function ConcertScreen({ navigation }) {
   // const [eventName, setEventName] = useState("")
@@ -41,6 +41,7 @@ export default function ConcertScreen({ navigation }) {
 
   const concert = concertsList.map((event, i) => {
     return (
+      <ScrollView>
       <View style={styles.description} key={i}>
         <View style={styles.infoContainer}>
           <Text style={styles.textUser}>{event.eventName}</Text>
@@ -50,6 +51,8 @@ export default function ConcertScreen({ navigation }) {
         </View>
         {/* <Text style={styles.textDecription}>{concert.description}</Text> */}
       </View>
+
+      </ScrollView>
     );
   });
   return (
@@ -110,7 +113,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   textUser: {
-    fontSize: 18,
+    fontSize: 15,
     margin: 2,
     color: 'grey',
     alignItems: 'center',
