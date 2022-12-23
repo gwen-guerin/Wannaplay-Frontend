@@ -138,7 +138,7 @@ export default function FriendProfile({ navigation, route: { params } }) {
     }
     const color = randomColor();
     return (
-      <Text style={[styles.textUser1, { backgroundColor: color }]} key={i}>
+      <Text style={[styles.textUser1, { borderColor: color }]} key={i}>
         #{teacher}
       </Text>
     );
@@ -156,7 +156,7 @@ export default function FriendProfile({ navigation, route: { params } }) {
     }
     const color = randomColor();
     return (
-      <Text style={[styles.textUser1, { backgroundColor: color }]} key={i}>
+      <Text style={[styles.textUser1, {  borderColor: color }]} key={i}>
         #{tag}
       </Text>
     );
@@ -224,8 +224,8 @@ const styles = StyleSheet.create({
   },
   profilePicture: {
     borderRadius: 60,
-    width: 80,
-    height: 80,
+    width: 120,
+    height: 120,
   },
   friendsTab: {
     backgroundColor: 'white',
@@ -237,33 +237,29 @@ const styles = StyleSheet.create({
     padding: 10,
     opacity: 0.6,
   },
-  friendsList: {
-    borderWidth: 1,
-    width: 100,
-    height: 100,
-  },
   textUser: {
     fontSize: 15,
     margin: 2,
-    color: '#CE2174',
-    alignItems: 'center',
-    fontWeight: '700',
+    alignItems: "center",
+    fontWeight: "700",
   },
   textDecription: {
     fontSize: 17,
-    color: '#CE2174',
+    color: "#615B5Aaa",
     alignItems: 'center',
     padding: 5,
     fontWeight: '700',
-  },
+     },
   textUser1: {
     fontSize: 14,
-    fontWeight: '800',
-    color: 'black',
+    fontWeight: "800",
+    color: "black",
     borderRadius: 20,
     paddingVertical: 3,
     paddingHorizontal: 8,
     margin: 5,
+    borderWidth: 3,
+    backgroundColor: "white",
   },
   textUsername: {
     fontWeight: 'bold',
@@ -314,7 +310,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   tagandteach: {
-    // backgroundColor: 'red',
     display: 'flex',
     marginTop: 20,
     marginBottom: 20,
@@ -329,18 +324,20 @@ const styles = StyleSheet.create({
     width: 150,
   },
   description: {
-    backgroundColor: "#C5C5C5",
+    backgroundColor: "#ffffffaa",
+    display: "flex",
     alignItems: "stretch",
     borderRadius: 5,
-    width: '100%',
+    width: "100%",
     padding: 5,
     marginTop: 25,
+    height: "20%",
   },
   infoContainer: {
-    backgroundColor: "#A3A3A3aa",
+    backgroundColor: "#E5EAE9",
     padding: 5,
     borderRadius: 5,
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   modifyIcon: {
     alignItems: 'flex-end',
