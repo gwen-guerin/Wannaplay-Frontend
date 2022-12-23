@@ -7,11 +7,11 @@ import {
   Modal,
   TextInput,
   Dimensions,
-} from "react-native";
-import { useDispatch } from "react-redux";
-import { useState } from "react";
-import { login } from "../reducers/user";
-import IPAdress from "../IPAdress";
+} from 'react-native';
+import { useDispatch } from 'react-redux';
+import { useState } from 'react';
+import { login } from '../reducers/user';
+import IPAdress from '../IPAdress';
 
 const EMAIL_REGEX =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -20,16 +20,15 @@ export default function Home({ navigation }) {
   const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = useState(false);
   const [modalSignInVisible, setModalSignInVisible] = useState(false);
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [usernameSignIn, setUsernameSignIn] = useState("");
-  const [passwordSignIn, setPasswordSignIn] = useState("");
+  const [firstname, setFirstname] = useState('');
+  const [lastname, setLastname] = useState('');
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [usernameSignIn, setUsernameSignIn] = useState('');
+  const [passwordSignIn, setPasswordSignIn] = useState('');
   const [errorSignin, setErrorSignin] = useState(false);
   const [errorSignup, setErrorSignup] = useState(false);
-
 
   const inputsObj = {
     firstname,
@@ -41,8 +40,8 @@ export default function Home({ navigation }) {
 
   const handleRegister = () => {
     fetch(`http://${IPAdress}:3000/users/signup`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         firstname: firstname,
         lastname: lastname,
@@ -61,15 +60,15 @@ export default function Home({ navigation }) {
               status: true,
             })
           );
-          setFirstname("");
-          setUsername("");
-          setPassword("");
-          setEmail("");
-          setLastname("");
+          setFirstname('');
+          setUsername('');
+          setPassword('');
+          setEmail('');
+          setLastname('');
           setModalVisible(!modalVisible);
-          navigation.navigate("Questions");
+          navigation.navigate('Questions');
         } else {
-          alert("username already existing !");
+          alert('username already existing !');
           setErrorSignup(true);
         }
       });
@@ -85,8 +84,8 @@ export default function Home({ navigation }) {
 
   const submitSignIn = () => {
     fetch(`http://${IPAdress}:3000/users/signin`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         username: usernameSignIn,
         password: passwordSignIn,
@@ -101,43 +100,42 @@ export default function Home({ navigation }) {
               status: true,
             })
           );
-          setFirstname("");
-          setUsername("");
-          setPassword("");
-          setEmail("");
-          setLastname("");
+          setFirstname('');
+          setUsername('');
+          setPassword('');
+          setEmail('');
+          setLastname('');
           setModalSignInVisible(!modalSignInVisible),
-            navigation.navigate("TabNavigator");
+            navigation.navigate('TabNavigator');
           setErrorSignin(false);
         } else {
           setModalSignInVisible(true);
           setErrorSignin(true);
         }
-        fetch("http://172.17.188.35:3000/users/isOnline", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
+        fetch('http://172.17.188.35:3000/users/isOnline', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             username: usernameSignIn,
           }),
-        }).then(res => res.json())
-        .then(data => {
         })
+          .then((res) => res.json())
+          .then((data) => {});
       });
     fetch(`http://${IPAdress}:3000/users/isOnline`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         username: usernameSignIn,
       }),
     })
       .then((res) => res.json())
-      .then((data) => {
-      });
+      .then((data) => {});
   };
 
   return (
     <ImageBackground
-      source={require("../assets/illu_02.jpg")}
+      source={require('../assets/illu_02.jpg')}
       style={styles.background}
     >
       <View style={styles.header}>
@@ -147,7 +145,7 @@ export default function Home({ navigation }) {
         <TouchableOpacity style={styles.signBtn} onPress={() => handleSignUp()}>
           <Text>SING'UP</Text>
           <Modal visible={modalVisible} animationType="slide" transparent>
-            <View style={{ backgroundColor: "#000000aa", flex: 1 }}>
+            <View style={{ backgroundColor: '#000000aa', flex: 1 }}>
               <View style={styles.modalContent}>
                 {errorSignup && (
                   <Text>Attention, champs manquants ou incorrect !</Text>
@@ -208,7 +206,7 @@ export default function Home({ navigation }) {
         <TouchableOpacity style={styles.signBtn} onPress={() => handleSignIn()}>
           <Text>SING'IN</Text>
           <Modal visible={modalSignInVisible} animationType="slide" transparent>
-            <View style={{ backgroundColor: "#000000aa", flex: 1 }}>
+            <View style={{ backgroundColor: '#000000aa', flex: 1 }}>
               <View style={styles.modalContent}>
                 {errorSignin && (
                   <Text>Attention, champs manquants ou incorrect !</Text>
@@ -252,12 +250,12 @@ export default function Home({ navigation }) {
   );
 }
 
-const win = Dimensions.get("window");
+const win = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   background: {
-    width: "100%",
-    height: "100%",
+    width: '100%',
+    height: '100%',
   },
   title: {
     fontSize: 50,
@@ -267,23 +265,23 @@ const styles = StyleSheet.create({
     // fontFamily: 'Atma-Bold'
   },
   header: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     height: 90,
     marginBottom: 20,
     // fontSize: 200,
   },
   signInSignUpContainer: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   signBtn: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#CE2174",
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#CE2174',
     width: 200,
     height: 30,
     marginBottom: 20,
@@ -291,31 +289,31 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     borderRadius: 40,
-    backgroundColor: "#CE2174",
+    backgroundColor: '#CE2174',
     marginTop: 200,
     padding: 30,
     margin: 30,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   inputs: {
-    backgroundColor: "#D9D9D9",
+    backgroundColor: '#D9D9D9',
     borderRadius: 20,
     paddingLeft: 10,
-    width: "100%",
+    width: '100%',
     fontSize: 16,
     marginBottom: 10,
   },
   submitContainer: {
-    width: "100%",
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   buttonsSub: {
-    backgroundColor: "#AAA8A8",
+    backgroundColor: '#AAA8A8',
     borderRadius: 15,
-    width: "45%",
-    alignItems: "center",
+    width: '45%',
+    alignItems: 'center',
   },
 });
