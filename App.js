@@ -20,7 +20,7 @@ import { LogBox } from "react-native";
 //import fontfamily Atma
 import AppLoading from "expo-app-loading";
 import {useState} from "react";
-import useFonts from "./hooks/useFonts";
+// import useFonts from "./";
 //fin import font
 
 

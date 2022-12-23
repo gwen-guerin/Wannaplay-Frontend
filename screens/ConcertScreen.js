@@ -202,10 +202,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     width: "50%",
-    backgroundColor: 'grey',
+    backgroundColor: '#ffffffaa',
     paddingHorizontal: 30,
     paddingVertical: 10,
     borderRadius: 25,
+
   },
   modalContent: {
     borderRadius: 40,
