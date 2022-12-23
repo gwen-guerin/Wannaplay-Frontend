@@ -11,31 +11,6 @@ import IPAdress from "../IPAdress";
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialTopTabNavigator();
 
-const handleSearch = () => {
-  if (searchQuery.length > 0) {
-    fetch(`http://${IPAdress}:3000/search/${searchQuery}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setSearchResults(
-          data.users.map((user, i) => {
-            return (
-              <TouchableOpacity key={i} style={styles.searchedButton}>
-                <Image
-                  source={require("../assets/mia-khalifa.jpg")}
-                  style={styles.avatar}
-                />
-                <View style={styles.userInfo}>
-                  <Text>{user.username}</Text>
-                </View>
-              </TouchableOpacity>
-            );
-          })
-        );
-      });
-  }
-};
-
-
 const SearchNavigator = () => {
   return (
     <Tab.Navigator
@@ -55,12 +30,14 @@ const SearchNavigator = () => {
 
 export default function SearchPage() {
   return (
-    <Stack.Navigator
-      screenOptions={{ headerShown: false }}
-      style={styles.navigator}
-    >
-      <Stack.Screen name="SearchNavigator" component={SearchNavigator} />
-    </Stack.Navigator>
+    <View style={styles.tabNavigatorContainer}>
+      <Stack.Navigator
+        screenOptions={{ headerShown: false }}
+        style={styles.navigator}
+      >
+        <Stack.Screen name="SearchNavigator" component={SearchNavigator} />
+      </Stack.Navigator>
+    </View>
   );
 }
 
@@ -72,5 +49,10 @@ const styles = StyleSheet.create({
   },
   navigator: {
     borderBottomColor: "#ec6e5b",
+  },
+  tabNavigatorContainer: {
+    flex: 1,
+    marginTop: "5%",
+    backgroundColor: "white",
   },
 });

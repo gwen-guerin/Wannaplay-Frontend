@@ -44,7 +44,7 @@ export default function ChatsFriends({ navigation }) {
               style={styles.chatlink}
             >
               <Image
-                source={require("../../assets/mia-khalifa.jpg")}
+                source={require("../../assets/jimi.jpg")}
                 style={styles.avatar}
               />
               <Text style={{ color: "black" }}> {data} </Text>

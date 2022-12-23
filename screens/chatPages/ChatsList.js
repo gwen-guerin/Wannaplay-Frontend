@@ -45,7 +45,7 @@ export default function ChatsList({ navigation }) {
               style={styles.chatlink}
             >
               <Image
-                source={require("../../assets/mia-khalifa.jpg")}
+                source={require("../../assets/jimi.jpg")}
                 style={styles.avatar}
               />
               <Text style={{ color: "black" }}> {data.friend} </Text>
@@ -69,7 +69,7 @@ export default function ChatsList({ navigation }) {
       >
         <TextInput
           style={styles.input}
-          placeholder="Search a friend..."
+          placeholder="Search a chat..."
           placeholderTextColor={"black"}
           // mode='outlined'
         />
