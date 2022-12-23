@@ -260,7 +260,6 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   title: {
-    paddingTop: 30,
     fontSize: 50,
     color: 'white',
     textShadowColor: '#CE2174',

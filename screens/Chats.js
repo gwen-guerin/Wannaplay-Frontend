@@ -20,7 +20,7 @@ const ChatsNavigator = () => {
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarHideOnKeyboard: true,
-        tabBarActiveTintColor: "#ec6e5b",
+        tabBarActiveTintColor: "#CE2174",
         tabBarInactiveTintColor: "#335561",
         headerShown: false,
       })}
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   },
   tabNavigatorContainer: {
     flex: 1,
-    marginTop: "10%",
+    marginTop: "5%",
     backgroundColor: "white",
   },
 });
