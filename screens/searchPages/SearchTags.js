@@ -80,7 +80,7 @@ export default function SearchTags({navigation}) {
             <FontAwesome
               name={"search"}
               size={20}
-              color="black"
+              color="#CE2174"
               style={styles.searchIcon}
             />
           </TouchableOpacity>
@@ -116,13 +116,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingLeft: "2%",
     paddingRight: "2%",
+    // borderColor: '#CE2174',
+    // borderWidth: 2,
   },
   searchBar: {
     color: "black",
     width: "90%",
     height: "100%",
     borderColor: "black",
-    shadowColor: "black",
   },
   searchButton: {
     height: "100%",
@@ -135,7 +136,7 @@ const styles = StyleSheet.create({
     height: Dimensions.get("screen").width * 0.35,
     borderRadius: 25,
     margin: 10,
-    borderColor: "#black",
+    borderColor: "#CE2174",
     borderWidth: 2,
   },
   searchIcon: {},
@@ -154,7 +155,7 @@ const styles = StyleSheet.create({
     height: Dimensions.get("screen").width * 0.35,
     borderRadius: 25,
     // margin: Dimensions.get("screen").width * 0.01,
-    borderColor: "#black",
+    borderColor: "#CE2174",
     borderWidth: 2,
   },
   avatar: {

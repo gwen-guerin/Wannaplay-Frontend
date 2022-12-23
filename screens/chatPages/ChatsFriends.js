@@ -44,7 +44,7 @@ export default function ChatsFriends({ navigation }) {
               style={styles.chatlink}
             >
               <Image
-                source={require("../../assets/mia-khalifa.jpg")}
+                source={require("../../assets/jimi.jpg")}
                 style={styles.avatar}
               />
               <Text style={{ color: "black" }}> {data} </Text>
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingLeft: "2%",
     marginBottom: "3%",
-    borderColor: "black",
+    borderColor: "#CE2174",
     borderWidth: 2,
     borderRadius: 5,
   },
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     margin: Dimensions.get("screen").width * 0.01,
     borderRadius: 5,
     borderWidth: 2,
-    borderColor: "black",
+    borderColor: "#CE2174",
   },
   chatlink: {
     flexDirection: "row",

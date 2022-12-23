@@ -29,6 +29,7 @@ export default function SearchTeacher({navigation}) {
       .then((data) => {
         setSearchResults(
           data.users.map((user, i) => {
+            console.log(user)
             return (
               <BlurView
                 key={i}
@@ -82,7 +83,7 @@ export default function SearchTeacher({navigation}) {
             <FontAwesome
               name={"search"}
               size={20}
-              color="black"
+              color="#CE2174"
               style={styles.searchIcon}
             />
           </TouchableOpacity>
@@ -137,7 +138,7 @@ const styles = StyleSheet.create({
     height: Dimensions.get("screen").width * 0.35,
     borderRadius: 25,
     margin: 10,
-    borderColor: "#black",
+    borderColor: "#CE2174",
     borderWidth: 2,
   },
   scrollList: {
@@ -155,7 +156,7 @@ const styles = StyleSheet.create({
     height: Dimensions.get("screen").width * 0.35,
     borderRadius: 25,
     // margin: Dimensions.get("screen").width * 0.01,
-    borderColor: "#black",
+    borderColor: "#CE2174",
     borderWidth: 2,
   },
   avatar: {

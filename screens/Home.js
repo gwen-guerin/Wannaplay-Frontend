@@ -143,7 +143,7 @@ export default function Home({ navigation }) {
       </View>
       <View style={styles.signInSignUpContainer}>
         <TouchableOpacity style={styles.signBtn} onPress={() => handleSignUp()}>
-          <Text>SING'UP</Text>
+          <Text style={styles.singText}>SING'UP</Text>
           <Modal visible={modalVisible} animationType="slide" transparent>
             <View style={{ backgroundColor: '#000000aa', flex: 1 }}>
               <View style={styles.modalContent}>
@@ -204,7 +204,7 @@ export default function Home({ navigation }) {
           </Modal>
         </TouchableOpacity>
         <TouchableOpacity style={styles.signBtn} onPress={() => handleSignIn()}>
-          <Text>SING'IN</Text>
+          <Text style={styles.singText}>SING'IN</Text>
           <Modal visible={modalSignInVisible} animationType="slide" transparent>
             <View style={{ backgroundColor: '#000000aa', flex: 1 }}>
               <View style={styles.modalContent}>
@@ -259,6 +259,9 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 50,
+    color: 'white',
+    textShadowColor: '#CE2174',
+    textShadowRadius: 10,
   },
   home: {
     fontSize: 200,
@@ -277,13 +280,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  singText: {
+    color: '#CE2174'
+  },
   signBtn: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#CE2174',
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
+    borderColor: '#CE2174',
+    borderWidth: 2,
     width: 200,
-    height: 30,
+    height: 40,
     marginBottom: 20,
     borderRadius: 15,
   },
