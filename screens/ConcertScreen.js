@@ -56,6 +56,7 @@ export default function ConcertScreen({ navigation }) {
 
   const concert = concertsList.map((event, i) => {
     return (
+      <ScrollView>
       <View style={styles.description} key={i}>
         {/* <View style={styles.infoContainer}> */}
         <View style={styles.eventDetails}>
@@ -69,6 +70,8 @@ export default function ConcertScreen({ navigation }) {
         {/* </View> */}
         {/* <Text style={styles.textDecription}>{concert.description}</Text> */}
       </View>
+
+      </ScrollView>
     );
   });
   return (
@@ -184,7 +187,7 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   textUser: {
-    fontSize: 18,
+    fontSize: 15,
     margin: 2,
     color: 'grey',
     alignItems: 'center',

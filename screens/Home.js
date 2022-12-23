@@ -37,7 +37,10 @@ export default function Home({ navigation }) {
     email,
     password,
   };
-
+  // TEST REGEX !!!
+// const checkEmail = (email) => {
+//   return XPathExpression.test
+// }
   const handleRegister = () => {
     fetch(`http://${IPAdress}:3000/users/signup`, {
       method: 'POST',
@@ -258,23 +261,19 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   title: {
-    fontSize: 50,
+    fontSize: 60,
     color: 'white',
     textShadowColor: '#CE2174',
     textShadowRadius: 10,
     fontFamily: "Atma-Regular",
   },
-  home: {
-    fontSize: 200,
-    // fontFamily: 'Atma-Bold'
-  },
   header: {
+    marginTop: 50,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    height: 90,
+    height: 120,
     marginBottom: 20,
-    // fontSize: 200,
   },
   signInSignUpContainer: {
     display: 'flex',
