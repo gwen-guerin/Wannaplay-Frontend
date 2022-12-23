@@ -78,7 +78,6 @@ export default function ProfileScreen({ navigation }) {
             age: data.user.age,
             tags: data.user.tags,
             friends: data.user.friends,
-            city: data.user.city,
             teacher: data.user.teacher,
             firstname: data.user.firstname,
             description: data.user.description,
