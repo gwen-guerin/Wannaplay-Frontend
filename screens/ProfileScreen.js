@@ -183,6 +183,7 @@ const styles = StyleSheet.create({
     height: "100%",
     paddingTop: 50,
     padding: 10,
+    fontFamily: "Regular-Atma",
   },
   imgBack: {
     width: "100%",
@@ -215,11 +216,13 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
   textDecription: {
+    fontFamily: "Atma-Regular",
     fontSize: 17,
     color: "#615B5Aaa",
     alignItems: "center",
     padding: 5,
     fontWeight: "700",
+    fontFamily: "Regular-Atma",
   },
   textUser1: {
     fontSize: 14,

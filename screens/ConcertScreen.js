@@ -103,6 +103,7 @@ const styles = StyleSheet.create({
     marginTop: 25,
   },
   infoContainer: {
+   
     backgroundColor: '#ffffffaa',
     padding: 5,
     borderRadius: 10,
@@ -114,6 +115,7 @@ const styles = StyleSheet.create({
     color: 'grey',
     alignItems: 'center',
     fontWeight: '700',
+    
   },
   textDecription: {
     fontSize: 17,
