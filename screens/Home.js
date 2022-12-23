@@ -262,6 +262,9 @@ const styles = StyleSheet.create({
   title: {
     paddingTop: 30,
     fontSize: 50,
+    color: 'white',
+    textShadowColor: '#CE2174',
+    textShadowRadius: 10,
   },
   home: {
     fontSize: 200,
