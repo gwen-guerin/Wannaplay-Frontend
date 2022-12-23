@@ -33,6 +33,7 @@ export default function ProfileScreen({ navigation }) {
     teacher: [],
     description: null,
     profilePicture: null,
+    city: null,
   });
 
   //useEffect utilisé pour charger la page profile de l'utilisateur au  moment de sa connection/signin
@@ -72,6 +73,7 @@ export default function ProfileScreen({ navigation }) {
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
+          console.log(data.user);
           setUser({
             age: data.user.age,
             tags: data.user.tags,
@@ -81,6 +83,7 @@ export default function ProfileScreen({ navigation }) {
             firstname: data.user.firstname,
             description: data.user.description,
             profilePicture: data.user.profilePicture,
+            city: data.user.city
           });
           dispatch(setFriends({ friends: data.user.friends }));
         }
