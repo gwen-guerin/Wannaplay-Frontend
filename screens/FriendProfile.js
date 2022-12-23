@@ -15,7 +15,6 @@ import IPAdress from "../IPAdress";
 
 // construction de  la page profile
 export default function FriendProfile({ navigation, route: { params } }) {
-
   const userRed = useSelector((state) => state.user.value);
   const dispatch = useDispatch();
   const [friend, setFriend] = useState(false);
@@ -73,7 +72,7 @@ export default function FriendProfile({ navigation, route: { params } }) {
       );
     } else
       return (
-        <TouchableOpacity onPress={() => addFriend()}>
+        <TouchableOpacity style={styles.ionIcons} onPress={() => addFriend()}>
           <Ionicons name="person-add" size={30} color="#CE2174" />
         </TouchableOpacity>
       );
@@ -81,8 +80,8 @@ export default function FriendProfile({ navigation, route: { params } }) {
 
   const addFriend = () => {
     fetch(`http://${IPAdress}:3000/friends/addFriend`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         username: userRed.username,
         friend: params.username,
@@ -97,8 +96,8 @@ export default function FriendProfile({ navigation, route: { params } }) {
 
   const removeFriend = () => {
     fetch(`http://${IPAdress}:3000/friends/removeFriend`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         username: userRed.username,
         friend: user.username,
@@ -122,19 +121,21 @@ export default function FriendProfile({ navigation, route: { params } }) {
     })
       .then((response) => response.json())
       .then((data) => {
-        navigation.navigate("Chat", {chatData: {chatName : data.chatName, friend: data.friend}})
+        navigation.navigate("Chat", {
+          chatData: { chatName: data.chatName, friend: data.friend },
+        });
       });
   };
 
   //on map sur l'état teacher pour faire ressortir les tags/les instruments que l'utilisateur veut enseigner
   const teacherTag = user.teacher.map((teacher, i) => {
     function randomColor() {
-      const letters = '0123456789ABCDEF';
-      let color = '#';
+      const letters = "0123456789ABCDEF";
+      let color = "#";
       for (let i = 0; i < 6; i++) {
         color += letters[Math.floor(Math.random() * 16)];
       }
-      return color + 'aa';
+      return color + "aa";
     }
     const color = randomColor();
     return (
@@ -147,12 +148,12 @@ export default function FriendProfile({ navigation, route: { params } }) {
   //on map sur l'état tags pour faire ressortir les tags/les instruments pratiqué par l'utilisateur
   const tagsList = user.tags.map((tag, i) => {
     function randomColor() {
-      const letters = '0123456789ABCDEF';
-      let color = '#';
+      const letters = "0123456789ABCDEF";
+      let color = "#";
       for (let i = 0; i < 6; i++) {
         color += letters[Math.floor(Math.random() * 16)];
       }
-      return color + 'aa';
+      return color + "aa";
     }
     const color = randomColor();
     return (
@@ -164,7 +165,7 @@ export default function FriendProfile({ navigation, route: { params } }) {
 
   return (
     <ImageBackground
-      source={require('../assets/illu_02.jpg')}
+      source={require("../assets/illu_02.jpg")}
       imageStyle={{ opacity: 0.4 }}
       style={styles.imgBack}
     >
@@ -216,9 +217,9 @@ export default function FriendProfile({ navigation, route: { params } }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'space-between',
-    width: '100%',
-    height: '100%',
+    justifyContent: "space-between",
+    width: "100%",
+    height: "100%",
     paddingTop: 50,
     padding: 10,
   },
@@ -228,12 +229,12 @@ const styles = StyleSheet.create({
     height: 80,
   },
   friendsTab: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     opacity: 0.9,
     borderRadius: 40,
     height: 140,
-    display: 'flex',
-    flexDirection: 'row',
+    display: "flex",
+    flexDirection: "row",
     padding: 10,
     opacity: 0.6,
   },
@@ -245,49 +246,49 @@ const styles = StyleSheet.create({
   textUser: {
     fontSize: 15,
     margin: 2,
-    color: '#CE2174',
-    alignItems: 'center',
-    fontWeight: '700',
+    color: "#CE2174",
+    alignItems: "center",
+    fontWeight: "700",
   },
   textDecription: {
     fontSize: 17,
-    color: '#CE2174',
-    alignItems: 'center',
+    color: "#CE2174",
+    alignItems: "center",
     padding: 5,
-    fontWeight: '700',
+    fontWeight: "700",
   },
   textUser1: {
     fontSize: 14,
-    fontWeight: '800',
-    color: 'black',
+    fontWeight: "800",
+    color: "black",
     borderRadius: 20,
     paddingVertical: 3,
     paddingHorizontal: 8,
     margin: 5,
   },
   textUsername: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     fontSize: 25,
-    alignItems: 'center',
-    color: '#CE2174',
+    alignItems: "center",
+    color: "#CE2174",
   },
   nameAndStatus: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
     width: 150,
-    justifyContent: 'space-around',
-    alignItems: 'center',
+    justifyContent: "space-around",
+    alignItems: "center",
   },
   background: {
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "100%",
   },
   friends: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     fontSize: 20,
     marginLeft: 5,
-    color: '#CE2174',
+    color: "#CE2174",
   },
   online: {
     height: 20,
@@ -301,28 +302,28 @@ const styles = StyleSheet.create({
   },
   friendsView: {
     marginTop: 30,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
     marginBottom: 8,
   },
   tagsList: {
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
     borderRadius: 20,
   },
   tagandteach: {
     // backgroundColor: 'red',
-    display: 'flex',
+    display: "flex",
     marginTop: 20,
     marginBottom: 20,
   },
   headerProfile: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
   },
   nameAndTags: {
     marginLeft: 20,
@@ -332,7 +333,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#C5C5C5",
     alignItems: "stretch",
     borderRadius: 5,
-    width: '100%',
+    width: "100%",
     padding: 5,
     marginTop: 25,
   },
@@ -340,20 +341,20 @@ const styles = StyleSheet.create({
     backgroundColor: "#A3A3A3aa",
     padding: 5,
     borderRadius: 5,
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   modifyIcon: {
-    alignItems: 'flex-end',
+    alignItems: "flex-end",
     marginTop: -15,
   },
   iconContainer: {
     marginTop: 60,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    flexDirection: "row",
+    justifyContent: "space-around",
   },
   imgBack: {
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "100%",
   },
 
   ionIcons: {
@@ -362,6 +363,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
-    backgroundColor: '#ffffffaa',
+    backgroundColor: "#ffffffaa",
   },
 });

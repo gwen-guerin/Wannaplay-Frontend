@@ -29,6 +29,7 @@ export default function SearchTeacher({navigation}) {
       .then((data) => {
         setSearchResults(
           data.users.map((user, i) => {
+            console.log(user)
             return (
               <BlurView
                 key={i}

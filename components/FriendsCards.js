@@ -9,7 +9,6 @@ import { useNavigation } from "@react-navigation/native";
 export default function FriendsCards(props) {
   const navigation = useNavigation();
   const userRed = useSelector((state) => state.user.value);
-  const [friends, setFriends] = useState([]);
   const [isFriendOnline, setIsFriendOnline] = useState(false);
   const [photo, setPhoto] = useState();
 
@@ -19,9 +18,8 @@ export default function FriendsCards(props) {
     fetch(`http://${IPAdress}:3000/users/profile/${props.friend}`)
       .then((res) => res.json())
       .then((data) => {
-        setFriends(data.user.username);
-        setIsFriendOnline(data.user.status);
         setPhoto(data.user.profilePicture);
+        setIsFriendOnline(data.user.status);
       });
   }, []);
   //style conditionnel pour le statut online ou pas

@@ -178,6 +178,7 @@ const styles = StyleSheet.create({
     width: Dimensions.get("screen").height * 0.08,
     borderRadius: 50,
     margin: Dimensions.get("screen").width * 0.01,
+    backgroundColor: 'black'
   },
   text: {
     fontSize: 16,
