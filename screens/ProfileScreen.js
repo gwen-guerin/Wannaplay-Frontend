@@ -16,13 +16,11 @@ import { useIsFocused } from "@react-navigation/native";
 import IPAdress from "../IPAdress";
 import * as Location from "expo-location";
 
-
 // construction de  la page profile
 export default function ProfileScreen({ navigation }) {
   const isFocused = useIsFocused();
   const dispatch = useDispatch();
   const userRed = useSelector((state) => state.user.value);
-
 
   const [user, setUser] = useState({
     firstname: null,
@@ -51,46 +49,13 @@ export default function ProfileScreen({ navigation }) {
             firstname: data.user.firstname,
             description: data.user.description,
             profilePicture: data.user.profilePicture,
-            city: data.user.city
+            city: data.user.city,
           });
           dispatch(setFriends({ friends: data.user.friends }));
         }
       });
   }, [isFocused]);
 
-  useEffect(() => {
-    (async () => {
-      const { status } = await Location.requestForegroundPermissionsAsync();
-      let latitude = 0;
-      let longitude = 0;
-      let url = "";
-
-      if (status === "granted") {
-        Location.watchPositionAsync({ distanceInterval: 10 }, (location) => {
-          latitude = location.coords.latitude;
-          longitude = location.coords.longitude;
-          fetch(
-            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
-          )
-            .then((response) => response.json())
-            .then((data) => {
-              fetch(`http://${IPAdress}:3000/users/geoloc`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                  username: userRed.username,
-                  location: {
-                    city: data.address.city,
-                    latitude: latitude,
-                    longitude: longitude,
-                  },
-                }),
-              }).then((response) => response.json());
-            });
-        });
-      }
-    })();
-  })
   //style conditionnel pour le statut online ou pas
   let styleOnline = styles.online;
   if (userRed.status) {

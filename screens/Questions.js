@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Text,
   StyleSheet,
@@ -14,6 +14,8 @@ import { useSelector } from "react-redux";
 import { Select } from "native-base";
 import { Entypo } from "@expo/vector-icons";
 import IPAdress from "../IPAdress";
+import { useIsFocused } from "@react-navigation/native";
+import * as Location from 'expo-location'
 
 export default function Questions({ navigation }) {
   const user = useSelector((state) => state.user.value);
@@ -24,6 +26,42 @@ export default function Questions({ navigation }) {
   const [instruments, setInstruments] = useState([]);
   const [instruTaught, setInstruTaught] = useState([]);
   const [description, setDescription] = useState("");
+  const isFocused = useIsFocused()
+
+  useEffect(() => {
+    (async () => {
+      console.log('in')
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      let latitude = 0;
+      let longitude = 0;
+      let url = "";
+
+      if (status === "granted") {
+        Location.watchPositionAsync({ distanceInterval: 10 }, (location) => {
+          latitude = location.coords.latitude;
+          longitude = location.coords.longitude;
+          fetch(
+            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+          )
+            .then((response) => response.json())
+            .then((data) => {
+              fetch(`http://${IPAdress}:3000/users/geoloc`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  username: user.username,
+                  location: {
+                    city: data.address.city,
+                    latitude: latitude,
+                    longitude: longitude,
+                  },
+                }),
+              }).then((response) => response.json());
+            });
+        });
+      }
+    })();
+  }, [isFocused]);
 
   //FONCTIONS POUR DELETE INSTRU/TEACHING
   const handleDeleteInstru = (instru) => {
