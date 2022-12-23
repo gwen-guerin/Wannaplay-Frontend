@@ -20,7 +20,7 @@ export default function ProfileScreen({ navigation }) {
   const isFocused = useIsFocused();
   const dispatch = useDispatch();
   const userRed = useSelector((state) => state.user.value);
-  const [teaching, setTeaching] = useState(false);
+
 
   const [user, setUser] = useState({
     firstname: null,
@@ -221,7 +221,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 5,
     fontWeight: "700",
-    fontFamily: "Regular-Atma",
   },
   textUser1: {
     fontSize: 14,

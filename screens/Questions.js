@@ -193,6 +193,7 @@ export default function Questions({ navigation }) {
               >
                 <Select.Item label="Singer" value="Singer" />
                 <Select.Item label="Guitar" value="Guitar" />
+                <Select.Item label="Rapper" value="Rapper" />
                 <Select.Item label="Drums" value="Drums" />
                 <Select.Item label="Piano" value="Piano" />
                 <Select.Item label="Bass" value="Bass" />
