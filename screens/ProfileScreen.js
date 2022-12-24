@@ -21,7 +21,6 @@ export default function ProfileScreen({ navigation }) {
   const dispatch = useDispatch();
   const userRed = useSelector((state) => state.user.value);
 
-
   const [user, setUser] = useState({
     firstname: null,
     tags: [],
@@ -48,6 +47,7 @@ export default function ProfileScreen({ navigation }) {
             firstname: data.user.firstname,
             description: data.user.description,
             profilePicture: data.user.profilePicture,
+            city: data.user.city,
           });
           dispatch(setFriends({ friends: data.user.friends }));
         }
