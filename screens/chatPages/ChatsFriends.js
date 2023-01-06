@@ -14,23 +14,47 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setFriends } from "../../reducers/user";
 import IPAdress from "../../IPAdress";
+import { useIsFocused } from "@react-navigation/native";
 
 export default function ChatsFriends({ navigation }) {
+  const [friends, setFriends] = useState([]);
+  const [friendsChats, setFriendsChats] = useState([]);
   const [chatBoxes, setChatBoxes] = useState([]);
   const user = useSelector((state) => state.user.value);
   const dispatch = useDispatch();
+  const isFocused = useIsFocused();
 
   useEffect(() => {
+    ("aight");
     fetch(`http://${IPAdress}:3000/friends/getFriends/${user.username}`)
       .then((response) => response.json())
       .then((data) => {
-        dispatch(setFriends({ friends: data.friends }));
+        if (data.result) {
+          setFriends(data.friends);
+        }
       });
-  }, []);
+  }, [isFocused]);
 
   useEffect(() => {
+    console.log("friends", friends);
+    fetch(`http://${IPAdress}:3000/chats/allChats/${user.username}`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setFriendsChats(
+          data.allChats.filter((e) => {
+            for (let i = 0; i < friends.length; i++)
+              if (e.friend === friends[i]) return true;
+            return false;
+          })
+        );
+      });
+  }, [friends]);
+
+  useEffect(() => {
+    console.log("friendsChats", friendsChats);
     setChatBoxes(
-      user.friends.map((data, i) => {
+      friendsChats.map((data, i) => {
         return (
           <BlurView
             key={i}
@@ -46,19 +70,16 @@ export default function ChatsFriends({ navigation }) {
                 source={require("../../assets/jimi.jpg")}
                 style={styles.avatar}
               />
-              <Text style={{ color: "black" }}> {data} </Text>
+              <Text style={{ color: "black" }}> {data.friend} </Text>
             </TouchableOpacity>
           </BlurView>
         );
       })
     );
-  }, [user]);
+  }, [friendsChats]);
 
-  const handleNavigation = (user) => {
-    navigation.navigate("Chat", {
-      username: "username",
-      friend: user,
-    });
+  const handleNavigation = (data) => {
+    navigation.navigate("Chat", { chatData: data });
   };
 
   return (
