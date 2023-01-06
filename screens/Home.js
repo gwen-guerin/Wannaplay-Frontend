@@ -13,8 +13,8 @@ import { useState } from 'react';
 import { login } from '../reducers/user';
 import IPAdress from '../IPAdress';
 
-const EMAIL_REGEX =
-  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const emailRegex =
+  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 export default function Home({ navigation }) {
   const dispatch = useDispatch();
@@ -29,52 +29,45 @@ export default function Home({ navigation }) {
   const [passwordSignIn, setPasswordSignIn] = useState('');
   const [errorSignin, setErrorSignin] = useState(false);
   const [errorSignup, setErrorSignup] = useState(false);
+  const [validEmail, setValidEmail] = useState(false);
 
-  const inputsObj = {
-    firstname,
-    lastname,
-    username,
-    email,
-    password,
-  };
-  // TEST REGEX !!!
-// const checkEmail = (email) => {
-//   return XPathExpression.test
-// }
   const handleRegister = () => {
-    fetch(`http://${IPAdress}:3000/users/signup`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        firstname: firstname,
-        lastname: lastname,
-        username: username,
-        password: password,
-        email: email,
-        location: {},
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.result) {
-          dispatch(
-            login({
-              username: data.user,
-              status: true,
-            })
-          );
-          setFirstname('');
-          setUsername('');
-          setPassword('');
-          setEmail('');
-          setLastname('');
-          setModalVisible(!modalVisible);
-          navigation.navigate('Questions');
-        } else {
-          alert('username already existing !');
-          setErrorSignup(true);
-        }
-      });
+    if (emailRegex.test(email)) {
+      fetch(`http://${IPAdress}:3000/users/signup`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstname: firstname,
+          lastname: lastname,
+          username: username,
+          password: password,
+          email: email,
+          location: {},
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.result) {
+            dispatch(
+              login({
+                username: data.user,
+                status: true,
+              })
+            );
+            setFirstname('');
+            setUsername('');
+            setPassword('');
+            setEmail('');
+            setLastname('');
+            setModalVisible(!modalVisible);
+            setValidEmail(false);
+            navigation.navigate('Questions');
+          } else {
+            alert('username already existing !');
+            setErrorSignup(true);
+          }
+        });
+    } else setValidEmail('Please enter a valid email adress');
   };
 
   const handleSignUp = () => {
@@ -111,11 +104,12 @@ export default function Home({ navigation }) {
           setModalSignInVisible(!modalSignInVisible),
             navigation.navigate('TabNavigator');
           setErrorSignin(false);
+          setCheckEmail(true);
         } else {
           setModalSignInVisible(true);
           setErrorSignin(true);
         }
-        fetch('http://172.17.188.35:3000/users/isOnline', {
+        fetch(`http://${IPAdress}:3000/users/isOnline`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -153,6 +147,7 @@ export default function Home({ navigation }) {
                 {errorSignup && (
                   <Text>Attention, champs manquants ou incorrect !</Text>
                 )}
+                {validEmail && <Text>{validEmail}</Text>}
                 <TextInput
                   placeholder="First Name"
                   value={firstname}
@@ -172,7 +167,7 @@ export default function Home({ navigation }) {
                   style={styles.inputs}
                 ></TextInput>
                 <TextInput
-                  placeholder="E-mail"
+                  placeholder="Enter your email"
                   value={email}
                   onChangeText={(value) => setEmail(value)}
                   style={styles.inputs}
@@ -192,11 +187,7 @@ export default function Home({ navigation }) {
                     <Text>X</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
-                    onPress={() => {
-                      handleRegister();
-                      setModalVisible(!modalVisible),
-                        dispatch(login(inputsObj));
-                    }}
+                    onPress={() => handleRegister()}
                     style={styles.buttonsSub}
                   >
                     <Text>SUBMIT</Text>
@@ -236,7 +227,6 @@ export default function Home({ navigation }) {
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() => {
-                      // dispatch(login(inputsObj));
                       submitSignIn();
                     }}
                     style={styles.buttonsSub}
@@ -265,7 +255,7 @@ const styles = StyleSheet.create({
     color: 'white',
     textShadowColor: '#CE2174',
     textShadowRadius: 10,
-    fontFamily: "Atma-Regular",
+    fontFamily: 'Atma-Regular',
   },
   header: {
     marginTop: 50,
@@ -282,13 +272,13 @@ const styles = StyleSheet.create({
   },
   singText: {
     color: '#CE2174',
-    fontFamily: "Atma-Regular",
+    fontFamily: 'Atma-Regular',
   },
   signBtn: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "white",
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
     borderColor: '#CE2174',
     borderWidth: 2,
     width: 200,

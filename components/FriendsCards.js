@@ -1,7 +1,5 @@
 import { Image, View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { useState, useEffect } from "react";
-import { FontAwesome5 } from "@expo/vector-icons";
-import { useSelector } from "react-redux";
 import IPAdress from "../IPAdress";
 import { useNavigation } from "@react-navigation/native";
 

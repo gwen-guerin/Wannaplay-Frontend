@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import {
   Text,
   StyleSheet,
@@ -7,36 +7,36 @@ import {
   ScrollView,
   ImageBackground,
   TouchableOpacity,
-} from "react-native";
-import { Picker } from "@react-native-picker/picker";
-import Slider from "@react-native-community/slider";
-import { useSelector } from "react-redux";
-import { Select } from "native-base";
-import { Entypo } from "@expo/vector-icons";
-import IPAdress from "../IPAdress";
-import { useIsFocused } from "@react-navigation/native";
-import * as Location from 'expo-location'
+} from 'react-native';
+import { Picker } from '@react-native-picker/picker';
+import Slider from '@react-native-community/slider';
+import { useSelector } from 'react-redux';
+import { Select } from 'native-base';
+import { Entypo } from '@expo/vector-icons';
+import IPAdress from '../IPAdress';
+import { useIsFocused } from '@react-navigation/native';
+import * as Location from 'expo-location';
 
 export default function Questions({ navigation }) {
   const user = useSelector((state) => state.user.value);
 
   const [age, setAge] = useState(0);
-  const [city, setCity] = useState("");
+  const [city, setCity] = useState('');
   const [teacher, setTeacher] = useState(false);
   const [instruments, setInstruments] = useState([]);
   const [instruTaught, setInstruTaught] = useState([]);
-  const [description, setDescription] = useState("");
-  const isFocused = useIsFocused()
+  const [description, setDescription] = useState('');
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     (async () => {
-      console.log('in')
+      // console.log('in')
       const { status } = await Location.requestForegroundPermissionsAsync();
       let latitude = 0;
       let longitude = 0;
-      let url = "";
+      let url = '';
 
-      if (status === "granted") {
+      if (status === 'granted') {
         Location.watchPositionAsync({ distanceInterval: 10 }, (location) => {
           latitude = location.coords.latitude;
           longitude = location.coords.longitude;
@@ -46,8 +46,8 @@ export default function Questions({ navigation }) {
             .then((response) => response.json())
             .then((data) => {
               fetch(`http://${IPAdress}:3000/users/geoloc`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                   username: user.username,
                   location: {
@@ -63,18 +63,11 @@ export default function Questions({ navigation }) {
     })();
   }, [isFocused]);
 
-  //FONCTIONS POUR DELETE INSTRU/TEACHING
-  const handleDeleteInstru = (instru) => {
-    setInstruments(instruments.filter((data) => data != instru));
-  };
-  const handleDeleteInstruTaught = (instru) => {
-    setInstruTaught(instruTaught.filter((data) => data !== instru));
-  };
   // FONCTION POUR AJOUTER UN INSTRUMENT JOUé ET DISPLAY
   function onSelectedInstru(itemAdded) {
     let added = false;
     instruments.map((data) => {
-      if (data == itemAdded) {
+      if (data === itemAdded) {
         added = true;
       }
     });
@@ -95,6 +88,10 @@ export default function Questions({ navigation }) {
       </View>
     );
   });
+    //FONCTIONS POUR DELETE INSTRU
+    const handleDeleteInstru = (instru) => {
+      setInstruments(instruments.filter((data) => data !== instru));
+    };
 
   // FONCTION POUR AJOUTER UN INSTRU A ENSEIGNER
   function onSelectedInstruTaught(itemAdded) {
@@ -121,13 +118,16 @@ export default function Questions({ navigation }) {
       </View>
     );
   });
-
+      //FONCTIONS POUR DELETE INSTRU enseigné
+  const handleDeleteInstruTaught = (instru) => {
+    setInstruTaught(instruTaught.filter((data) => data !== instru));
+  };
   // ROUTE POST DES DONNEES DU FORM EN DB
   const handleFormSubmit = () => {
-    console.log('front', city)
+    console.log('front', city);
     fetch(`http://${IPAdress}:3000/users/signupForm`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         username: user.username,
         age: age,
@@ -137,12 +137,12 @@ export default function Questions({ navigation }) {
         city: city,
       }),
     });
-    navigation.navigate("TabNavigator");
+    navigation.navigate('TabNavigator');
   };
 
   return (
     <ImageBackground
-      source={require("../assets/illu_02.jpg")}
+      source={require('../assets/illu_02.jpg')}
       imageStyle={{ opacity: 0.25 }}
       style={styles.imgBack}
     >
@@ -160,7 +160,9 @@ export default function Questions({ navigation }) {
               maximumTrackTintColor="#d3d3d3"
               thumbTintColor="#b9e4c9"
             />
-            <Text style={styles.instruText}>I am {age} years old</Text>
+            <View style={styles.ageTextContainer}>
+              <Text style={styles.ageText}>I am {age} years old</Text>
+            </View>
           </View>
           <TextInput
             style={styles.inputText}
@@ -180,7 +182,7 @@ export default function Questions({ navigation }) {
               <Picker.Item style={styles.instruText} label="Yes" value={true} />
             </Picker>
           </View>
-          {/* Conditionnal rendering if he/she wanna teach something (needs to choose what) */}
+          {/* Conditionnal rendering if he/she wanna teaches something (needs to choose what) */}
           <View style={{ marginTop: -30 }}>
             {teacher ? (
               <View>
@@ -255,7 +257,7 @@ export default function Questions({ navigation }) {
           <TextInput
             style={styles.inputText}
             placeholder="Describe yourself in a few words ..."
-            placeholderTextColor={"#ffffff"}
+            placeholderTextColor={'#ffffff'}
             multiline={true}
             numberOfLines={4}
             onChangeText={(text) => setDescription(text)}
@@ -266,7 +268,7 @@ export default function Questions({ navigation }) {
             style={styles.submitForm}
             onPress={() => handleFormSubmit()}
           >
-            <Text style={{ fontSize: 25, color: "#ffffff" }}>SUBMIT</Text>
+            <Text style={{ fontSize: 25, color: '#ffffff' }}>SUBMIT</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -279,45 +281,49 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     paddingLeft: 20,
     paddingRight: 20,
-    backgroundColor: "rgba(80,0,0,0.3)",
+    backgroundColor: 'rgba(80,0,0,0.3)',
   },
   scrollContainer: {
     height: 900,
-    display: "flex",
-    justifyContent: "space-around",
-    alignItems: "stretch",
+    display: 'flex',
+    justifyContent: 'space-around',
+    alignItems: 'stretch',
   },
   inputText: {
-    color: "#ffffff",
+    color: '#ffffff',
     fontSize: 25,
-    backgroundColor: "#CE2174aa",
+    backgroundColor: '#CE2174aa',
     borderRadius: 15,
     padding: 6,
   },
   submitForm: {
-    width: "80%",
-    alignSelf: "center",
-    alignItems: "center",
-    backgroundColor: "#CE2174aa",
+    width: '80%',
+    alignSelf: 'center',
+    alignItems: 'center',
+    backgroundColor: '#CE2174aa',
     borderRadius: 15,
     padding: 6,
   },
   instruCard: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 20,
-    backgroundColor: "#C5C5C5aa",
+    backgroundColor: '#C5C5C5aa',
     padding: 5,
   },
   instruContainer: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-around",
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
     marginTop: 5,
   },
-  instruText: {
-    fontSize: 20,
+  ageTextContainer: {
+    alignItems: "flex-end",
+    marginBottom: -30,
+  },
+  ageText: {
+    fontSize: 30,
   },
 });

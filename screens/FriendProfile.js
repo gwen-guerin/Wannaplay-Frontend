@@ -2,14 +2,13 @@ import {
   View,
   StyleSheet,
   Text,
-  ScrollView,
   TouchableOpacity,
   Image,
   ImageBackground,
 } from "react-native";
 import { useState, useEffect } from "react";
-import { addToFriends, removeFromFriends, logout } from "../reducers/user";
-import { FontAwesome, FontAwesome5, Ionicons } from "@expo/vector-icons";
+import { addToFriends, removeFromFriends } from "../reducers/user";
+import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
 import IPAdress from "../IPAdress";
 

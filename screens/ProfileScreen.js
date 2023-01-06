@@ -62,6 +62,7 @@ export default function ProfileScreen({ navigation }) {
 
   //on map sur l'état teacher pour faire ressortir les tags/les instruments que l'utilisateur veut enseigner
   const teacherTag = user.teacher.map((teacher, i) => {
+    console.log("yoyo")
     function randomColor() {
       const letters = "0123456789ABCDEF";
       let color = "#";
@@ -77,6 +78,8 @@ export default function ProfileScreen({ navigation }) {
       </Text>
     );
   });
+
+
 
   //on map sur l'état tags pour faire ressortir les tags/les instruments pratiqué par l'utilisateur
   const tagsList = user.tags.map((tag, i) => {
@@ -96,9 +99,9 @@ export default function ProfileScreen({ navigation }) {
     );
   });
   
-  useEffect(() => {
-    console.log(user)
-  }, [user])
+  // useEffect(() => {
+  //   console.log(user)
+  // }, [user])
   //on map sur l'état friends pour faire ressortir les amis de l'utilisateur
   const friendsList = user.friends.map((friend, i) => {
     return <FriendsCards key={i} friend={friend} />;
@@ -112,8 +115,6 @@ export default function ProfileScreen({ navigation }) {
         username: userRed.username,
       }),
     })
-      .then((res) => res.json())
-      .then((data) => {});
     dispatch(logout());
     navigation.navigate("Home");
   };
