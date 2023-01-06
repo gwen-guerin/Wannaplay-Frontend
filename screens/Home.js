@@ -212,7 +212,7 @@ export default function Home({ navigation }) {
                   style={styles.inputs}
                 ></TextInput>
                 <TextInput
-                  label="Password"
+                  placeholder="Password"
                   value={passwordSignIn}
                   onChangeText={(value) => setPasswordSignIn(value)}
                   style={styles.inputs}
