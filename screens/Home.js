@@ -96,6 +96,13 @@ export default function Home({ navigation }) {
               status: true,
             })
           );
+          fetch(`http://${IPAdress}:3000/users/isOnline`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              username: usernameSignIn,
+            }),
+          })
           setFirstname('');
           setUsername('');
           setPassword('');
@@ -104,30 +111,13 @@ export default function Home({ navigation }) {
           setModalSignInVisible(!modalSignInVisible),
             navigation.navigate('TabNavigator');
           setErrorSignin(false);
-          setCheckEmail(true);
+          setValidEmail(true);
         } else {
           setModalSignInVisible(true);
           setErrorSignin(true);
         }
-        fetch(`http://${IPAdress}:3000/users/isOnline`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            username: usernameSignIn,
-          }),
-        })
-          .then((res) => res.json())
-          .then((data) => {});
+
       });
-    fetch(`http://${IPAdress}:3000/users/isOnline`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        username: usernameSignIn,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {});
   };
 
   return (
