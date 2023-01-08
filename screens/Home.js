@@ -122,8 +122,6 @@ export default function Home({ navigation }) {
             username: usernameSignIn,
           }),
         })
-          .then((res) => res.json())
-          .then((data) => {});
       });
     fetch(`http://${IPAdress}:3000/users/isOnline`, {
       method: 'POST',
