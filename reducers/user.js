@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   value: {
@@ -10,7 +10,7 @@ const initialState = {
 };
 
 export const userSlice = createSlice({
-  name: 'user',
+  name: "user",
   initialState,
   reducers: {
     login: (state, action) => {
@@ -19,7 +19,7 @@ export const userSlice = createSlice({
     },
     logout: (state) => {
       state.value.username = null;
-      state.value.status =false
+      state.value.status = false;
     },
 
     addToFriends: (state, action) => {
@@ -31,7 +31,7 @@ export const userSlice = createSlice({
       );
     },
     addPhoto: (state, action) => {
-      state.value.photo = action.payload;
+      state.value.photos = action.payload;
     },
     removePhoto: (state, action) => {
       state.value.photos = state.value.photos.filter(
@@ -39,10 +39,9 @@ export const userSlice = createSlice({
       );
     },
     setFriends: (state, action) => {
-      console.log('payload',action.payload.friends)
+      console.log("payload", action.payload.friends);
       state.value.friends = action.payload.friends;
     },
-
   },
 });
 
