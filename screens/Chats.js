@@ -18,7 +18,7 @@ const Tab = createMaterialTopTabNavigator();
 const ChatsNavigator = () => {
   return (
     <Tab.Navigator
-      screenOptions={({ route }) => ({
+      screenOptions={() => ({
         tabBarHideOnKeyboard: true,
         tabBarActiveTintColor: "#CE2174",
         tabBarInactiveTintColor: "#335561",

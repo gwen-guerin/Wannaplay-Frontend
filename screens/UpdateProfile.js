@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   Text,
   StyleSheet,
@@ -7,14 +7,14 @@ import {
   ScrollView,
   ImageBackground,
   TouchableOpacity,
-} from "react-native";
-import { Entypo } from "@expo/vector-icons";
-import { Picker } from "@react-native-picker/picker";
-import Slider from "@react-native-community/slider";
-import { Select } from "native-base";
-import { useSelector, useDispatch } from "react-redux";
-import { login } from "../reducers/user";
-import IPAdress from "../IPAdress";
+} from 'react-native';
+import { Entypo } from '@expo/vector-icons';
+import { Picker } from '@react-native-picker/picker';
+import Slider from '@react-native-community/slider';
+import { Select } from 'native-base';
+import { useSelector, useDispatch } from 'react-redux';
+import { login } from '../reducers/user';
+import IPAdress from '../IPAdress';
 
 export default function UpdateProfile({ navigation }) {
   const dispatch = useDispatch();
@@ -23,11 +23,10 @@ export default function UpdateProfile({ navigation }) {
   const [age, setAge] = useState(0);
   const [teacher, setTeacher] = useState(false);
   const [city, setCity] = useState(false);
-  const [description, setDescription] = useState("");
+  const [description, setDescription] = useState('');
   const [instruments, setInstruments] = useState([]);
   const [instruTaught, setInstruTaught] = useState([]);
   const [status, setStatus] = useState(true);
-
 
   //FONCTIONS POUR DELETE INSTRU/TEACHING
   const handleDeleteInstru = (instru) => {
@@ -91,8 +90,8 @@ export default function UpdateProfile({ navigation }) {
   // ROUTE POST DES DONNEES DU FORM EN DB
   const handleFormSubmit = () => {
     fetch(`http://${IPAdress}:3000/users/updateProfile`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         username: user.username,
         age,
@@ -104,15 +103,15 @@ export default function UpdateProfile({ navigation }) {
     })
       .then((response) => response.json())
       .then((data) => {
-        dispatch(login({ username: data.username}))
+        dispatch(login({ username: data.username }));
       });
-    navigation.navigate("TabNavigator");
+    navigation.navigate('TabNavigator');
   };
 
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require("../assets/illu_02.jpg")}
+        source={require('../assets/illu_02.jpg')}
         imageStyle={{ opacity: 0.25 }}
         style={styles.imgBack}
       >
@@ -130,7 +129,9 @@ export default function UpdateProfile({ navigation }) {
                 maximumTrackTintColor="#d3d3d3"
                 thumbTintColor="#b9e4c9"
               />
-              <Text style={styles.instruText}>I am {age} years old</Text>
+              <View style={styles.ageTextContainer}>
+                <Text style={styles.ageText}>I am {age} years old</Text>
+              </View>{' '}
             </View>
             <TextInput
               style={styles.inputText}
@@ -234,7 +235,7 @@ export default function UpdateProfile({ navigation }) {
             <TextInput
               style={styles.inputText}
               placeholder="Describe yourself in a few words ..."
-              placeholderTextColor={"#ffffff"}
+              placeholderTextColor={'#ffffff'}
               multiline={true}
               onChangeText={(text) => setDescription(text)}
               value={description}
@@ -244,7 +245,7 @@ export default function UpdateProfile({ navigation }) {
               style={styles.submitForm}
               onPress={() => handleFormSubmit()}
             >
-              <Text style={{ fontSize: 25, color: "#ffffff" }}>SUBMIT</Text>
+              <Text style={{ fontSize: 25, color: '#ffffff' }}>SUBMIT</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
@@ -257,45 +258,52 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     paddingLeft: 20,
     paddingRight: 20,
-    backgroundColor: "rgba(80,0,0,0.3)",
+    backgroundColor: 'rgba(80,0,0,0.3)',
   },
   scrollContainer: {
     height: 900,
-    display: "flex",
-    justifyContent: "space-around",
-    alignItems: "stretch",
+    display: 'flex',
+    justifyContent: 'space-around',
+    alignItems: 'stretch',
   },
   inputText: {
-    color: "#ffffff",
+    color: '#ffffff',
     fontSize: 25,
-    backgroundColor: "#CE2174aa",
+    backgroundColor: '#CE2174aa',
     borderRadius: 15,
     padding: 6,
   },
   submitForm: {
-    width: "80%",
-    alignSelf: "center",
-    alignItems: "center",
-    backgroundColor: "#CE2174aa",
+    width: '80%',
+    alignSelf: 'center',
+    alignItems: 'center',
+    backgroundColor: '#CE2174aa',
     borderRadius: 15,
     padding: 6,
   },
   instruCard: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 20,
-    backgroundColor: "#C5C5C5aa",
+    backgroundColor: '#C5C5C5aa',
     padding: 5,
   },
   instruContainer: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-around",
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
     marginTop: 5,
   },
   instruText: {
     fontSize: 20,
+  },
+  ageTextContainer: {
+    alignItems: "flex-end",
+    marginBottom: -30,
+  },
+  ageText: {
+    fontSize: 30,
   },
 });

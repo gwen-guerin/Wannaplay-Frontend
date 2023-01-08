@@ -14,7 +14,6 @@ import { FontAwesome } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
 import IPAdress from "../IPAdress";
-import * as Location from "expo-location";
 
 // construction de  la page profile
 export default function ProfileScreen({ navigation }) {
@@ -31,7 +30,6 @@ export default function ProfileScreen({ navigation }) {
     teacher: [],
     description: null,
     profilePicture: null,
-    city: null,
   });
 
   //useEffect utilisé pour charger la page profile de l'utilisateur au  moment de sa connection/signin
@@ -40,11 +38,11 @@ export default function ProfileScreen({ navigation }) {
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
-          console.log(data.user);
           setUser({
             age: data.user.age,
             tags: data.user.tags,
             friends: data.user.friends,
+            city: data.user.city,
             teacher: data.user.teacher,
             firstname: data.user.firstname,
             description: data.user.description,
@@ -64,6 +62,7 @@ export default function ProfileScreen({ navigation }) {
 
   //on map sur l'état teacher pour faire ressortir les tags/les instruments que l'utilisateur veut enseigner
   const teacherTag = user.teacher.map((teacher, i) => {
+    console.log("yoyo")
     function randomColor() {
       const letters = "0123456789ABCDEF";
       let color = "#";
@@ -79,6 +78,8 @@ export default function ProfileScreen({ navigation }) {
       </Text>
     );
   });
+
+
 
   //on map sur l'état tags pour faire ressortir les tags/les instruments pratiqué par l'utilisateur
   const tagsList = user.tags.map((tag, i) => {
@@ -97,7 +98,10 @@ export default function ProfileScreen({ navigation }) {
       </Text>
     );
   });
-
+  
+  // useEffect(() => {
+  //   console.log(user)
+  // }, [user])
   //on map sur l'état friends pour faire ressortir les amis de l'utilisateur
   const friendsList = user.friends.map((friend, i) => {
     return <FriendsCards key={i} friend={friend} />;
@@ -111,8 +115,6 @@ export default function ProfileScreen({ navigation }) {
         username: userRed.username,
       }),
     })
-      .then((res) => res.json())
-      .then((data) => {});
     dispatch(logout());
     navigation.navigate("Home");
   };
