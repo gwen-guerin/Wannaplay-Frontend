@@ -39,7 +39,6 @@ export const userSlice = createSlice({
       );
     },
     setFriends: (state, action) => {
-      console.log('payload',action.payload.friends)
       state.value.friends = action.payload.friends;
     },
 
