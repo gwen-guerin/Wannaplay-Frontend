@@ -13,15 +13,14 @@ import {
   ImageBackground,
 } from "react-native";
 import { BlurView } from "expo-blur";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import IPAdress from "../../IPAdress";
+
 export default function SearchUser({ navigation }) {
+
   const [searchQuery, setSearchQuery] = useState("");
-  const [results, setResults] = useState([]);
-  const [searched, setSearched] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
 
-  const username = useSelector((state) => state.user.value.username);
 
   useEffect(() => {
     handleSearch();

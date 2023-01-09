@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { Searchbar, ThemeProvider } from "react-native-paper";
+import React, { useState } from "react";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import {
-  SafeAreaView,
   Text,
   StyleSheet,
   View,
@@ -19,8 +17,6 @@ import IPAdress from "../../IPAdress";
 
 export default function SearchTeacher({navigation}) {
   const [searchQuery, setSearchQuery] = useState("");
-  const [results, setResults] = useState([]);
-  const [searched, setSearched] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
 
   const handleSearch = () => {

@@ -7,6 +7,7 @@ import {
   PermissionsAndroid,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
+//ImagePicker : module qui permet d'accéder à la bibliothèque multimédia de l'utilisateur et de séléctionné un actif multimédia
 import * as ImagePicker from "expo-image-picker";
 import { useSelector } from "react-redux";
 import IPAdress from "../IPAdress";
@@ -15,6 +16,7 @@ export default function UploadImage() {
   const [image, setImage] = useState(null);
   const user = useSelector((state) => state.user.value);
 
+  //useEffect qui récupère la photo utilisateur au chargement de la page de profil.
   useEffect(() => {
     fetch(`http://${IPAdress}:3000/users/profile/${user.username}`)
       .then((res) => res.json())
@@ -26,7 +28,6 @@ export default function UploadImage() {
   }, []);
 
   // AUTORISATION D'ACCES GALLERY
-
   const requestGalleryPermission = async () => {
     try {
       const granted = await PermissionsAndroid.request(
@@ -49,8 +50,7 @@ export default function UploadImage() {
     }
   };
 
-  // CHOISIR IMAGE DANS LA GALLERY
-
+  // fonction pour choisir une image dans la gallery + fetch "post" pour envoyer l'image sur cloudinary et l'url coudinary de l'image en DB
   const pickImage = async () => {
     try {
       const granted = await PermissionsAndroid.check(
@@ -64,67 +64,70 @@ export default function UploadImage() {
         return;
       }
 
-      let _image = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1,
-      });
+  //variable qui attend que l'utilisateur est choisi l'image dans sa bibliothèque
+  let _image = await ImagePicker.launchImageLibraryAsync({
+    mediaTypes: ImagePicker.MediaTypeOptions.Images, //type de média : image uniquement ici
+    allowsEditing: true, //autorisation crop image
+    aspect: [4, 3],
+    quality: 1,
+  });
+  //si une image est bien choisie, alors la variable fromData est crée. le formData prend en paramètre l'uri, le nom et le type de l'image.
+  if (!_image.canceled) {
+    //une nouvelle instance de FormData est créée et l'image est ajoutée en utilisant la méthode append.
+    //Le premier argument de append est un nom qui sera associé à l'image lorsqu'elle sera envoyée (par exemple, "photoFromFront").
+    //Le deuxième argument est l'objet qui représente l'image qui contient l'URI (adresse) de l'image sur le téléphone, son nom et son type.
+    const formData = new FormData();
+    formData.append("photoFromFront", {
+      uri: _image.assets[0].uri,
+      name: "photo.jpg",
+      type: "image/jpeg",
+    });
 
-      if (!_image.canceled) {
-        const formData = new FormData();
-        formData.append("photoFromFront", {
-          uri: _image.assets[0].uri,
-          name: "photo.jpg",
-          type: "image/jpeg",
-        });
-        // console.log("POUETTT", image);
-        fetch(`http://${IPAdress}:3000/upload`, {
+    //fetch post pour envoyer la photo sur cloudinary
+    fetch(`http://${IPAdress}:3000/upload`, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("IMAAAAGE", data);
+        //on fetch en post pour envoyer uniquement l'adresse url de l'image en db
+        fetch(`http://${IPAdress}:3000/users/photo`, {
           method: "POST",
-          body: formData,
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            console.log("IMAAAAGE", data);
-            fetch(`http://${IPAdress}:3000/users/photo`, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                username: user.username,
-                profilePicture: data.url,
-              }),
-            });
-            setImage(data.url);
-          });
-      }
-    } catch (err) {
-      console.log(err);
-    }
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            username: user.username,
+            profilePicture: data.url,
+          }),
+        });
+        //chargement de l'état Image avec l'url de l'image
+        setImage(data.url);
+      });
+  }
+} catch (err) {
+  console.log(err);
+}
   };
-
-  // methode permettant d'ouvrir l'ui utilisateur pour choisir une image
 
   return (
     <View style={imageUploaderStyles.container}>
       <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
 
-      <View style={imageUploaderStyles.uploadBtnContainer}>
-        <TouchableOpacity
-          // onPress={checkForCameraRollPermission}
-          onPress={pickImage}
-          style={imageUploaderStyles.uploadBtn}
-        >
-          {/* <Text>{image ? 'Edit' : 'Upload'} Image</Text> */}
-          <AntDesign
-            name="camera"
-            size={20}
-            color="black"
-            title="Pick an image from the gallery"
-            onPress={pickImage}
-          />
-        </TouchableOpacity>
-      </View>
-    </View>
+  <View style={imageUploaderStyles.uploadBtnContainer}>
+    <TouchableOpacity
+      onPress={pickImage}
+      style={imageUploaderStyles.uploadBtn}
+    >
+      <AntDesign
+        name="camera"
+        size={20}
+        color="black"
+        title="Pick an image from the gallery"
+        onPress={pickImage}
+      />
+    </TouchableOpacity>
+  </View>
+</View>
   );
 }
 const imageUploaderStyles = StyleSheet.create({

@@ -26,7 +26,6 @@ export default function UpdateProfile({ navigation }) {
   const [description, setDescription] = useState('');
   const [instruments, setInstruments] = useState([]);
   const [instruTaught, setInstruTaught] = useState([]);
-  const [status, setStatus] = useState(true);
 
   //FONCTIONS POUR DELETE INSTRU/TEACHING
   const handleDeleteInstru = (instru) => {
@@ -117,7 +116,7 @@ export default function UpdateProfile({ navigation }) {
       >
         <ScrollView>
           <View style={styles.scrollContainer}>
-            <View style={styles.ageContainer}>
+            <View>
               <Text style={styles.inputText}>How old are you ?</Text>
               <Slider
                 step={1}
@@ -131,7 +130,7 @@ export default function UpdateProfile({ navigation }) {
               />
               <View style={styles.ageTextContainer}>
                 <Text style={styles.ageText}>I am {age} years old</Text>
-              </View>{' '}
+              </View>
             </View>
             <TextInput
               style={styles.inputText}

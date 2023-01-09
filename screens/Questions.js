@@ -148,7 +148,7 @@ export default function Questions({ navigation }) {
     >
       <ScrollView>
         <View style={styles.scrollContainer}>
-          <View style={styles.ageContainer}>
+          <View>
             <Text style={styles.inputText}>How old are you ?</Text>
             <Slider
               step={1}

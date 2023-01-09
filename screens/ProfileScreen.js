@@ -98,10 +98,7 @@ export default function ProfileScreen({ navigation }) {
       </Text>
     );
   });
-  
-  // useEffect(() => {
-  //   console.log(user)
-  // }, [user])
+    
   //on map sur l'état friends pour faire ressortir les amis de l'utilisateur
   const friendsList = user.friends.map((friend, i) => {
     return <FriendsCards key={i} friend={friend} />;

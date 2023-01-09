@@ -15,18 +15,22 @@ import { useSelector } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
 import IPAdress from "../IPAdress";
 
+//declaration de la variable pusher en dehors de la fonction 
 const pusher = new Pusher("2ea678f34e1d48f32f22", { cluster: "eu" });
+//Pusher sert à envoyé des messages en temps réel. c'est un webservice.une API.
+//spécifie le compte pusher pour WannaPlay
 
 export default function ChatScreen({ navigation, route: { params } }) {
-  const [messages, setMessages] = useState([]);
-  const [messageText, setMessageText] = useState("");
+  const [messages, setMessages] = useState([]);//etat qui stocke les messages. tableau d'objet. l'objet sera le payload : id du chat , username, message, date.
+  const [messageText, setMessageText] = useState("");//état qui stocke le msg tapé par l'utilisateur
   const user = useSelector((state) => state.user.value);
 
-  const scrollViewRef = useRef();
+  const scrollViewRef = useRef();//point de départ du scroll en bas (au lieu d'en haut)
 
   const isFocused = useIsFocused;
   let subscription;
   useEffect(() => {
+    //on fetch pour rejoindre un chat
     (() => {
       fetch(`http://${IPAdress}:3000/chats/joinChat`, {
         method: "POST",
@@ -36,6 +40,7 @@ export default function ChatScreen({ navigation, route: { params } }) {
           username: user.username,
         }),
       });
+      //ensuite on fetch la route allMessages qui récupère ts les msgs précédents
       fetch(
         `http://${IPAdress}:3000/chats/allMessages/${params.chatData.chatName}`
       )
@@ -43,41 +48,46 @@ export default function ChatScreen({ navigation, route: { params } }) {
         .then((data) => {
           if (data.result) setMessages(data.messages);
         });
-      subscription = pusher.subscribe(params.chatData.chatName);
-      subscription.bind("pusher:subscription_succeeded", () => {
-        subscription.bind("message", handleReceiveMessage);
-      });
-    })();
 
-    return () => {
-      subscription.unsubscribe(params.chatData.chatName);
-      fetch(`http://${IPAdress}:3000/chats/leaveChat`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          chatName: params.chatData.chatName,
-          username: user.username,
-        }),
-      });
-    };
+    //pour recevoir les msg en temps réel on va placer une écoute. Pour ça on va )-s'abonner à un évènement qui est le nom du chat
+  subscription = pusher.subscribe(params.chatData.chatName);
+  //en 2)si on a bien souscrit au nom du chat, alors on "grant" la souscription et une fonction de callback est lancé pour récupérer les nouveaux flux de msgs
+  subscription.bind("pusher:subscription_succeeded", () => {
+    subscription.bind("message", handleReceiveMessage);
+  });
+})();
+
+//ce useEffect contient un return qui s'exécute lors de la desctruction du composant
+return () => {
+  subscription.unsubscribe(params.chatData.chatName);
+  fetch(`http://${IPAdress}:3000/chats/leaveChat`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      chatName: params.chatData.chatName,
+      username: user.username,
+    }),
+  });
+};
   }, [isFocused]);
 
+  //ici data = payload du msg
   const handleReceiveMessage = (data) => {
     setMessages((messages) => [...messages, data]);
   };
-
+//envoi d'un message
   const handleSendMessage = () => {
     if (!messageText) {
       return;
     }
-
+//payload envoyé au backend = msg envoyé au backend
     const payload = {
-      text: messageText,
+      text: messageText,//iput saisi par l'utilisateur 
       username: user.username,
       createdAt: new Date(),
-      id: Math.floor(Math.random() * 100000),
+      id: Math.floor(Math.random() * 100000),//id de chaque message généré car pusher demande un id par message (à voir pokoi ??)
     };
-
+//on post le message en DB et à pusher
     fetch(`http://${IPAdress}:3000/chats/message`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -86,7 +96,7 @@ export default function ChatScreen({ navigation, route: { params } }) {
         payload: payload,
       }),
     });
-
+//puis on vide l'état MessageText
     setMessageText("");
   };
 
@@ -102,68 +112,68 @@ export default function ChatScreen({ navigation, route: { params } }) {
           size={24}
           onPress={() => navigation.goBack()}
         />
-        <Text style={styles.greetingText}> {params.chatData.friend} 👋</Text>
+        <Text style={styles.greetingText}> {params.chatData.friend} :wave:</Text>
       </View>
 
-      <View style={styles.inset}>
-        <ScrollView
-          style={styles.scroller}
-          ref={scrollViewRef}
-          onContentSizeChange={() =>
-            scrollViewRef.current.scrollToEnd({ animated: true })
-          }
+  <View style={styles.inset}>
+    <ScrollView
+      style={styles.scroller}
+      ref={scrollViewRef}
+      onContentSizeChange={() =>
+        scrollViewRef.current.scrollToEnd({ animated: true })
+      }
+    >
+      {messages.map((message, i) => (
+        <View
+          key={i}
+          style={[
+            styles.messageWrapper,
+            {
+              ...(message.username === params.chatData.friend
+                ? styles.messageSent
+                : styles.messageRecieved),
+            },
+          ]}
         >
-          {messages.map((message, i) => (
-            <View
-              key={i}
-              style={[
-                styles.messageWrapper,
-                {
-                  ...(message.username === params.chatData.friend
-                    ? styles.messageSent
-                    : styles.messageRecieved),
-                },
-              ]}
-            >
-              <View
-                style={[
-                  styles.message,
-                  {
-                    ...(message.username === user.username
-                      ? styles.messageSentBg
-                      : styles.messageRecievedBg),
-                  },
-                ]}
-              >
-                <Text style={styles.messageText}>{message.text}</Text>
-              </View>
-              <Text style={styles.timeText}>
-                {new Date(message.createdAt).getHours()}:
-                {String(new Date(message.createdAt).getMinutes()).padStart(
-                  2,
-                  "0"
-                )}
-              </Text>
-            </View>
-          ))}
-        </ScrollView>
-
-        <View style={styles.inputContainer}>
-          <TextInput
-            onChangeText={(value) => setMessageText(value)}
-            value={messageText}
-            style={styles.input}
-            autoFocus
-          />
-          <TouchableOpacity
-            onPress={() => handleSendMessage()}
-            style={styles.sendButton}
+          <View
+            style={[
+              styles.message,
+              {
+                ...(message.username === user.username
+                  ? styles.messageSentBg
+                  : styles.messageRecievedBg),
+              },
+            ]}
           >
-            <MaterialIcons name="send" color="#ffffff" size={24} />
-          </TouchableOpacity>
+            <Text style={styles.messageText}>{message.text}</Text>
+          </View>
+          <Text style={styles.timeText}>
+            {new Date(message.createdAt).getHours()}:
+            {String(new Date(message.createdAt).getMinutes()).padStart(
+              2,
+              "0"
+            )}
+          </Text>
         </View>
-      </View>
-    </KeyboardAvoidingView>
+      ))}
+    </ScrollView>
+
+    <View style={styles.inputContainer}>
+      <TextInput
+        onChangeText={(value) => setMessageText(value)}
+        value={messageText}
+        style={styles.input}
+        autoFocus
+      />
+      <TouchableOpacity
+        onPress={() => handleSendMessage()}
+        style={styles.sendButton}
+      >
+        <MaterialIcons name="send" color="#ffffff" size={24} />
+      </TouchableOpacity>
+    </View>
+  </View>
+</KeyboardAvoidingView>
   );
 }
 
