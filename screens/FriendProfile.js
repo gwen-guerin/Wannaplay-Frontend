@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Image,
   ImageBackground,
+  ScrollView
 } from "react-native";
 import { useState, useEffect } from "react";
 import { addToFriends, removeFromFriends } from "../reducers/user";
