@@ -5,18 +5,22 @@ import {
   TouchableOpacity,
   Image,
   ImageBackground,
+  ScrollView
 } from "react-native";
 import { useState, useEffect } from "react";
 import { addToFriends, removeFromFriends } from "../reducers/user";
 import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
 import IPAdress from "../IPAdress";
+import FriendsCards from "../components/FriendsCards";
 
 // construction de  la page profile
 export default function FriendProfile({ navigation, route: { params } }) {
   const userRed = useSelector((state) => state.user.value);
   const dispatch = useDispatch();
   const [friend, setFriend] = useState(false);
+  const [commonFriends, setCommonFriends] = useState([]);
+  const [friendsList, setFriendsList] = useState([]);
   const [user, setUser] = useState({
     username: null,
     firstname: null,
@@ -33,6 +37,7 @@ export default function FriendProfile({ navigation, route: { params } }) {
   //useEffect utilisé pour charger la page profile de l'utilisateur au  moment de sa connection/signin
   useEffect(() => {
     isFriend();
+    handleCommonFriends();
     fetch(`http://${IPAdress}:3000/users/profile/${params.username}`)
       .then((res) => res.json())
       .then((data) => {
@@ -58,6 +63,30 @@ export default function FriendProfile({ navigation, route: { params } }) {
       if (userRed.friends[i] === params.username) setFriend(true);
     }
   };
+
+  const handleCommonFriends = () => {
+    fetch(`http://${IPAdress}:3000/search/commonFriends`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        friend: params.username,
+        username: userRed.username,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setCommonFriends(data.allFriends);
+      });
+  };
+
+  useEffect(() => {
+    console.log("commonFriends", commonFriends);
+    setFriendsList(
+      commonFriends.map((friend, i) => {
+        return <FriendsCards key={i} friend={friend} />;
+      })
+    );
+  }, [commonFriends]);
 
   const addOrDelete = () => {
     if (friend) {
@@ -156,7 +185,7 @@ export default function FriendProfile({ navigation, route: { params } }) {
     }
     const color = randomColor();
     return (
-      <Text style={[styles.textUser1, {  borderColor: color }]} key={i}>
+      <Text style={[styles.textUser1, { borderColor: color }]} key={i}>
         #{tag}
       </Text>
     );
@@ -199,6 +228,16 @@ export default function FriendProfile({ navigation, route: { params } }) {
           <Text style={styles.textDecription}>{user.description}</Text>
           <View style={styles.modifyIcon}></View>
         </View>
+        <ScrollView style={styles.friendsCardsContainer} horizontal={true}>
+          {friendsList.length <= 0 ? (
+            <Text>No common friends</Text>
+          ) : (
+            <View style={styles.commonFriendsContainer}>
+              <Text>Common friends:</Text>
+              {friendsList}
+            </View>
+          )}
+        </ScrollView>
         <View style={styles.iconContainer}>
           <TouchableOpacity
             style={styles.ionIcons}
@@ -246,10 +285,10 @@ const styles = StyleSheet.create({
   textDecription: {
     fontSize: 17,
     color: "#615B5Aaa",
-    alignItems: 'center',
+    alignItems: "center",
     padding: 5,
-    fontWeight: '700',
-     },
+    fontWeight: "700",
+  },
   textUser1: {
     fontSize: 14,
     fontWeight: "800",
@@ -310,7 +349,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   tagandteach: {
-    display: 'flex',
+    display: "flex",
     marginTop: 20,
     marginBottom: 20,
   },
@@ -361,4 +400,11 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: "#ffffffaa",
   },
+  commonFriendsContainer: {
+    flex: 1,
+    backgroundColor: 'red',
+  },
+  friendsCardsContainer: {
+    flex: 1,
+  }
 });

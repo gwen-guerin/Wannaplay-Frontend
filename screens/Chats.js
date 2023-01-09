@@ -1,10 +1,6 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import {
-  SafeAreaProvider,
-  initialWindowMetrics,
-} from "react-native-safe-area-context";
 import { View } from "react-native";
 import { StyleSheet } from "react-native";
 
@@ -18,7 +14,7 @@ const Tab = createMaterialTopTabNavigator();
 const ChatsNavigator = () => {
   return (
     <Tab.Navigator
-      screenOptions={({ route }) => ({
+      screenOptions={() => ({
         tabBarHideOnKeyboard: true,
         tabBarActiveTintColor: "#CE2174",
         tabBarInactiveTintColor: "#335561",
