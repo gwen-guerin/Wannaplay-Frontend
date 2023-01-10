@@ -53,15 +53,13 @@ export default function FriendsCards(props) {
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: "space-around",
+    justifyContent: "space-between",
     alignItems: "center",
     padding: 20,
-
     backgroundColor: "#ffffffaa",
     elevation: 1,
     borderRadius: 10,
     margin: 5,
-    height: "60%",
   },
   textUser: {
     color: "#CE2174",
@@ -70,7 +68,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   online: {
-    marginTop: 10,
     height: 15,
     width: 15,
     backgroundColor: "red",

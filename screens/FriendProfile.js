@@ -5,14 +5,14 @@ import {
   TouchableOpacity,
   Image,
   ImageBackground,
-  ScrollView
-} from "react-native";
-import { useState, useEffect } from "react";
-import { addToFriends, removeFromFriends } from "../reducers/user";
-import { FontAwesome5, Ionicons } from "@expo/vector-icons";
-import { useSelector, useDispatch } from "react-redux";
-import IPAdress from "../IPAdress";
-import FriendsCards from "../components/FriendsCards";
+  ScrollView,
+} from 'react-native';
+import { useState, useEffect } from 'react';
+import { addToFriends, removeFromFriends } from '../reducers/user';
+import { FontAwesome5, Ionicons } from '@expo/vector-icons';
+import { useSelector, useDispatch } from 'react-redux';
+import IPAdress from '../IPAdress';
+import FriendsCards from '../components/FriendsCards';
 
 // construction de  la page profile
 export default function FriendProfile({ navigation, route: { params } }) {
@@ -66,8 +66,8 @@ export default function FriendProfile({ navigation, route: { params } }) {
 
   const handleCommonFriends = () => {
     fetch(`http://${IPAdress}:3000/search/commonFriends`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         friend: params.username,
         username: userRed.username,
@@ -80,10 +80,15 @@ export default function FriendProfile({ navigation, route: { params } }) {
   };
 
   useEffect(() => {
-    console.log("commonFriends", commonFriends);
     setFriendsList(
       commonFriends.map((friend, i) => {
-        return <FriendsCards key={i} friend={friend} />;
+        return (
+          <FriendsCards
+            style={styles.friendsContainer}
+            key={i}
+            friend={friend}
+          />
+        );
       })
     );
   }, [commonFriends]);
@@ -108,8 +113,8 @@ export default function FriendProfile({ navigation, route: { params } }) {
 
   const addFriend = () => {
     fetch(`http://${IPAdress}:3000/friends/addFriend`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         username: userRed.username,
         friend: params.username,
@@ -124,8 +129,8 @@ export default function FriendProfile({ navigation, route: { params } }) {
 
   const removeFriend = () => {
     fetch(`http://${IPAdress}:3000/friends/removeFriend`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         username: userRed.username,
         friend: user.username,
@@ -140,8 +145,8 @@ export default function FriendProfile({ navigation, route: { params } }) {
 
   const handleChat = () => {
     fetch(`http://${IPAdress}:3000/chats/createChat`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         username: userRed.username,
         secondUser: user.username,
@@ -149,21 +154,20 @@ export default function FriendProfile({ navigation, route: { params } }) {
     })
       .then((response) => response.json())
       .then((data) => {
-        navigation.navigate("Chat", {
+        navigation.navigate('Chat', {
           chatData: { chatName: data.chatName, friend: data.friend },
         });
       });
   };
 
-  //on map sur l'état teacher pour faire ressortir les tags/les instruments que l'utilisateur veut enseigner
   const teacherTag = user.teacher.map((teacher, i) => {
     function randomColor() {
-      const letters = "0123456789ABCDEF";
-      let color = "#";
+      const letters = '0123456789ABCDEF';
+      let color = '#';
       for (let i = 0; i < 6; i++) {
         color += letters[Math.floor(Math.random() * 16)];
       }
-      return color + "aa";
+      return color + 'aa';
     }
     const color = randomColor();
     return (
@@ -173,15 +177,14 @@ export default function FriendProfile({ navigation, route: { params } }) {
     );
   });
 
-  //on map sur l'état tags pour faire ressortir les tags/les instruments pratiqué par l'utilisateur
   const tagsList = user.tags.map((tag, i) => {
     function randomColor() {
-      const letters = "0123456789ABCDEF";
-      let color = "#";
+      const letters = '0123456789ABCDEF';
+      let color = '#';
       for (let i = 0; i < 6; i++) {
         color += letters[Math.floor(Math.random() * 16)];
       }
-      return color + "aa";
+      return color + 'aa';
     }
     const color = randomColor();
     return (
@@ -193,7 +196,7 @@ export default function FriendProfile({ navigation, route: { params } }) {
 
   return (
     <ImageBackground
-      source={require("../assets/illu_02.jpg")}
+      source={require('../assets/illu_02.jpg')}
       imageStyle={{ opacity: 0.4 }}
       style={styles.imgBack}
     >
@@ -210,9 +213,9 @@ export default function FriendProfile({ navigation, route: { params } }) {
             <View style={styles.tagandteach}>
               <View style={styles.tagsList}>{tagsList}</View>
               {user.teacher.length > 0 && (
-                <View style={styles.tagsList}>
+                <View style={styles.teachList}>
                   <Text style={styles.textUser}>Wanna teach : </Text>
-                  {teacherTag}
+                  <View>{teacherTag}</View>
                 </View>
               )}
             </View>
@@ -226,18 +229,19 @@ export default function FriendProfile({ navigation, route: { params } }) {
             <Text style={styles.textUser}>{user.city}</Text>
           </View>
           <Text style={styles.textDecription}>{user.description}</Text>
-          <View style={styles.modifyIcon}></View>
         </View>
-        <ScrollView style={styles.friendsCardsContainer} horizontal={true}>
-          {friendsList.length <= 0 ? (
-            <Text>No common friends</Text>
-          ) : (
-            <View style={styles.commonFriendsContainer}>
-              <Text>Common friends:</Text>
-              {friendsList}
-            </View>
-          )}
-        </ScrollView>
+        {friendsList.length <= 0 ? (
+          <View style={styles.noCommon}>
+            <Text style={{ fontSize: 25 }}>No common friend</Text>
+          </View>
+        ) : (
+          <View>
+            <Text style={{ fontSize: 17, paddingLeft: 10 }}>Common friend</Text>
+          <ScrollView horizontal={true} style={styles.commonFriendsContainer}>
+            {friendsList}
+          </ScrollView>
+          </View>
+        )}
         <View style={styles.iconContainer}>
           <TouchableOpacity
             style={styles.ionIcons}
@@ -255,9 +259,9 @@ export default function FriendProfile({ navigation, route: { params } }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "space-between",
-    width: "100%",
-    height: "100%",
+    justifyContent: 'space-between',
+    width: '100%',
+    height: '100%',
     paddingTop: 50,
     padding: 10,
   },
@@ -266,145 +270,108 @@ const styles = StyleSheet.create({
     width: 120,
     height: 120,
   },
-  friendsTab: {
-    backgroundColor: "white",
-    opacity: 0.9,
-    borderRadius: 40,
-    height: 140,
-    display: "flex",
-    flexDirection: "row",
-    padding: 10,
-    opacity: 0.6,
-  },
   textUser: {
     fontSize: 15,
     margin: 2,
-    alignItems: "center",
-    fontWeight: "700",
+    alignItems: 'center',
+    fontWeight: '700',
   },
   textDecription: {
     fontSize: 17,
-    color: "#615B5Aaa",
-    alignItems: "center",
+    color: '#615B5Aaa',
+    alignItems: 'center',
     padding: 5,
-    fontWeight: "700",
+    fontWeight: '700',
   },
   textUser1: {
     fontSize: 14,
-    fontWeight: "800",
-    color: "black",
+    fontWeight: '800',
+    color: 'black',
     borderRadius: 20,
     paddingVertical: 3,
     paddingHorizontal: 8,
     margin: 5,
     borderWidth: 3,
-    backgroundColor: "white",
+    backgroundColor: 'white',
   },
   textUsername: {
-    fontWeight: "bold",
+    fontWeight: 'bold',
     fontSize: 25,
-    alignItems: "center",
-    color: "#CE2174",
+    alignItems: 'center',
+    color: '#CE2174',
   },
   nameAndStatus: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
     width: 150,
-    justifyContent: "space-around",
-    alignItems: "center",
-  },
-  background: {
-    width: "100%",
-    height: "100%",
-  },
-  friends: {
-    fontWeight: "bold",
-    fontSize: 20,
-    marginLeft: 5,
-    color: "#CE2174",
-  },
-  online: {
-    height: 20,
-    width: 20,
-    borderRadius: 40,
-  },
-  online1: {
-    height: 20,
-    width: 20,
-    borderRadius: 40,
-  },
-  friendsView: {
-    marginTop: 30,
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    marginBottom: 8,
+    justifyContent: 'space-around',
+    alignItems: 'center',
   },
   tagsList: {
-    display: "flex",
-    flexDirection: "row",
-    flexWrap: "wrap",
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     borderRadius: 20,
+    width: '120%',
+  },
+  teachList: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    borderRadius: 20,
+    width: '120%',
   },
   tagandteach: {
-    display: "flex",
+    display: 'flex',
     marginTop: 20,
     marginBottom: 20,
   },
   headerProfile: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   nameAndTags: {
     marginLeft: 20,
     width: 150,
   },
   description: {
-    backgroundColor: "#ffffffaa",
-    display: "flex",
-    alignItems: "stretch",
+    backgroundColor: '#ffffffaa',
+    display: 'flex',
+    alignItems: 'stretch',
     borderRadius: 5,
-    width: "100%",
+    width: '100%',
     padding: 5,
     marginTop: 25,
-    height: "20%",
+    height: '20%',
   },
   infoContainer: {
-    backgroundColor: "#E5EAE9",
+    backgroundColor: '#E5EAE9',
     padding: 5,
     borderRadius: 5,
-    flexDirection: "row",
-  },
-  modifyIcon: {
-    alignItems: "flex-end",
-    marginTop: -15,
+    flexDirection: 'row',
   },
   iconContainer: {
-    marginTop: 60,
-    flexDirection: "row",
-    justifyContent: "space-around",
+    flexDirection: 'row',
+    justifyContent: 'space-around',
   },
   imgBack: {
-    width: "100%",
-    height: "100%",
+    width: '100%',
+    height: '100%',
   },
-
   ionIcons: {
     borderRadius: 40,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     padding: 20,
-    backgroundColor: "#ffffffaa",
+    backgroundColor: '#ffffffaa',
   },
   commonFriendsContainer: {
-    flex: 1,
-    backgroundColor: 'red',
+    display: 'flex',
+    flexDirection: 'row',
   },
-  friendsCardsContainer: {
-    flex: 1,
-  }
+  noCommon: {
+    alignItems: 'center',
+  },
 });
