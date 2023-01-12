@@ -11,7 +11,6 @@ import {
 import { useEffect, useState } from 'react';
 import IPAdress from '../IPAdress';
 import { useIsFocused } from '@react-navigation/native';
-import { BlurView } from 'expo-blur';
 
 export default function ConcertScreen({ navigation }) {
   const [eventName, setEventName] = useState('');
@@ -21,7 +20,6 @@ export default function ConcertScreen({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
 
   function handleAddEvent() {
-    console.log('TARACE');
     return setModalVisible(!modalVisible);
   }
 
@@ -37,7 +35,6 @@ export default function ConcertScreen({ navigation }) {
   }, [isFocused]);
 
   const [concertsList, setConcertsList] = useState([]);
-  console.log('concertlist', concertsList);
 
   const handleSubmitEvent = () => {
     fetch(`http://${IPAdress}:3000/concerts/createConcert`, {
@@ -58,7 +55,6 @@ export default function ConcertScreen({ navigation }) {
     return (
       <ScrollView>
       <View style={styles.description} key={i}>
-        {/* <View style={styles.infoContainer}> */}
         <View style={styles.eventDetails}>
           <Text style={styles.textUser}>{event.eventName}</Text>
           <Text style={styles.textUser}>{event.style}</Text>
@@ -67,8 +63,6 @@ export default function ConcertScreen({ navigation }) {
           <Text style={styles.textUser}>{event.place}</Text>
           <Text style={styles.textUser}>{event.date}</Text>
         </View>
-        {/* </View> */}
-        {/* <Text style={styles.textDecription}>{concert.description}</Text> */}
       </View>
 
       </ScrollView>
@@ -94,9 +88,6 @@ export default function ConcertScreen({ navigation }) {
           <Modal visible={modalVisible} animationType="slide" transparent>
             <View style={{ backgroundColor: '#000000aa', flex: 1 }}>
               <View style={styles.modalContent}>
-                {/* {errorSignup && (
-                <Text>Attention, champs manquants ou incorrect !</Text>
-              )} */}
                 <TextInput
                   placeholder="Event"
                   value={eventName}
@@ -173,12 +164,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-  concertList: {
-    height: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   description: {
     marginTop: 12,
     marginBottom: 12,
@@ -193,13 +178,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     fontWeight: '700',
     
-  },
-  textDecription: {
-    fontSize: 17,
-    color: '#CE2174',
-    alignItems: 'center',
-    padding: 5,
-    fontWeight: '700',
   },
   btnAdd: {
     justifyContent: "center",
