@@ -108,14 +108,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 5,
   },
-  header: {
-    height: "10%",
-    width: "100%",
-    backgroundColor: "black",
-  },
   scrollList: {
-    // flex: 1,
-    // backgroundColor: 'green',
     alignItems: "center",
   },
   chatlinkContainer: {

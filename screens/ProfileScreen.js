@@ -62,7 +62,6 @@ export default function ProfileScreen({ navigation }) {
 
   //on map sur l'état teacher pour faire ressortir les tags/les instruments que l'utilisateur veut enseigner
   const teacherTag = user.teacher.map((teacher, i) => {
-    console.log("yoyo")
     function randomColor() {
       const letters = "0123456789ABCDEF";
       let color = "#";
@@ -99,7 +98,6 @@ export default function ProfileScreen({ navigation }) {
     );
   });
     
-  //on map sur l'état friends pour faire ressortir les amis de l'utilisateur
   const friendsList = user.friends.map((friend, i) => {
     return <FriendsCards key={i} friend={friend} />;
   });
@@ -168,9 +166,11 @@ export default function ProfileScreen({ navigation }) {
             />
           </View>
         </View>
+        <View>
         <ScrollView style={styles.friendsCardsContainer} horizontal={true}>
           {friendsList}
         </ScrollView>
+        </View>
       </View>
     </ImageBackground>
   );
@@ -188,26 +188,6 @@ const styles = StyleSheet.create({
   imgBack: {
     width: "100%",
     height: "100%",
-  },
-  userPicture: {
-    borderRadius: 60,
-    width: 80,
-    height: 80,
-  },
-  friendsTab: {
-    backgroundColor: "white",
-    opacity: 0.9,
-    borderRadius: 40,
-    height: 140,
-    display: "flex",
-    flexDirection: "row",
-    padding: 10,
-    opacity: 0.6,
-  },
-  friendsList: {
-    borderWidth: 1,
-    width: 10,
-    height: 100,
   },
   textUser: {
     fontSize: 15,
@@ -248,12 +228,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
   },
-  friends: {
-    fontWeight: "bold",
-    fontSize: 20,
-    marginLeft: 5,
-    color: "#CE2174",
-  },
   online: {
     backgroundColor: "green",
     height: 20,
@@ -267,14 +241,6 @@ const styles = StyleSheet.create({
     width: 20,
     borderRadius: 40,
     backgroundColor: "green",
-  },
-  friendsView: {
-    marginTop: 30,
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    marginBottom: 8,
   },
   tagsList: {
     display: "flex",
@@ -315,17 +281,5 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "flex-end",
     marginTop: -15,
-  },
-  iconContainer: {
-    marginTop: 60,
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-around",
-  },
-  friendsCardsContainer: {
-    display: "flex",
-    flexDirection: "row",
-    width: "100%",
-    marginTop: 25,
   },
 });

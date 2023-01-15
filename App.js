@@ -21,8 +21,6 @@ import { LogBox } from "react-native";
 import AppLoading from "expo-app-loading";
 import {useState} from "react";
 import useFonts from "./hooks/useFonts";
-//fin import font
-
 
 LogBox.ignoreAllLogs();
 
@@ -66,7 +64,6 @@ const TabNavigator = () => {
 };
 
 export default function App() {
-  //fontfamily
   const [IsReady, SetIsReady] = useState(false);
 
   const LoadFonts = async () => {

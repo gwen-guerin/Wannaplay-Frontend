@@ -6,7 +6,6 @@ import SearchUser from "./searchPages/SearchUser";
 import SearchTeacher from "./searchPages/SearchTeacher";
 
 import { StyleSheet, View } from "react-native";
-import IPAdress from "../IPAdress";
 
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialTopTabNavigator();
@@ -42,11 +41,6 @@ export default function SearchPage() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
   navigator: {
     borderBottomColor: "#ec6e5b",
   },

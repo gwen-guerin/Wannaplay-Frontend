@@ -1,4 +1,3 @@
-import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { View } from "react-native";
@@ -8,7 +7,6 @@ import ChatsFriends from "./chatPages/ChatsFriends";
 import ChatsList from "./chatPages/ChatsList";
 
 const Stack = createNativeStackNavigator();
-
 const Tab = createMaterialTopTabNavigator();
 
 const ChatsNavigator = () => {
@@ -41,11 +39,6 @@ export default function Chats() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
   navigator: {
     borderBottomColor: "#ec6e5b",
   },

@@ -25,7 +25,6 @@ export default function SearchTeacher({navigation}) {
       .then((data) => {
         setSearchResults(
           data.users.map((user, i) => {
-            console.log(user)
             return (
               <BlurView
                 key={i}
@@ -151,7 +150,6 @@ const styles = StyleSheet.create({
     width: Dimensions.get("screen").width * 0.35,
     height: Dimensions.get("screen").width * 0.35,
     borderRadius: 25,
-    // margin: Dimensions.get("screen").width * 0.01,
     borderColor: "#CE2174",
     borderWidth: 2,
   },
@@ -161,9 +159,5 @@ const styles = StyleSheet.create({
     backgroundColor: "grey",
     borderRadius: 50,
     margin: Dimensions.get("screen").width * 0.01,
-  },
-  text: {
-    fontSize: 16,
-    padding: 5,
   },
 });

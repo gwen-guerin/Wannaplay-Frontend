@@ -13,7 +13,6 @@ import {
   ImageBackground,
 } from "react-native";
 import { BlurView } from "expo-blur";
-import { useSelector } from "react-redux";
 import IPAdress from "../../IPAdress";
 
 export default function SearchUser({ navigation }) {
@@ -26,19 +25,17 @@ export default function SearchUser({ navigation }) {
     handleSearch();
   }, [searchQuery]);
 
-  const addChat = (friendUsername) => {
-    fetch(`http://${IPAdress}:3000/users/`);
-  };
+  // const addChat = (friendUsername) => {
+  //   fetch(`http://${IPAdress}:3000/users/`);
+  // };
 
   const handleSearch = () => {
     if (searchQuery.length > 0) {
-      // console.log(searchQuery.length)
       fetch(`http://${IPAdress}:3000/search/${searchQuery}`)
         .then((response) => response.json())
         .then((data) => {
           setSearchResults(
             data.users.map((user, i) => {
-              console.log(user);
               return (
                 <BlurView
                   key={i}
@@ -129,8 +126,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingLeft: "2%",
     paddingRight: "2%",
-    // borderColor: "#black",
-    // borderWidth: 2,
+
   },
   searchBar: {
     color: "black",
@@ -153,7 +149,7 @@ const styles = StyleSheet.create({
     borderColor: "#CE2174",
     borderWidth: 2,
   },
-  searchIcon: {},
+  // searchIcon: {},
   scrollList: {
     width: "95%",
     flexDirection: "row",
@@ -168,7 +164,6 @@ const styles = StyleSheet.create({
     width: Dimensions.get("screen").width * 0.35,
     height: Dimensions.get("screen").width * 0.35,
     borderRadius: 25,
-    // margin: Dimensions.get("screen").width * 0.01,
     borderColor: "#CE2174",
     borderWidth: 2,
   },
@@ -178,9 +173,5 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     margin: Dimensions.get("screen").width * 0.01,
     backgroundColor: 'black'
-  },
-  text: {
-    fontSize: 16,
-    padding: 5,
   },
 });

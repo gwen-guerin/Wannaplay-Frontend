@@ -71,23 +71,20 @@ return () => {
 };
   }, [isFocused]);
 
-  //ici data = payload du msg
   const handleReceiveMessage = (data) => {
     setMessages((messages) => [...messages, data]);
   };
-//envoi d'un message
   const handleSendMessage = () => {
     if (!messageText) {
       return;
     }
-//payload envoyé au backend = msg envoyé au backend
+//msg envoyé au backend
     const payload = {
-      text: messageText,//iput saisi par l'utilisateur 
+      text: messageText,
       username: user.username,
       createdAt: new Date(),
-      id: Math.floor(Math.random() * 100000),//id de chaque message généré car pusher demande un id par message (à voir pokoi ??)
+      id: Math.floor(Math.random() * 100000),
     };
-//on post le message en DB et à pusher
     fetch(`http://${IPAdress}:3000/chats/message`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -96,7 +93,6 @@ return () => {
         payload: payload,
       }),
     });
-//puis on vide l'état MessageText
     setMessageText("");
   };
 
@@ -317,11 +313,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 6.41,
     elevation: 1.2,
-  },
-  buttonText: {
-    color: "#ffffff",
-    fontWeight: "800",
-    textTransform: "uppercase",
   },
   scroller: {
     paddingLeft: 20,

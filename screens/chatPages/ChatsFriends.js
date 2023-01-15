@@ -12,7 +12,6 @@ import {
 import { BlurView } from "expo-blur";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setFriends } from "../../reducers/user";
 import IPAdress from "../../IPAdress";
 import { useIsFocused } from "@react-navigation/native";
 
@@ -21,7 +20,6 @@ export default function ChatsFriends({ navigation }) {
   const [friendsChats, setFriendsChats] = useState([]);
   const [chatBoxes, setChatBoxes] = useState([]);
   const user = useSelector((state) => state.user.value);
-  const dispatch = useDispatch();
   const isFocused = useIsFocused();
 
   useEffect(() => {
@@ -36,11 +34,9 @@ export default function ChatsFriends({ navigation }) {
   }, [isFocused]);
 
   useEffect(() => {
-    console.log("friends", friends);
     fetch(`http://${IPAdress}:3000/chats/allChats/${user.username}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setFriendsChats(
           data.allChats.filter((e) => {
             for (let i = 0; i < friends.length; i++)
@@ -52,7 +48,6 @@ export default function ChatsFriends({ navigation }) {
   }, [friends]);
 
   useEffect(() => {
-    console.log("friendsChats", friendsChats);
     setChatBoxes(
       friendsChats.map((data, i) => {
         return (
@@ -93,7 +88,6 @@ export default function ChatsFriends({ navigation }) {
           style={styles.input}
           placeholder="Search a friend..."
           placeholderTextColor={"black"}
-          // mode='outlined'
         />
         <ScrollView contentContainerStyle={styles.scrollList}>
           {chatBoxes}

@@ -30,7 +30,6 @@ export default function Questions({ navigation }) {
 
   useEffect(() => {
     (async () => {
-      // console.log('in')
       const { status } = await Location.requestForegroundPermissionsAsync();
       let latitude = 0;
       let longitude = 0;
@@ -124,7 +123,6 @@ export default function Questions({ navigation }) {
   };
   // ROUTE POST DES DONNEES DU FORM EN DB
   const handleFormSubmit = () => {
-    console.log('front', city);
     fetch(`http://${IPAdress}:3000/users/signupForm`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

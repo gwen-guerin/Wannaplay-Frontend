@@ -90,7 +90,6 @@ export default function UploadImage() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("IMAAAAGE", data);
         //on fetch en post pour envoyer uniquement l'adresse url de l'image en db
         fetch(`http://${IPAdress}:3000/users/photo`, {
           method: "POST",
